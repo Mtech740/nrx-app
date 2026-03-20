@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NRX App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      text-align: center;
+    }
+
+    header {
+      padding: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      margin: 0 5px;
+      cursor: pointer;
+      background: #1e293b;
+      border-radius: 5px;
+    }
+
+    .active {
+      background: #22c55e;
+    }
+
+    .box {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 350px;
+      margin: auto;
+    }
+
+    input, select {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: none;
+    }
+
+    button {
+      padding: 10px 20px;
+      background: #22c55e;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .result {
+      margin-top: 15px;
+      font-size: 16px;
+    }
+
+    .gallery {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .gallery img {
+      width: 150px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>🎯 NRX T-Shirt Drop</header>
+
+<div class="container">
+
+  <p>Buy a shirt. Unlock hidden rewards up to $10.</p>
+
+  <!-- IMAGES -->
+  <div class="gallery">
+    <img src="images/shirt1.png" alt="NRX Shirt">
+    <img src="images/shirt2.png" alt="NRX Shirt">
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('buy')">Buy</div>
+    <div class="tab" onclick="showTab('redeem')">Redeem</div>
+  </div>
+
+  <!-- BUY SECTION -->
+  <div id="buy" class="box">
+    <h3>Buy T-Shirt</h3>
+
+    <p><strong>Price:</strong> $5 (or local equivalent)</p>
+    <p>🎯 Unlock rewards up to $10 with every purchase</p>
+    <p style="color:#facc15;">⚡ Limited stock available</p>
+
+    <input type="text" id="name" placeholder="Full Name">
+    <input type="text" id="phone" placeholder="Phone Number">
+
+    <select id="size">
+      <option value="">Select Size</option>
+      <option>S</option>
+      <option>M</option>
+      <option>L</option>
+      <option>XL</option>
+    </select>
+
+    <select id="delivery">
+      <option value="">Delivery Method</option>
+      <option>Pickup</option>
+      <option>Delivery</option>
+    </select>
+
+    <button onclick="buy()">Place Order</button>
+
+    <div id="buyResult" class="result"></div>
+
+    <hr style="margin:15px 0;">
+
+    <p><strong>📍 Pickup:</strong> Woodlands / Leopard Hill Road</p>
+    <p><strong>🚚 Delivery:</strong> Available within Lusaka</p>
+    <p><strong>⏱ Delivery Time:</strong> Same day or next day</p>
+  </div>
+
+  <!-- REDEEM SECTION -->
+  <div id="redeem" class="box hidden">
+    <h3>Unlock Reward</h3>
+
+    <input type="text" id="code" placeholder="NRX-XXXXX">
+
+    <button onclick="redeem()">Unlock</button>
+
+    <div id="result" class="result"></div>
+  </div>
+
+</div>
+
+<script>
+  function showTab(tab) {
+    document.getElementById("buy").classList.add("hidden");
+    document.getElementById("redeem").classList.add("hidden");
+
+    document.getElementById(tab).classList.remove("hidden");
+
+    let tabs = document.querySelectorAll(".tab");
+    tabs.forEach(t => t.classList.remove("active"));
+
+    event.target.classList.add("active");
+  }
+
+  async function buy() {
+    document.getElementById("buyResult").innerText = "Order feature coming soon...";
+  }
+
+  async function redeem() {
+    document.getElementById("result").innerText = "Reward system coming soon...";
+  }
+</script>
+
+</body>
+</html>
