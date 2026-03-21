@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>NRX App | T-Shirt Drop</title>
+  <meta name="description" content="NRX T-Shirt Drop — Buy a shirt, unlock hidden rewards. K180 per shirt.">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(145deg, #0a0f1c 0%, #0f172a 100%);
+      color: #f1f5f9;
+      text-align: center;
+      min-height: 100vh;
+      padding-bottom: 40px;
+    }
+
+    header {
+      padding: 28px 20px 16px;
+      font-size: 28px;
+      font-weight: 800;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(34, 197, 94, 0.3);
+    }
+
+    header span {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 20px 16px;
+    }
+
+    /* Gallery Section */
+    .gallery-section {
+      background: rgba(15, 23, 42, 0.5);
+      border-radius: 32px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .gallery-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .gallery-title h3 {
+      font-size: 1.3rem;
+    }
+
+    .admin-btn {
+      background: #3b82f6;
+      padding: 8px 20px;
+      font-size: 0.85rem;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: 0.2s;
+      font-weight: 600;
+    }
+
+    .admin-btn:hover {
+      background: #2563eb;
+      transform: scale(0.98);
+    }
+
+    .gallery {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .shirt-card {
+      position: relative;
+      width: 150px;
+      background: #1e293b;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 2px solid rgba(34, 197, 94, 0.3);
+      transition: all 0.25s ease;
+    }
+
+    .shirt-card:hover {
+      transform: translateY(-5px);
+      border-color: #22c55e;
+      box-shadow: 0 20px 25px -12px black;
+    }
+
+    .shirt-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .shirt-name {
+      padding: 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: #0f172a;
+      color: #22c55e;
+    }
+
+    .delete-shirt {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #ef4444;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      font-size: 14px;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .shirt-card:hover .delete-shirt {
+      opacity: 1;
+    }
+
+    .empty-gallery {
+      color: #94a3b8;
+      padding: 40px;
+      text-align: center;
+    }
+
+    /* Admin Panel */
+    .admin-panel {
+      background: #1e293b;
+      border-radius: 28px;
+      padding: 24px;
+      margin-bottom: 24px;
+      border: 1px solid #22c55e;
+      transition: all 0.3s;
+    }
+
+    .admin-panel.hidden {
+      display: none;
+    }
+
+    .url-input-group {
+      margin: 16px 0;
+    }
+
+    .url-input-group label {
+      display: block;
+      text-align: left;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #94a3b8;
+    }
+
+    .url-input-group input {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid #334155;
+      background: #0f172a;
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    .url-input-group input:focus {
+      border-color: #22c55e;
+      outline: none;
+    }
+
+    .admin-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .admin-buttons button {
+      flex: 1;
+      margin: 0;
+    }
+
+    .btn-secondary {
+      background: #475569;
+    }
+
+    .btn-danger {
+      background: #dc2626;
+    }
+
+    .current-count {
+      background: #0f172a;
+      padding: 10px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+    }
+
+    /* Tabs & other styles */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 16px 0 24px;
+    }
+
+    .tab {
+      padding: 10px 28px;
+      font-weight: 600;
+      background: #1e293b;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab.active {
+      background: #22c55e;
+      color: #0f172a;
+      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+    }
+
+    .box {
+      background: rgba(30, 41, 59, 0.8);
+      backdrop-filter: blur(4px);
+      padding: 24px 20px;
+      border-radius: 32px;
+      border: 1px solid rgba(34, 197, 94, 0.2);
+    }
+
+    input, select {
+      width: 100%;
+      padding: 14px 16px;
+      margin: 10px 0;
+      border-radius: 60px;
+      border: 1px solid #334155;
+      background: #0f172a;
+      color: white;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: #22c55e;
+    }
+
+    button {
+      background: linear-gradient(95deg, #22c55e, #16a34a);
+      padding: 14px 24px;
+      border: none;
+      border-radius: 60px;
+      font-weight: bold;
+      font-size: 1rem;
+      color: white;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 12px;
+      transition: 0.2s;
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 40px;
+      background: #0f172a;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .success {
+      color: #bbf7d0;
+      background: #14532d;
+      border-left: 4px solid #4ade80;
+    }
+
+    .error {
+      color: #fecaca;
+      background: #7f1a1a;
+      border-left: 4px solid #f87171;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .delivery-note {
+      font-size: 0.85rem;
+      background: #0f172a;
+      border-radius: 28px;
+      padding: 12px;
+      margin-top: 16px;
+      text-align: left;
+    }
+
+    .price-badge {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #facc15;
+    }
+
+    footer {
+      font-size: 0.75rem;
+      margin-top: 32px;
+      opacity: 0.7;
+    }
+
+    @media (max-width: 480px) {
+      .shirt-card {
+        width: 120px;
+      }
+      .shirt-card img {
+        height: 120px;
+      }
+      .admin-buttons button {
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>🎯 <span>NRX</span> T-Shirt Drop</header>
+
+<div class="container">
+  <p style="margin-bottom: 5px; font-weight: 500;">⚡ Limited Edition Drops — each shirt hides a reward up to <strong style="color:#facc15;">K200+ value</strong> cashback or coupon!</p>
+
+  <!-- GALLERY SECTION -->
+  <div class="gallery-section">
+    <div class="gallery-title">
+      <h3>🔥 NRX Collection</h3>
+      <div class="admin-btn" id="toggleAdminBtn">🛠️ Manage Images</div>
+    </div>
+    <div id="galleryContainer" class="gallery">
+      <!-- Dynamic shirts will appear here -->
+    </div>
+  </div>
+
+  <!-- ADMIN PANEL - URL Based Image Management -->
+  <div id="adminPanel" class="admin-panel hidden">
+    <h4 style="margin-bottom: 16px;">📸 Add T-Shirt Images via URL</h4>
+    <p style="font-size: 0.85rem; margin-bottom: 16px; color: #94a3b8;">
+      💡 Paste your PostImage direct links below to add more shirts.
+    </p>
+    
+    <div class="current-count" id="shirtCount">
+      Current shirts: 0
+    </div>
+    
+    <div class="url-input-group">
+      <label>🖼️ Image URL (direct link):</label>
+      <input type="text" id="imageUrl" placeholder="https://i.postimg.cc/xxxxx/image.png" autocomplete="off">
+    </div>
+    
+    <div class="url-input-group">
+      <label>🏷️ Shirt Name (optional):</label>
+      <input type="text" id="shirtName" placeholder="e.g., NRX Black Edition">
+    </div>
+    
+    <div class="admin-buttons">
+      <button id="addUrlBtn">➕ Add Shirt</button>
+      <button id="clearAllBtn" class="btn-danger">🗑️ Clear All</button>
+    </div>
+    
+    <hr style="margin: 20px 0; border-color: #334155;">
+    
+    <h5 style="text-align: left; margin-bottom: 12px;">📋 Your Shirt URLs:</h5>
+    <ul style="text-align: left; font-size: 0.75rem; color: #94a3b8; padding-left: 20px;">
+      <li>Shirt 1: https://i.postimg.cc/QF1NfQ52/file-000000000bb071f587d3192da8b5aff2.png</li>
+      <li>Shirt 2: https://i.postimg.cc/bZkYmxkj/file-000000000ecc722fa0aa9ba18400aa71.png</li>
+      <li>Shirt 3: https://i.postimg.cc/gnfkySwV/file-000000006e8c71fd8e3efd99a47710e9.png</li>
+      <li>Shirt 4: https://i.postimg.cc/3kmrtXmT/file-0000000086d0722f9c1bac970b3af52f.png</li>
+      <li>Shirt 5: https://i.postimg.cc/gx8cgV89/file-00000000897c71f7be4c0ed9a59f2619.png</li>
+    </ul>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <div class="tab active" data-tab="buy">🛒 Buy Shirt</div>
+    <div class="tab" data-tab="redeem">🎁 Unlock Reward</div>
+  </div>
+
+  <!-- BUY SECTION -->
+  <div id="buy" class="box">
+    <h3 style="margin-bottom: 8px;">🔥 Purchase NRX Merch</h3>
+    <div style="background:#22c55e20; display:inline-block; padding:4px 12px; border-radius:50px; font-size:0.85rem;">🎯 each shirt = 1 reward code</div>
+    <p><strong>💰 Price:</strong> <span class="price-badge">K180</span> <span style="font-size:0.9rem;">(Zambian Kwacha)</span></p>
+    <p style="color:#facc15; margin: 8px 0;">✨ Unlock hidden reward up to K200+ value with every purchase ✨</p>
+
+    <input type="text" id="name" placeholder="Full Name *">
+    <input type="tel" id="phone" placeholder="Phone Number (e.g., 097XXXXXX) *">
+    
+    <select id="size">
+      <option value="" disabled selected>Select Size</option>
+      <option>S</option>
+      <option>M</option>
+      <option>L</option>
+      <option>XL</option>
+      <option>XXL</option>
+    </select>
+
+    <select id="delivery">
+      <option value="" disabled selected>Delivery Method</option>
+      <option value="Pickup">📍 Pickup (Woodlands / Leopard Hill Road)</option>
+      <option value="Delivery">🚚 Delivery (Lusaka only)</option>
+    </select>
+
+    <button id="orderBtn">✅ Place Order & Get Reward Code</button>
+    <div id="buyResult" class="result"></div>
+
+    <div class="delivery-note">
+      <strong>📍 Pickup:</strong> Woodlands / Leopard Hill Road (free)<br>
+      <strong>🚚 Delivery:</strong> Lusaka only — same/next day (K40 delivery fee)<br>
+      <strong>💵 Price:</strong> K180 per shirt (includes hidden reward up to K200+)
+    </div>
+  </div>
+
+  <!-- REDEEM SECTION -->
+  <div id="redeem" class="box hidden">
+    <h3>🔓 Unlock Your Surprise</h3>
+    <p style="margin-bottom: 12px;">Enter your NRX reward code found inside your shirt tag or receipt.</p>
+    <input type="text" id="code" placeholder="e.g., NRX-8A7F2D9C">
+    <button id="redeemBtn">💎 Unlock Reward</button>
+    <div id="redeemResult" class="result"></div>
+    <div class="delivery-note" style="margin-top: 20px;">
+      💡 <strong>How it works:</strong> After purchase, you'll receive a unique reward code. Each code unlocks cashback (K30–K200), discount vouchers, or exclusive merch.
+    </div>
+  </div>
+  <footer>© NRX Drops — Premium Quality Tees | K180 each</footer>
+</div>
+
+<script>
+  // ---------------------- SHIRT GALLERY WITH YOUR 5 IMAGES PRE-LOADED ----------------------
+  let shirtImages = [];
+
+  // Load from localStorage or use default with your 5 images
+  function loadShirtsFromStorage() {
+    const stored = localStorage.getItem('nrx_shirt_gallery_urls');
+    if (stored) {
+      try {
+        shirtImages = JSON.parse(stored);
+        renderGallery();
+        updateShirtCount();
+      } catch(e) { 
+        console.warn(e); 
+        loadDefaultShirts();
+      }
+    } else {
+      loadDefaultShirts();
+    }
+  }
+
+  // YOUR 5 NRX SHIRTS - PRE-LOADED WITH YOUR POSTIMAGE LINKS
+  function loadDefaultShirts() {
+    shirtImages = [
+      { id: 'shirt1', url: 'https://i.postimg.cc/QF1NfQ52/file-000000000bb071f587d3192da8b5aff2.png', name: 'NRX Black Edition' },
+      { id: 'shirt2', url: 'https://i.postimg.cc/bZkYmxkj/file-000000000ecc722fa0aa9ba18400aa71.png', name: 'NRX White Edition' },
+      { id: 'shirt3', url: 'https://i.postimg.cc/gnfkySwV/file-000000006e8c71fd8e3efd99a47710e9.png', name: 'NRX Gold Edition' },
+      { id: 'shirt4', url: 'https://i.postimg.cc/3kmrtXmT/file-0000000086d0722f9c1bac970b3af52f.png', name: 'NRX Red Edition' },
+      { id: 'shirt5', url: 'https://i.postimg.cc/gx8cgV89/file-00000000897c71f7be4c0ed9a59f2619.png', name: 'NRX Blue Edition' }
+    ];
+    saveShirtsToStorage();
+    renderGallery();
+    updateShirtCount();
+  }
+
+  function saveShirtsToStorage() {
+    localStorage.setItem('nrx_shirt_gallery_urls', JSON.stringify(shirtImages));
+  }
+
+  function updateShirtCount() {
+    const countElem = document.getElementById('shirtCount');
+    if (countElem) {
+      countElem.innerHTML = `📸 Current shirts in gallery: ${shirtImages.length}`;
+    }
+  }
+
+  function renderGallery() {
+    const container = document.getElementById('galleryContainer');
+    if (!container) return;
+    
+    if (!shirtImages.length) {
+      container.innerHTML = '<div class="empty-gallery">✨ No shirts added yet. Use the Manage Images panel to add your NRX drops via URL!</div>';
+      return;
+    }
+    
+    container.innerHTML = shirtImages.map(shirt => `
+      <div class="shirt-card" data-id="${shirt.id}">
+        <img src="${shirt.url}" alt="${shirt.name}" onerror="this.src='https://placehold.co/400x500/ef4444/ffffff?text=Image+Error'">
+        <div class="shirt-name">${escapeHtml(shirt.name || 'NRX Shirt')}</div>
+        <button class="delete-shirt" data-id="${shirt.id}">✕</button>
+      </div>
+    `).join('');
+
+    // attach delete events
+    document.querySelectorAll('.delete-shirt').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const id = btn.getAttribute('data-id');
+        deleteShirtById(id);
+      });
+    });
+  }
+
+  function deleteShirtById(id) {
+    if (confirm('Remove this shirt from the gallery?')) {
+      shirtImages = shirtImages.filter(s => s.id !== id);
+      saveShirtsToStorage();
+      renderGallery();
+      updateShirtCount();
+      showToast('Shirt removed from gallery', 'success');
+    }
+  }
+
+  function clearAllShirts() {
+    if (confirm('⚠️ Remove ALL shirts from gallery? This action cannot be undone.')) {
+      shirtImages = [];
+      saveShirtsToStorage();
+      renderGallery();
+      updateShirtCount();
+      showToast('All shirts cleared', 'success');
+    }
+  }
+
+  function addShirtByUrl() {
+    const urlInput = document.getElementById('imageUrl');
+    const nameInput = document.getElementById('shirtName');
+    const url = urlInput.value.trim();
+    const name = nameInput.value.trim();
+    
+    if (!url) {
+      showToast('Please enter an image URL', 'error');
+      return;
+    }
+    
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      showToast('Please enter a valid URL starting with http:// or https://', 'error');
+      return;
+    }
+    
+    const newId = Date.now() + '-' + Math.random().toString(36).substr(2, 8);
+    shirtImages.push({
+      id: newId,
+      url: url,
+      name: name || `NRX Shirt ${shirtImages.length + 1}`
+    });
+    
+    saveShirtsToStorage();
+    renderGallery();
+    updateShirtCount();
+    
+    urlInput.value = '';
+    nameInput.value = '';
+    
+    showToast('✅ Shirt added successfully!', 'success');
+  }
+
+  function showToast(msg, type) {
+    const toastDiv = document.createElement('div');
+    toastDiv.style.position = 'fixed';
+    toastDiv.style.bottom = '20px';
+    toastDiv.style.left = '50%';
+    toastDiv.style.transform = 'translateX(-50%)';
+    toastDiv.style.backgroundColor = type === 'success' ? '#22c55e' : '#ef4444';
+    toastDiv.style.color = 'white';
+    toastDiv.style.padding = '12px 24px';
+    toastDiv.style.borderRadius = '60px';
+    toastDiv.style.zIndex = '9999';
+    toastDiv.style.fontWeight = 'bold';
+    toastDiv.style.boxShadow = '0 4px 12px black';
+    toastDiv.innerText = msg;
+    document.body.appendChild(toastDiv);
+    setTimeout(() => toastDiv.remove(), 2500);
+  }
+
+  function escapeHtml(str) { 
+    if(!str) return ''; 
+    return str.replace(/[&<>]/g, function(m){ 
+      if(m==='&') return '&amp;'; 
+      if(m==='<') return '&lt;'; 
+      if(m==='>') return '&gt;'; 
+      return m;
+    }); 
+  }
+
+  // ---------------------- REWARD SYSTEM ----------------------
+  let rewardCodesDB = {};
+
+  function generateRandomReward() {
+    const rand = Math.random();
+    if (rand < 0.05) return "K200 cashback";
+    if (rand < 0.15) return "K150 store credit";
+    if (rand < 0.30) return "K100 discount code";
+    if (rand < 0.55) return "K60 cashback";
+    return "K30 cashback";
+  }
+
+  function generateUniqueCode() {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
+    let code;
+    let exists = true;
+    while (exists) {
+      let segment = '';
+      for (let i = 0; i < 8; i++) segment += chars.charAt(Math.floor(Math.random() * chars.length));
+      code = `NRX-${segment}`;
+      if (!rewardCodesDB[code]) exists = false;
+    }
+    return code;
+  }
+
+  function addRewardForOrder() {
+    const rewardValue = generateRandomReward();
+    const newCode = generateUniqueCode();
+    rewardCodesDB[newCode] = { reward: rewardValue, status: "unused", createdAt: new Date().toISOString() };
+    return { code: newCode, reward: rewardValue };
+  }
+
+  function isValidPhone(phone) { 
+    const cleaned = phone.replace(/\s+/g, ''); 
+    return cleaned.length >= 9 && /^[0-9+\-()]+$/.test(cleaned); 
+  }
+
+  function handleBuy() {
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const size = document.getElementById('size').value;
+    const delivery = document.getElementById('delivery').value;
+    const buyResultDiv = document.getElementById('buyResult');
+
+    if (!name) { buyResultDiv.innerHTML = '❌ Please enter your full name.'; buyResultDiv.className = 'result error'; return; }
+    if (!phone || !isValidPhone(phone)) { buyResultDiv.innerHTML = '📞 Valid phone number required.'; buyResultDiv.className = 'result error'; return; }
+    if (!size) { buyResultDiv.innerHTML = '👕 Select a size.'; buyResultDiv.className = 'result error'; return; }
+    if (!delivery) { buyResultDiv.innerHTML = '🚚 Select delivery method.'; buyResultDiv.className = 'result error'; return; }
+
+    const { code, reward } = addRewardForOrder();
+    const deliveryMsg = delivery === 'Pickup' ? '📍 Pickup at Woodlands / Leopard Hill Road' : '🚚 Delivery to Lusaka (same/next day, K40 fee on arrival)';
+    
+    buyResultDiv.innerHTML = `
+      <div style="text-align:left;">
+        ✅ <strong>Order placed, ${escapeHtml(name)}!</strong><br>
+        🎽 Size: ${size} | 📦 ${delivery}<br>
+        💵 Total: K180 (pay on ${delivery === 'Pickup' ? 'pickup' : 'delivery'})<br>
+        ${deliveryMsg}<br><br>
+        🎁 <strong style="color:#facc15;">YOUR REWARD UNLOCKED:</strong> ${reward}<br>
+        🔑 <strong>Reward Code:</strong> <span style="background:#00000080; padding:4px 10px; border-radius:40px; font-family:monospace;">${code}</span><br>
+        ✨ Go to <strong>Redeem tab</strong> and enter this code to claim instantly.
+      </div>
+    `;
+    buyResultDiv.className = 'result success';
+    document.getElementById('name').value = '';
+    document.getElementById('phone').value = '';
+    document.getElementById('size').value = '';
+    document.getElementById('delivery').value = '';
+  }
+
+  function handleRedeem() {
+    let rawCode = document.getElementById('code').value.trim().toUpperCase();
+    const redeemResultDiv = document.getElementById('redeemResult');
+    if (!rawCode) { redeemResultDiv.innerHTML = '🔑 Please enter your reward code.'; redeemResultDiv.className = 'result error'; return; }
+    if (!rawCode.startsWith('NRX-') && /^[A-Z0-9]{8}$/.test(rawCode)) rawCode = `NRX-${rawCode}`;
+    if (!rawCode.startsWith('NRX-')) { redeemResultDiv.innerHTML = '❌ Invalid format. Use NRX-XXXXXXXX'; redeemResultDiv.className = 'result error'; return; }
+    
+    const entry = rewardCodesDB[rawCode];
+    if (!entry) { redeemResultDiv.innerHTML = '⚠️ Code not recognized. Make sure you entered it correctly.'; redeemResultDiv.className = 'result error'; return; }
+    if (entry.status === 'used') { redeemResultDiv.innerHTML = `⏰ This code was already redeemed.`; redeemResultDiv.className = 'result error'; return; }
+    
+    entry.status = 'used';
+    entry.usedDate = new Date().toISOString();
+    redeemResultDiv.innerHTML = `<div>✨ <strong>Reward claimed!</strong> ✨<br>🎁 ${entry.reward} unlocked!<br>🔑 Code ${rawCode} used successfully.<br>🎯 Thank you for being part of NRX Drops.</div>`;
+    redeemResultDiv.className = 'result success';
+    document.getElementById('code').value = '';
+  }
+
+  function initDemoRewards() {
+    if (!rewardCodesDB['NRX-DEMO4NRX']) rewardCodesDB['NRX-DEMO4NRX'] = { reward: "K100 discount code", status: "unused" };
+    if (!rewardCodesDB['NRX-LUCKY10']) rewardCodesDB['NRX-LUCKY10'] = { reward: "K200 cashback", status: "unused" };
+    if (!rewardCodesDB['NRX-FREEBIE']) rewardCodesDB['NRX-FREEBIE'] = { reward: "K60 cashback", status: "unused" };
+    if (!rewardCodesDB['NRX-GOLD23']) rewardCodesDB['NRX-GOLD23'] = { reward: "K150 store credit", status: "unused" };
+  }
+
+  // ---------------------- UI SETUP ----------------------
+  function setupAdminPanel() {
+    const toggleBtn = document.getElementById('toggleAdminBtn');
+    const adminPanel = document.getElementById('adminPanel');
+    const addUrlBtn = document.getElementById('addUrlBtn');
+    const clearAllBtn = document.getElementById('clearAllBtn');
+
+    toggleBtn.addEventListener('click', () => {
+      adminPanel.classList.toggle('hidden');
+    });
+
+    addUrlBtn.addEventListener('click', addShirtByUrl);
+    clearAllBtn.addEventListener('click', clearAllShirts);
+    
+    const urlInput = document.getElementById('imageUrl');
+    if (urlInput) {
+      urlInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          addShirtByUrl();
+        }
+      });
+    }
+  }
+
+  function setupTabs() {
+    const tabs = document.querySelectorAll('.tab');
+    const buySection = document.getElementById('buy');
+    const redeemSection = document.getElementById('redeem');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        const target = this.getAttribute('data-tab');
+        tabs.forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        if (target === 'buy') { buySection.classList.remove('hidden'); redeemSection.classList.add('hidden'); }
+        else { redeemSection.classList.remove('hidden'); buySection.classList.add('hidden'); }
+      });
+    });
+  }
+
+  // Initialize everything
+  function init() {
+    loadShirtsFromStorage();
+    setupAdminPanel();
+    setupTabs();
+    initDemoRewards();
+    document.getElementById('orderBtn').addEventListener('click', handleBuy);
+    document.getElementById('redeemBtn').addEventListener('click', handleRedeem);
+    
+    const codeField = document.getElementById('code');
+    if(codeField) codeField.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleRedeem(); });
+    
+    // Add demo note for redeem
+    const redeemDiv = document.getElementById('redeem');
+    if(redeemDiv && !document.querySelector('.demo-note')) {
+      const note = document.createElement('div');
+      note.className = 'demo-note';
+      note.style.fontSize = '0.7rem';
+      note.style.marginTop = '10px';
+      note.style.opacity = '0.7';
+      note.style.padding = '8px';
+      note.style.background = '#0f172a';
+      note.style.borderRadius = '20px';
+      note.innerHTML = `🎯 Test codes: NRX-DEMO4NRX · NRX-LUCKY10 · NRX-FREEBIE · NRX-GOLD23`;
+      document.getElementById('redeemResult').after(note);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
