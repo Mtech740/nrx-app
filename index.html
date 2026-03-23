@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>NRX | Premium T-Shirt Drop - Referral Rewards</title>
+  <meta name="description" content="NRX T-Shirt Drop — Limited edition streetwear. Refer friends, earn bonuses! Secure your shirt with Airtel/MTN mobile money. Unlock instant rewards up to $10.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #050505;
+      color: #ededee;
+      scroll-behavior: smooth;
+    }
+
+    .bg-glow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 10% 20%, rgba(34,197,94,0.08), transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 24px 0 16px;
+      border-bottom: 1px solid rgba(34,197,94,0.2);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #22c55e, #15803d);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: 800;
+      box-shadow: 0 8px 20px rgba(34,197,94,0.3);
+    }
+
+    .logo-text {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+    .logo-text span { color: #22c55e; }
+
+    .badge-header {
+      background: rgba(34,197,94,0.15);
+      padding: 6px 14px;
+      border-radius: 60px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      border: 1px solid rgba(34,197,94,0.4);
+    }
+
+    .hero {
+      text-align: center;
+      margin: 48px 0 32px;
+    }
+    .hero h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff, #22c55e);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .hero p {
+      color: #a1a1aa;
+      margin-top: 12px;
+    }
+
+    .referral-banner {
+      background: linear-gradient(135deg, #1e3a2f, #0f2a1f);
+      border-radius: 24px;
+      padding: 16px 24px;
+      margin: 20px 0 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      border: 1px solid rgba(34,197,94,0.3);
+    }
+
+    .referral-banner code {
+      background: #00000066;
+      padding: 8px 16px;
+      border-radius: 40px;
+      font-family: monospace;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+    }
+
+    .copy-btn {
+      background: #22c55e;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 32px;
+      margin: 48px 0 40px;
+    }
+
+    .shirt-card-big {
+      background: #111113;
+      border-radius: 32px;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      border: 1px solid rgba(34,197,94,0.2);
+      backdrop-filter: blur(2px);
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.6);
+    }
+
+    .shirt-card-big:hover {
+      transform: translateY(-8px);
+      border-color: #22c55e;
+      box-shadow: 0 28px 30px -12px rgba(34,197,94,0.2);
+    }
+
+    .shirt-img-wrapper {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #0a0a0c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .shirt-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+
+    .shirt-card-big:hover .shirt-img-wrapper img {
+      transform: scale(1.02);
+    }
+
+    .shirt-info {
+      padding: 20px;
+      background: #0e0e10;
+    }
+
+    .shirt-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .price-badge {
+      color: #facc15;
+      font-weight: 800;
+      font-size: 1.6rem;
+      margin: 8px 0;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 40px 0 28px;
+    }
+
+    .tab {
+      padding: 12px 32px;
+      font-weight: 700;
+      background: #111113;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: 0.2s;
+      border: 1px solid #2a2a2e;
+    }
+
+    .tab.active {
+      background: #22c55e;
+      color: #050505;
+      border-color: #22c55e;
+      box-shadow: 0 4px 14px rgba(34,197,94,0.4);
+    }
+
+    .card-panel {
+      background: #0c0c0e;
+      border-radius: 40px;
+      padding: 32px 28px;
+      border: 1px solid #222226;
+      margin-bottom: 40px;
+      backdrop-filter: blur(4px);
+    }
+
+    .form-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    input, select, textarea {
+      background: #010101;
+      border: 1px solid #2c2c30;
+      padding: 14px 18px;
+      border-radius: 28px;
+      color: white;
+      font-size: 1rem;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #22c55e;
+    }
+
+    .payment-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin: 12px 0;
+    }
+
+    .payment-option {
+      flex: 1;
+      background: #111113;
+      border: 1px solid #2c2c30;
+      border-radius: 60px;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+
+    .payment-option.selected {
+      background: #22c55e;
+      color: black;
+      border-color: #22c55e;
+    }
+
+    .upload-area {
+      background: #0a0a0c;
+      border: 2px dashed #22c55e;
+      border-radius: 28px;
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-top: 8px;
+    }
+
+    .upload-area small {
+      color: #888;
+    }
+
+    .btn-primary {
+      background: linear-gradient(95deg, #22c55e, #16a34a);
+      border: none;
+      padding: 16px;
+      font-weight: 800;
+      font-size: 1.1rem;
+      border-radius: 60px;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+      width: 100%;
+    }
+
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .result-box {
+      margin-top: 24px;
+      padding: 16px;
+      border-radius: 28px;
+      background: #0f0f12;
+    }
+
+    .success { background: #14532d; color: #bbf7d0; border-left: 5px solid #4ade80; }
+    .error { background: #7f1a1a; color: #fecaca; border-left: 5px solid #f87171; }
+    .loading { background: #1e293b; color: #facc15; border-left: 5px solid #facc15; }
+
+    .info-box {
+      background: #1a2a1f;
+      border-radius: 20px;
+      padding: 12px 16px;
+      font-size: 0.85rem;
+      border-left: 3px solid #22c55e;
+    }
+
+    footer {
+      text-align: center;
+      padding: 32px 0;
+      border-top: 1px solid #1f1f23;
+      margin-top: 32px;
+      font-size: 0.8rem;
+      color: #5f5f6a;
+    }
+
+    .hidden { display: none; }
+    
+    @media (max-width: 700px) {
+      .gallery-grid { gap: 20px; }
+      .hero h1 { font-size: 2.2rem; }
+      .container { padding: 0 16px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<div class="container">
+  <div class="navbar">
+    <div class="logo">
+      <div class="logo-icon">NRX</div>
+      <div class="logo-text"><span>NRX</span> DROP</div>
+    </div>
+    <div class="badge-header">⚡ REFER & EARN BONUSES | K180</div>
+  </div>
+
+  <div class="hero">
+    <h1>NRX STREETWEAR DROP</h1>
+    <p>Premium tees • Hidden rewards up to $10 • Refer friends, earn extra bonuses!</p>
+  </div>
+
+  <!-- REFERRAL BANNER - Shows user's unique referral code -->
+  <div class="referral-banner" id="referralBanner">
+    <div>
+      🔗 <strong>Your Unique Referral Code:</strong><br>
+      <code id="userReferralCode">NRX-LOADING</code>
+      <span style="font-size:0.75rem; margin-left:8px;">Share this code — when friends use it, you earn bonuses!</span>
+    </div>
+    <button class="copy-btn" id="copyReferralBtn">📋 Copy Code</button>
+  </div>
+
+  <div id="galleryContainer" class="gallery-grid"></div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="buy">🔥 ORDER NOW</div>
+    <div class="tab" data-tab="redeem">🎁 UNLOCK REWARD</div>
+  </div>
+
+  <div id="buy" class="card-panel">
+    <h2 style="margin-bottom: 16px;">🛒 Secure your NRX shirt</h2>
+    <div class="form-grid">
+      <div class="form-row">
+        <input type="text" id="fullName" placeholder="Full Name *">
+        <input type="tel" id="phoneNumber" placeholder="Phone Number (Airtel/MTN) *">
+      </div>
+      <div class="form-row">
+        <input type="email" id="emailAddress" placeholder="Email (optional)">
+        <input type="text" id="referralCodeInput" placeholder="Referral Code (if someone referred you)">
+      </div>
+      
+      <select id="colorSelect">
+        <option value="">-- Select T-Shirt Colour / Edition --</option>
+      </select>
+
+      <div class="form-row">
+        <select id="sizeSelect">
+          <option value="">Select Size</option>
+          <option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
+        </select>
+        <select id="deliverySelect">
+          <option value="">Delivery Method</option>
+          <option value="Pickup">📍 Pickup (Woodlands / Leopard Hill Road)</option>
+          <option value="Delivery">🚚 Delivery (Lusaka only, +K40)</option>
+        </select>
+      </div>
+
+      <div style="margin: 8px 0 4px; font-weight: 600;">💸 Select Mobile Money</div>
+      <div class="payment-row" id="paymentOptions">
+        <div class="payment-option" data-method="mtn">📱 MTN Mobile Money</div>
+        <div class="payment-option" data-method="airtel">📶 Airtel Money</div>
+      </div>
+      <div id="paymentDetails" style="background:#050507; padding:12px 16px; border-radius:28px; font-size:0.9rem; margin:8px 0;"></div>
+
+      <div class="upload-area" id="uploadArea">
+        📸 Tap to upload payment screenshot (proof of transfer)<br>
+        <small>JPEG / PNG — after sending K180 (or +K40 delivery)</small>
+        <input type="file" id="screenshotInput" accept="image/jpeg,image/png,image/webp" style="display: none;">
+      </div>
+      <div id="fileNameDisplay" style="font-size:0.75rem; color:#aaa; margin-top: 6px;"></div>
+
+      <button class="btn-primary" id="placeOrderBtn">✅ COMPLETE ORDER & UNLOCK REWARD</button>
+      <div id="buyResultMsg" class="result-box"></div>
+      
+      <div class="info-box">
+        💰 <strong>REFERRAL BONUS:</strong> When someone uses your referral code, you earn extra rewards! <br>
+        🎥 <strong>Video Bonus:</strong> Share your unboxing on TikTok/Instagram and tag @NRX for additional bonuses!
+      </div>
+    </div>
+  </div>
+
+  <div id="redeem" class="card-panel hidden">
+    <h3>🔓 Enter NRX reward code</h3>
+    <p style="margin: 12px 0;">Each shirt comes with a secret code. Paste it here to claim cashback/discount up to $10 equivalent.</p>
+    <input type="text" id="redeemCode" placeholder="e.g., NRX-7F3K9P2M" style="width:100%;">
+    <button class="btn-primary" id="redeemBtn" style="margin-top: 20px;">💎 UNLOCK REWARD</button>
+    <div id="redeemResultMsg" class="result-box" style="margin-top: 20px;"></div>
+  </div>
+  <footer>© NRX Drops — Refer friends, earn bonuses! | Payments via Airtel/MTN | Rewards valid for 30 days</footer>
+</div>
+
+<script>
+  // ======================= GOOGLE SHEETS BACKEND INTEGRATION =======================
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyEbG02TqegU9a5agdehnDrjxGh1BC7KhlBdz0B_RGKBdUa4gqBm8fKRwQGe_PqDQ0A/exec";
+
+  function sendToGoogleSheets(orderData) {
+    return fetch(SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(orderData)
+    })
+    .then(() => {
+      console.log("Order sent to Google Sheets:", orderData);
+      return { success: true };
+    })
+    .catch(err => {
+      console.error("Error sending to sheet:", err);
+      return { success: false, error: err };
+    });
+  }
+
+  // ======================= REFERRAL SYSTEM =======================
+  // Generate or retrieve user's unique referral code (stored in localStorage)
+  function getUserReferralCode() {
+    let userCode = localStorage.getItem('nrx_user_referral_code');
+    if (!userCode) {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
+      let code = '';
+      for (let i = 0; i < 8; i++) {
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      userCode = `NRX-${code}`;
+      localStorage.setItem('nrx_user_referral_code', userCode);
+    }
+    return userCode;
+  }
+
+  // Track referral count for the user (simulated - would come from backend in production)
+  function getReferralCount() {
+    const referrals = JSON.parse(localStorage.getItem('nrx_referrals') || '[]');
+    return referrals.length;
+  }
+
+  // Record a referral when someone uses this user's code
+  function recordReferral(referredByCode, newCustomerName) {
+    if (!referredByCode || referredByCode === 'None') return;
+    const referrals = JSON.parse(localStorage.getItem('nrx_referrals') || '[]');
+    referrals.push({
+      code: referredByCode,
+      customerName: newCustomerName,
+      timestamp: new Date().toISOString()
+    });
+    localStorage.setItem('nrx_referrals', JSON.stringify(referrals));
+  }
+
+  // ======================= SHIRT DATABASE =======================
+  let shirtInventory = [
+    { id: "shirt1", name: "NRX Onyx Black", color: "Black", url: "https://i.postimg.cc/QF1NfQ52/file-000000000bb071f587d3192da8b5aff2.png" },
+    { id: "shirt2", name: "NRX Arctic White", color: "White", url: "https://i.postimg.cc/bZkYmxkj/file-000000000ecc722fa0aa9ba18400aa71.png" },
+    { id: "shirt3", name: "NRX Golden Era", color: "Gold", url: "https://i.postimg.cc/gnfkySwV/file-000000006e8c71fd8e3efd99a47710e9.png" },
+    { id: "shirt4", name: "NRX Crimson", color: "Red", url: "https://i.postimg.cc/3kmrtXmT/file-0000000086d0722f9c1bac970b3af52f.png" },
+    { id: "shirt5", name: "NRX Cobalt Blue", color: "Blue", url: "https://i.postimg.cc/gx8cgV89/file-00000000897c71f7be4c0ed9a59f2619.png" }
+  ];
+
+  // ======================= REWARD SYSTEM =======================
+  let rewardCodesDB = {};
+  
+  function loadRewardsFromStorage() {
+    const stored = localStorage.getItem('nrx_rewards_db');
+    if(stored) {
+      try { Object.assign(rewardCodesDB, JSON.parse(stored)); } catch(e) {}
+    }
+    if(!rewardCodesDB['NRX-DEMO10']) rewardCodesDB['NRX-DEMO10'] = { reward: "$10 cashback", status: "unused" };
+    if(!rewardCodesDB['NRX-DEMO5']) rewardCodesDB['NRX-DEMO5'] = { reward: "$5 discount", status: "unused" };
+    saveRewards();
+  }
+  
+  function saveRewards() { localStorage.setItem('nrx_rewards_db', JSON.stringify(rewardCodesDB)); }
+
+  function generateRandomReward() {
+    const rand = Math.random();
+    if (rand < 0.1) return "$10 cashback";
+    if (rand < 0.25) return "$8 store credit";
+    if (rand < 0.45) return "$5 discount code";
+    if (rand < 0.7) return "$3 cashback";
+    return "$1 cashback";
+  }
+  
+  function generateUniqueCode() {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
+    let code;
+    do {
+      let seg = '';
+      for(let i=0;i<8;i++) seg += chars.charAt(Math.floor(Math.random() * chars.length));
+      code = `NRX-${seg}`;
+    } while(rewardCodesDB[code]);
+    return code;
+  }
+
+  function createRewardForOrder() {
+    const rewardVal = generateRandomReward();
+    const newCode = generateUniqueCode();
+    rewardCodesDB[newCode] = { reward: rewardVal, status: "unused", createdAt: new Date().toISOString() };
+    saveRewards();
+    return { code: newCode, reward: rewardVal };
+  }
+
+  // ======================= RENDER GALLERY =======================
+  function renderBigGallery() {
+    const container = document.getElementById('galleryContainer');
+    if(!container) return;
+    container.innerHTML = shirtInventory.map(shirt => `
+      <div class="shirt-card-big">
+        <div class="shirt-img-wrapper">
+          <img src="${shirt.url}" alt="${shirt.name}" loading="lazy" onerror="this.src='https://placehold.co/600x600/1e1e2a/22c55e?text=NRX'">
+        </div>
+        <div class="shirt-info">
+          <div class="shirt-name">${escapeHtml(shirt.name)}</div>
+          <div class="price-badge">K180</div>
+          <div style="color:#a0a0a5; font-size:0.8rem;">🎁 unlocks $ reward | Refer & earn!</div>
+        </div>
+      </div>
+    `).join('');
+    
+    const colorSelect = document.getElementById('colorSelect');
+    if(colorSelect) {
+      colorSelect.innerHTML = '<option value="">-- Select T-Shirt Colour / Edition --</option>' + 
+        shirtInventory.map(s => `<option value="${s.color.toLowerCase()}">${s.name} (${s.color})</option>`).join('');
+    }
+  }
+
+  // ======================= PAYMENT LOGIC =======================
+  let selectedPayment = null;
+  const paymentDetailsMap = {
+    mtn: { number: "0960168307", name: "Mumba Sampa", instruction: "Send K180 (or +K40 delivery) to MTN: 0960168307" },
+    airtel: { number: "0772566084", name: "Mumba Sampa", instruction: "Send K180 (or +K40 delivery) to Airtel: 0772566084" }
+  };
+
+  function updatePaymentUI() {
+    const detailsDiv = document.getElementById('paymentDetails');
+    if(!selectedPayment || !paymentDetailsMap[selectedPayment]) {
+      detailsDiv.innerHTML = `⚡ Please select MTN or Airtel to see payment details.`;
+      return;
+    }
+    const info = paymentDetailsMap[selectedPayment];
+    detailsDiv.innerHTML = `<strong>💰 Payment to:</strong> ${info.name} <br>📞 ${selectedPayment.toUpperCase()}: ${info.number}<br>💵 Amount: K180 (add K40 if delivery selected)<br><span style="color:#facc15;">✅ After transfer, upload screenshot below</span>`;
+  }
+
+  let uploadedFileData = null;
+  let uploadedFileName = null;
+  
+  function setupFileUpload() {
+    const uploadDiv = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('screenshotInput');
+    uploadDiv.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if(file && (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/webp')) {
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          uploadedFileData = ev.target.result;
+          uploadedFileName = file.name;
+          document.getElementById('fileNameDisplay').innerHTML = `✅ Screenshot loaded: ${file.name}`;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        alert('Please select a valid JPG/PNG image');
+        uploadedFileData = null;
+        uploadedFileName = null;
+      }
+    });
+  }
+
+  // ======================= PLACE ORDER WITH COMPLETE DATA STRUCTURE =======================
+  async function handlePlaceOrder() {
+    const name = document.getElementById('fullName').value.trim();
+    const phone = document.getElementById('phoneNumber').value.trim();
+    const email = document.getElementById('emailAddress').value.trim();
+    const referralCodeInput = document.getElementById('referralCodeInput')?.value.trim().toUpperCase();
+    const colorVal = document.getElementById('colorSelect').value;
+    const size = document.getElementById('sizeSelect').value;
+    const delivery = document.getElementById('deliverySelect').value;
+    const resultDiv = document.getElementById('buyResultMsg');
+    const orderBtn = document.getElementById('placeOrderBtn');
+    
+    if(!name) { showResultMsg(resultDiv, '❌ Full name required', 'error'); return; }
+    if(!phone || phone.length < 9) { showResultMsg(resultDiv, '📞 Valid phone number required', 'error'); return; }
+    if(!colorVal) { showResultMsg(resultDiv, '🎨 Please select a t-shirt colour/edition', 'error'); return; }
+    if(!size) { showResultMsg(resultDiv, '👕 Choose size', 'error'); return; }
+    if(!delivery) { showResultMsg(resultDiv, '🚚 Select pickup or delivery', 'error'); return; }
+    if(!selectedPayment) { showResultMsg(resultDiv, '💳 Select payment method (MTN or Airtel)', 'error'); return; }
+    if(!uploadedFileData) { showResultMsg(resultDiv, '📸 Upload payment screenshot as proof', 'error'); return; }
+
+    const deliveryFee = delivery === 'Delivery' ? 40 : 0;
+    const totalAmount = 180 + deliveryFee;
+    const selectedShirt = shirtInventory.find(s => s.color.toLowerCase() === colorVal) || shirtInventory[0];
+    
+    // Generate reward code
+    const { code, reward } = createRewardForOrder();
+    const orderId = 'NRX-' + Date.now();
+    const timestamp = new Date().toISOString();
+    
+    // Get referral stats
+    const userReferralCode = getUserReferralCode();
+    const referralCount = getReferralCount();
+    
+    // Record referral if someone used a code
+    if (referralCodeInput && referralCodeInput !== 'None' && referralCodeInput !== userReferralCode) {
+      recordReferral(referralCodeInput, name);
+    }
+    
+    // Video bonus simulation (can be updated from backend later)
+    const videoBonus = 0;
+    const totalBonus = referralCount * 2 + videoBonus; // $2 per referral example
+    
+    // 🔥 COMPLETE ORDER DATA STRUCTURE AS REQUESTED
+    const orderData = {
+      orderId: orderId,
+      timestamp: timestamp,
+      fullName: name,
+      phone: phone,
+      email: email || "Not provided",
+      shirtName: selectedShirt.name,
+      shirtColor: selectedShirt.color,
+      size: size,
+      deliveryMethod: delivery,
+      deliveryFee: deliveryFee,
+      totalAmount: totalAmount,
+      paymentMethod: selectedPayment.toUpperCase(),
+      paymentNumber: paymentDetailsMap[selectedPayment].number,
+      
+      // 🔥 REWARD SYSTEM
+      rewardCode: code,
+      rewardValue: reward,
+      referralCount: referralCount,
+      videoBonus: videoBonus,
+      totalBonus: totalBonus,
+      
+      // 🔗 REFERRAL
+      referredBy: referralCodeInput || "None",
+      
+      screenshotFileName: uploadedFileName || "uploaded",
+      status: "Pending Confirmation",
+      
+      // 🔥 IMPORTANT FOR BACKEND
+      action: "new_order"
+    };
+    
+    // Disable button and show loading
+    orderBtn.disabled = true;
+    orderBtn.textContent = "⏳ Submitting Order...";
+    showResultMsg(resultDiv, 'Submitting your order to NRX system...', 'loading');
+    
+    try {
+      // Send to Google Sheets
+      await sendToGoogleSheets(orderData);
+      
+      // Store in local backup
+      let orders = JSON.parse(localStorage.getItem('nrx_orders') || '[]');
+      orders.push(orderData);
+      localStorage.setItem('nrx_orders', JSON.stringify(orders));
+      
+      // Success message with reward code and referral info
+      resultDiv.innerHTML = `
+        <div style="font-weight:bold;">✅ ORDER PLACED, ${escapeHtml(name)}!</div>
+        <div>🧥 ${selectedShirt.name} | Size ${size} | ${delivery} ${deliveryFee > 0 ? '(+K40 delivery)' : ''}</div>
+        <div>💰 Total: K${totalAmount} — payment screenshot received.</div>
+        <hr style="margin:12px 0; border-color:#2e5a2e;">
+        🎁 <strong style="color:#facc15;">YOUR REWARD UNLOCKED: ${reward}</strong><br>
+        🔑 <strong>Reward Code:</strong> <span style="background:#000000aa; padding:6px 12px; border-radius:40px; font-family:monospace;">${code}</span><br>
+        ✨ Save this code and use it in the <strong>Redeem tab</strong> to claim your reward.<br><br>
+        ${referralCodeInput ? `🔗 <strong>Referral used:</strong> ${referralCodeInput} — thank you for supporting the community!` : '<span>🔗 No referral code used. Share yours to earn bonuses!</span>'}
+        ${referralCount > 0 ? `<br>🎉 <strong>Your referral count:</strong> ${referralCount} friends — earn more bonuses with each referral!` : ''}
+      `;
+      resultDiv.className = 'result-box success';
+      
+      // Reset form
+      document.getElementById('fullName').value = '';
+      document.getElementById('phoneNumber').value = '';
+      document.getElementById('emailAddress').value = '';
+      document.getElementById('referralCodeInput').value = '';
+      document.getElementById('sizeSelect').value = '';
+      document.getElementById('deliverySelect').value = '';
+      uploadedFileData = null;
+      uploadedFileName = null;
+      document.getElementById('fileNameDisplay').innerHTML = '';
+      document.getElementById('screenshotInput').value = '';
+      
+    } catch (error) {
+      console.error("Order submission error:", error);
+      showResultMsg(resultDiv, '⚠️ Order submitted but there was an issue syncing with the server. Your reward code is still valid. Please contact support if needed.', 'error');
+    } finally {
+      orderBtn.disabled = false;
+      orderBtn.textContent = "✅ COMPLETE ORDER & UNLOCK REWARD";
+    }
+  }
+
+  function showResultMsg(el, msg, type) {
+    el.innerHTML = msg;
+    el.className = `result-box ${type}`;
+  }
+
+  // ======================= REDEEM =======================
+  function handleRedeem() {
+    let rawCode = document.getElementById('redeemCode').value.trim().toUpperCase();
+    const resultDiv = document.getElementById('redeemResultMsg');
+    if(!rawCode) { showResultMsg(resultDiv, '🔑 Please enter reward code', 'error'); return; }
+    if(!rawCode.startsWith('NRX-') && /^[A-Z0-9]{8}$/.test(rawCode)) rawCode = `NRX-${rawCode}`;
+    if(!rawCode.startsWith('NRX-')) { showResultMsg(resultDiv, '❌ Invalid format (should be NRX-XXXXXXXX)', 'error'); return; }
+    
+    const entry = rewardCodesDB[rawCode];
+    if(!entry) { showResultMsg(resultDiv, '⚠️ Code not found. Check your purchase confirmation.', 'error'); return; }
+    if(entry.status === 'used') { showResultMsg(resultDiv, `⏰ Already redeemed on ${entry.usedDate ? new Date(entry.usedDate).toLocaleString() : 'earlier'}`, 'error'); return; }
+    
+    entry.status = 'used';
+    entry.usedDate = new Date().toISOString();
+    saveRewards();
+    resultDiv.innerHTML = `<div>🎉 <strong>Reward claimed!</strong> 🎉<br>✨ ${entry.reward} has been activated.<br>🔑 Code ${rawCode} is now redeemed.<br>📧 Our team will contact you within 24h to deliver cashback/discount.</div>`;
+    resultDiv.className = 'result-box success';
+    document.getElementById('redeemCode').value = '';
+  }
+
+  // ======================= UI HELPERS =======================
+  function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+
+  function setupTabs() {
+    const tabs = document.querySelectorAll('.tab');
+    const buyDiv = document.getElementById('buy');
+    const redeemDiv = document.getElementById('redeem');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = tab.getAttribute('data-tab');
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        if(target === 'buy') { buyDiv.classList.remove('hidden'); redeemDiv.classList.add('hidden'); }
+        else { redeemDiv.classList.remove('hidden'); buyDiv.classList.add('hidden'); }
+      });
+    });
+  }
+
+  function initPaymentSelection() {
+    const options = document.querySelectorAll('.payment-option');
+    options.forEach(opt => {
+      opt.addEventListener('click', () => {
+        options.forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        selectedPayment = opt.getAttribute('data-method');
+        updatePaymentUI();
+      });
+    });
+  }
+
+  function setupReferralDisplay() {
+    const userCode = getUserReferralCode();
+    const codeElement = document.getElementById('userReferralCode');
+    if (codeElement) codeElement.textContent = userCode;
+    
+    const copyBtn = document.getElementById('copyReferralBtn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(userCode);
+        copyBtn.textContent = '✅ Copied!';
+        setTimeout(() => { copyBtn.textContent = '📋 Copy Code'; }, 2000);
+      });
+    }
+  }
+
+  // ======================= INITIALIZATION =======================
+  function init() {
+    loadRewardsFromStorage();
+    renderBigGallery();
+    setupFileUpload();
+    initPaymentSelection();
+    setupTabs();
+    setupReferralDisplay();
+    document.getElementById('placeOrderBtn').addEventListener('click', handlePlaceOrder);
+    document.getElementById('redeemBtn').addEventListener('click', handleRedeem);
+    updatePaymentUI();
+    const defaultMtn = document.querySelector('.payment-option[data-method="mtn"]');
+    if(defaultMtn) { defaultMtn.click(); }
+  }
+  
+  document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
