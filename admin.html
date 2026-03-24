@@ -1,15 +1,116 @@
-<h1>NRX Admin Dashboard</h1>
-<div id="orders"></div>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NRX Admin</title>
+  <style>
+    body { font-family: Arial; background:#0b0b0d; color:white; padding:20px; }
+    table { width:100%; border-collapse: collapse; margin-top:20px; }
+    th, td { padding:10px; border-bottom:1px solid #222; text-align:left; }
+    th { background:#111; }
+    button {
+      padding:8px 12px;
+      border:none;
+      border-radius:6px;
+      cursor:pointer;
+      font-weight:bold;
+    }
+    .approve { background:limegreen; color:black; }
+    .pending { color:orange; }
+    .approved { color:lime; }
+    img { width:60px; border-radius:6px; }
+  </style>
+</head>
+<body>
+
+<h2>🔥 NRX ADMIN DASHBOARD</h2>
+
+<button onclick="loadOrders()">🔄 Refresh</button>
+
+<table id="ordersTable">
+  <thead>
+    <tr>
+      <th>OrderID</th>
+      <th>Name</th>
+      <th>Phone</th>
+      <th>Shirt</th>
+      <th>Amount</th>
+      <th>Status</th>
+      <th>Screenshot</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
 
 <script>
-fetch("YOUR_SCRIPT_URL?action=orders")
-.then(res => res.json())
-.then(data => {
-  document.getElementById("orders").innerHTML =
-    data.map(o => `
-      <div style="margin:10px;padding:10px;border:1px solid #ccc">
-        ${o.fullName} | ${o.phone} | ${o.shirtName} | ${o.status}
-      </div>
-    `).join("");
-});
-          </script>
+const SCRIPT_URL = "PASTE_YOUR_SCRIPT_URL_HERE";
+
+// LOAD ORDERS
+async function loadOrders() {
+  const res = await fetch(SCRIPT_URL);
+  const data = await res.json();
+
+  const tbody = document.querySelector("#ordersTable tbody");
+  tbody.innerHTML = "";
+
+  data.slice(1).forEach(row => {
+    const tr = document.createElement("tr");
+
+    const orderId = row[0];
+    const name = row[3];
+    const phone = row[4];
+    const shirt = row[6];
+    const amount = row[11];
+    const status = row[2];
+    const screenshot = row[18];
+
+    tr.innerHTML = `
+      <td>${orderId}</td>
+      <td>${name}</td>
+      <td>${phone}</td>
+      <td>${shirt}</td>
+      <td>K${amount}</td>
+      <td class="${status === 'Pending' ? 'pending' : 'approved'}">${status}</td>
+      <td>${screenshot ? `<img src="${screenshot}">` : "No Image"}</td>
+      <td>
+        ${status === "Pending" 
+          ? `<button class="approve" onclick="approveOrder('${orderId}', '${phone}')">Approve</button>` 
+          : "✅"}
+      </td>
+    `;
+
+    tbody.appendChild(tr);
+  });
+}
+
+// APPROVE ORDER
+async function approveOrder(orderId, phone) {
+  const res = await fetch(SCRIPT_URL, {
+    method: "POST",
+    body: JSON.stringify({
+      action: "approve",
+      orderId: orderId,
+      phone: phone
+    })
+  });
+
+  const data = await res.json();
+
+  if (data.success) {
+    alert(`✅ Approved!\nCode: ${data.reward.code}\nReward: $${data.reward.reward}`);
+    
+    // Open WhatsApp
+    window.open(data.whatsapp, "_blank");
+
+    loadOrders();
+  } else {
+    alert("Error approving order");
+  }
+}
+
+// INIT
+loadOrders();
+</script>
+
+</body>
+</html>
