@@ -43,7 +43,8 @@
 </table>
 
 <script>
-const SCRIPT_URL = "PASTE_YOUR_SCRIPT_URL_HERE";
+
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz--SAJgrqXAFJrj7ilnEi6oMfD-FyzCcdIHYmEmcSe4fcaQyOC-7CoShE4uaEf7siF/exec";
 
 // LOAD ORDERS
 async function loadOrders() {
@@ -74,7 +75,7 @@ async function loadOrders() {
       <td>${screenshot ? `<img src="${screenshot}">` : "No Image"}</td>
       <td>
         ${status === "Pending" 
-          ? `<button class="approve" onclick="approveOrder('${orderId}', '${phone}')">Approve</button>` 
+          ? `<button class="approve" onclick="approveOrder('${orderId}')">Approve</button>` 
           : "✅"}
       </td>
     `;
@@ -84,13 +85,13 @@ async function loadOrders() {
 }
 
 // APPROVE ORDER
-async function approveOrder(orderId, phone) {
+async function approveOrder(orderId) {
+
   const res = await fetch(SCRIPT_URL, {
     method: "POST",
     body: JSON.stringify({
       action: "approve",
-      orderId: orderId,
-      phone: phone
+      orderId: orderId
     })
   });
 
@@ -98,8 +99,8 @@ async function approveOrder(orderId, phone) {
 
   if (data.success) {
     alert(`✅ Approved!\nCode: ${data.reward.code}\nReward: $${data.reward.reward}`);
-    
-    // Open WhatsApp
+
+    // OPEN WHATSAPP WITH YOUR NUMBER
     window.open(data.whatsapp, "_blank");
 
     loadOrders();
@@ -110,6 +111,7 @@ async function approveOrder(orderId, phone) {
 
 // INIT
 loadOrders();
+
 </script>
 
 </body>
