@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>NRX | Premium T-Shirt Drop - Official Store</title>
-  <meta name="description" content="NRX T-Shirt Drop — Limited edition streetwear. Secure your shirt with Airtel/MTN mobile money. Real reward codes from our secure database.">
+  <title>NRX | Premium T-Shirt Drop - Secure Order System</title>
+  <meta name="description" content="NRX T-Shirt Drop — Limited edition streetwear. Secure your shirt with Airtel/MTN mobile money. Rewards given after payment verification.">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
   <style>
     * {
@@ -100,6 +100,16 @@
       margin-top: 12px;
     }
 
+    .security-badge {
+      background: #1e2a3a;
+      border-radius: 60px;
+      padding: 8px 20px;
+      display: inline-block;
+      font-size: 0.8rem;
+      margin-bottom: 20px;
+      border: 1px solid #22c55e;
+    }
+
     .referral-banner {
       background: linear-gradient(135deg, #1e3a2f, #0f2a1f);
       border-radius: 24px;
@@ -136,22 +146,6 @@
     .copy-btn:hover, .action-btn:hover {
       transform: scale(1.02);
       opacity: 0.9;
-    }
-
-    .action-btn {
-      background: #3b82f6;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 40px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.2s;
-      color: white;
-      margin-left: 8px;
-    }
-
-    .whatsapp-btn {
-      background: #25D366;
     }
 
     .gallery-grid {
@@ -334,7 +328,7 @@
 
     .result-box {
       margin-top: 24px;
-      padding: 16px;
+      padding: 20px;
       border-radius: 28px;
       background: #0f0f12;
     }
@@ -342,6 +336,7 @@
     .success { background: #14532d; color: #bbf7d0; border-left: 5px solid #4ade80; }
     .error { background: #7f1a1a; color: #fecaca; border-left: 5px solid #f87171; }
     .loading { background: #1e293b; color: #facc15; border-left: 5px solid #facc15; }
+    .pending { background: #854d0e; color: #fef3c7; border-left: 5px solid #facc15; }
 
     .info-box {
       background: #1a2a1f;
@@ -351,16 +346,21 @@
       border-left: 3px solid #22c55e;
     }
 
-    .button-group {
-      display: flex;
-      gap: 12px;
-      margin-top: 12px;
-      flex-wrap: wrap;
+    .whatsapp-link {
+      display: inline-block;
+      background: #25D366;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 16px;
+      transition: 0.2s;
     }
 
-    .button-group button {
-      flex: 1;
-      margin: 0;
+    .whatsapp-link:hover {
+      transform: scale(1.02);
+      opacity: 0.9;
     }
 
     footer {
@@ -379,7 +379,6 @@
       .hero h1 { font-size: 2.2rem; }
       .container { padding: 0 16px; }
       .form-row { grid-template-columns: 1fr; }
-      .button-group { flex-direction: column; }
     }
   </style>
 </head>
@@ -391,12 +390,13 @@
       <div class="logo-icon">NRX</div>
       <div class="logo-text"><span>NRX</span> DROP</div>
     </div>
-    <div class="badge-header">⚡ OFFICIAL STORE | REFER & EARN BONUSES</div>
+    <div class="badge-header">🔒 SECURE ORDER SYSTEM | VERIFIED PAYMENTS ONLY</div>
   </div>
 
   <div class="hero">
     <h1>NRX STREETWEAR DROP</h1>
-    <p>Premium tees • Real reward codes • Share your referral code & earn bonuses!</p>
+    <p>Premium tees • Share your referral code & earn bonuses!</p>
+    <div class="security-badge">🔐 REWARDS GIVEN AFTER PAYMENT VERIFICATION</div>
   </div>
 
   <!-- REFERRAL BANNER -->
@@ -425,7 +425,6 @@
       </div>
       <div class="form-row">
         <input type="email" id="emailAddress" placeholder="Email (optional)">
-        <!-- ✅ REFERRAL INPUT FIELD - CORRECT ID -->
         <input type="text" id="referralCode" placeholder="Referral Code (optional)">
       </div>
       
@@ -459,74 +458,49 @@
       </div>
       <div id="fileNameDisplay" style="font-size:0.75rem; color:#aaa; margin-top: 6px;"></div>
 
-      <button class="btn-primary" id="placeOrderBtn">✅ COMPLETE ORDER & UNLOCK REWARD</button>
+      <button class="btn-primary" id="placeOrderBtn">✅ SUBMIT ORDER & PAYMENT PROOF</button>
       <div id="buyResultMsg" class="result-box"></div>
       
       <div class="info-box">
-        💰 <strong>REFERRAL BONUS:</strong> When someone uses your referral code, you earn extra rewards! <br>
-        🎁 <strong>REAL REWARDS:</strong> Your reward code comes directly from our secure database.
+        🔒 <strong>SECURE PROCESS:</strong> Your reward code will be sent AFTER admin verifies your payment.<br>
+        💰 <strong>REFERRAL BONUS:</strong> When someone uses your referral code, you earn extra rewards!<br>
+        ⏳ <strong>Verification Time:</strong> Usually within 24 hours.
       </div>
     </div>
   </div>
 
   <div id="redeem" class="card-panel hidden">
     <h3>🔓 Enter NRX reward code</h3>
-    <p style="margin: 12px 0;">Each shirt comes with a secret code from our database. Paste it here to claim cashback/discount up to $10 equivalent.</p>
+    <p style="margin: 12px 0;">After your payment is verified, you'll receive a reward code via WhatsApp/Email.</p>
     <input type="text" id="redeemCode" placeholder="e.g., NRX-7F3K9P2M" style="width:100%;">
     <button class="btn-primary" id="redeemBtn" style="margin-top: 20px;">💎 UNLOCK REWARD</button>
     <div id="redeemResultMsg" class="result-box" style="margin-top: 20px;"></div>
   </div>
-  <footer>© NRX Drops — Official Store | Share your referral code & earn bonuses! | Real reward codes from secure database</footer>
+  <footer>© NRX Drops — Official Store | Rewards given after payment verification | Share your referral code & earn bonuses!</footer>
 </div>
 
 <script>
   // ======================= BACKEND CONNECTION =======================
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyorjbDYaizNXV-HoOKqjt_8HUTZMPs3IBUtrPusJ2iX8TYwEWIDxrXeWGGP9J3mdHl/exec";
 
-  // ✅ Function to get REAL reward code from Google Sheets
-  async function getRewardFromBackend() {
-    console.log("🎁 Fetching reward code from backend...");
-    
-    try {
-      const response = await fetch(SCRIPT_URL, {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          action: "getReward"
-        })
-      });
-      
-      const rewardData = await response.json();
-      console.log("✅ Reward received from backend:", rewardData);
-      
-      return {
-        code: rewardData.code,
-        reward: rewardData.reward
-      };
-    } catch (error) {
-      console.error("❌ Error fetching reward from backend:", error);
-      console.log("⚠️ Using fallback local reward generation");
-      return createLocalReward();
-    }
-  }
-
-  // Function to send order to backend
+  // ✅ NEW: Send order WITHOUT reward code (pending verification)
   async function sendOrderToBackend(orderData) {
-    console.log("📤 Sending order to backend:", orderData);
+    console.log("📤 Sending order to backend (pending verification):", orderData);
     
     return fetch(SCRIPT_URL, {
       method: "POST",
-      mode: "no-cors",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(orderData)
+      body: JSON.stringify({
+        action: "order",
+        ...orderData
+      })
     })
-    .then(() => {
-      console.log("✅ Order sent successfully");
-      return { success: true };
+    .then(res => res.json())
+    .then(data => {
+      console.log("✅ Backend response:", data);
+      return data;
     })
     .catch(err => {
       console.error("❌ Error sending order:", err);
@@ -549,26 +523,12 @@
     return userCode;
   }
 
-  // Function to track referral count (increments when someone uses a code)
-  function incrementReferralCount(referralCodeUsed) {
-    if (!referralCodeUsed) return 0;
-    
-    let referralStats = JSON.parse(localStorage.getItem('nrx_referral_stats') || '{}');
-    if (!referralStats[referralCodeUsed]) {
-      referralStats[referralCodeUsed] = 0;
-    }
-    referralStats[referralCodeUsed]++;
-    localStorage.setItem('nrx_referral_stats', JSON.stringify(referralStats));
-    
-    return referralStats[referralCodeUsed];
-  }
-
   function getReferralCount(referralCode) {
     const referralStats = JSON.parse(localStorage.getItem('nrx_referral_stats') || '{}');
     return referralStats[referralCode] || 0;
   }
 
-  // ======================= LOCAL FALLBACK REWARD =======================
+  // ======================= LOCAL REWARD STORAGE (for redemption) =======================
   let localRewardCodesDB = {};
   
   function loadLocalRewards() {
@@ -579,50 +539,8 @@
   }
   
   function saveLocalRewards() { localStorage.setItem('nrx_rewards_db', JSON.stringify(localRewardCodesDB)); }
-  
-  function generateRandomReward() {
-    const rand = Math.random();
-    if (rand < 0.1) return "$10 cashback";
-    if (rand < 0.25) return "$8 store credit";
-    if (rand < 0.45) return "$5 discount code";
-    if (rand < 0.7) return "$3 cashback";
-    return "$1 cashback";
-  }
-  
-  function generateUniqueCode() {
-    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
-    let code;
-    do {
-      let seg = '';
-      for(let i=0;i<8;i++) seg += chars.charAt(Math.floor(Math.random() * chars.length));
-      code = `NRX-${seg}`;
-    } while(localRewardCodesDB[code]);
-    return code;
-  }
 
-  function createLocalReward() {
-    const rewardVal = generateRandomReward();
-    const newCode = generateUniqueCode();
-    localRewardCodesDB[newCode] = { reward: rewardVal, status: "unused", createdAt: new Date().toISOString() };
-    saveLocalRewards();
-    return { code: newCode, reward: rewardVal };
-  }
-
-  // ======================= COPY & SHARE FUNCTIONS =======================
-  function copyCode() {
-    const codeElement = document.getElementById("userCode");
-    if (codeElement) {
-      const code = codeElement.innerText;
-      navigator.clipboard.writeText(code);
-      alert("✅ Reward code copied to clipboard!");
-    }
-  }
-
-  function shareCode(code) {
-    const msg = `🔥 Buy NRX T-shirt & get rewards!\nUse my code: ${code}\nOrder here: https://nrxproject.com\n\nGet your own NRX shirt today! 🎁`;
-    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
-  }
-
+  // ======================= COPY FUNCTIONS =======================
   function copyReferralCode() {
     const userCode = getUserReferralCode();
     navigator.clipboard.writeText(userCode);
@@ -650,7 +568,7 @@
         <div class="shirt-info">
           <div class="shirt-name">${escapeHtml(shirt.name)}</div>
           <div class="price-badge">K180</div>
-          <div style="color:#a0a0a5; font-size:0.8rem;">🎁 unlocks real reward code</div>
+          <div style="color:#a0a0a5; font-size:0.8rem;">🎁 reward after payment verification</div>
         </div>
       </div>
     `).join('');
@@ -664,8 +582,8 @@
 
   // ======================= PAYMENT LOGIC =======================
   let selectedPayment = null;
-  let uploadedFileName = null;
   let uploadedFileData = null;
+  let uploadedFileName = null;
   
   const paymentDetailsMap = {
     mtn: { number: "076 9939546", name: "Mumba Sampa" },
@@ -704,7 +622,7 @@
     });
   }
 
-  // ======================= MAIN ORDER HANDLER =======================
+  // ======================= MAIN ORDER HANDLER (NO REWARD GIVEN INSTANTLY) =======================
   async function handleOrder() {
     const name = document.getElementById("fullName").value.trim();
     const phone = document.getElementById("phoneNumber").value.trim();
@@ -712,14 +630,11 @@
     const color = document.getElementById("colorSelect").value;
     const size = document.getElementById("sizeSelect").value;
     const delivery = document.getElementById("deliverySelect").value;
-    
-    // ✅ REFERRAL CODE CAPTURED CORRECTLY
     const referralCodeUsed = document.getElementById("referralCode").value.trim().toUpperCase() || "";
-    
     const result = document.getElementById("buyResultMsg");
     const orderBtn = document.getElementById("placeOrderBtn");
 
-    if (!name || !phone || !color || !size || !delivery || !selectedPayment || !uploadedFileName) {
+    if (!name || !phone || !color || !size || !delivery || !selectedPayment || !uploadedFileData) {
       showMsg(result, "❌ Fill all required fields (name, phone, color, size, delivery, payment, screenshot)", "error");
       return;
     }
@@ -738,90 +653,79 @@
     const timestamp = new Date().toISOString();
     const userReferralCode = getUserReferralCode();
     
-    // ✅ Track referral count for the code being used
+    // Get referral count for the code being used
     let referralCount = 0;
     if (referralCodeUsed) {
-      referralCount = incrementReferralCount(referralCodeUsed);
+      referralCount = getReferralCount(referralCodeUsed);
     }
     
-    // Video bonus (can be updated by backend later)
     const videoBonus = 0;
-    const totalBonus = referralCount * 2 + videoBonus; // $2 per referral example
+    const totalBonus = referralCount * 2 + videoBonus;
 
-    showMsg(result, "⏳ Fetching your reward code from database...", "loading");
+    showMsg(result, "⏳ Submitting order for verification...", "loading");
     orderBtn.disabled = true;
     orderBtn.textContent = "⏳ Processing...";
 
     try {
-      // ✅ GET REAL REWARD CODE FROM BACKEND
-      const rewardData = await getRewardFromBackend();
-      const code = rewardData.code;
-      const reward = rewardData.reward;
-
-      if (!code || !reward) {
-        throw new Error("No reward code received from backend");
-      }
-
-      // Store reward in local DB for redemption
-      if (!localRewardCodesDB[code]) {
-        localRewardCodesDB[code] = { reward: reward, status: "unused", createdAt: timestamp };
-        saveLocalRewards();
-      }
-
-      // ✅ COMPLETE ORDER DATA WITH ALL REFERRAL FIELDS
+      // ✅ NEW: Order WITHOUT reward code (pending approval)
       const orderData = {
-        orderId,
+        orderId: orderId,
         date: timestamp,
-        status: "Pending",
-        name,
-        phone,
-        email: email || "Not provided",
+        status: "Pending", // IMPORTANT: Pending verification
+        name: name,
+        phone: phone,
+        email: email || "",
         shirt: shirt.name,
         color: shirt.color,
-        size,
-        delivery,
+        size: size,
+        delivery: delivery,
+        deliveryFee: deliveryFee,
+        amount: total,
         paymentMethod: selectedPayment.toUpperCase(),
         paymentNumber: paymentDetailsMap[selectedPayment].number,
-        amount: total,
-        rewardCode: code,
-        rewardValue: reward,
-        // ✅ REFERRAL TRACKING FIELDS
+        // 🔒 NO REWARD CODE YET
+        rewardCode: "",
+        rewardValue: "",
         referralCodeUsed: referralCodeUsed,
         userReferralCode: userReferralCode,
         referralCount: referralCount,
         videoBonus: videoBonus,
         totalBonus: totalBonus,
-        screenshot: uploadedFileName,
-        action: "new_order"
+        screenshot: uploadedFileData,
+        screenshotName: uploadedFileName
       };
 
-      // Send order to backend
-      await sendOrderToBackend(orderData);
+      // Send to backend
+      const response = await sendOrderToBackend(orderData);
       
-      // Store in local backup
+      // Store order locally
       let orders = JSON.parse(localStorage.getItem('nrx_orders') || '[]');
       orders.push(orderData);
       localStorage.setItem('nrx_orders', JSON.stringify(orders));
 
-      // ✅ SUCCESS MESSAGE
+      // ✅ SUCCESS MESSAGE - NO REWARD CODE YET
+      const whatsappMsg = `Hello NRX Team! I just placed an order.\nOrder ID: ${orderId}\nName: ${name}\nPhone: ${phone}\nShirt: ${shirt.name}\nSize: ${size}\nDelivery: ${delivery}\nPayment: ${selectedPayment.toUpperCase()}\nAmount: K${total}\n\nPlease verify my payment screenshot. Thank you!`;
+      const whatsappUrl = `https://wa.me/260760000000?text=${encodeURIComponent(whatsappMsg)}`;
+      
       result.innerHTML = `
-        ✅ <strong>ORDER SUCCESSFUL!</strong><br><br>
-        🎁 <strong style="color:#facc15;">YOUR REWARD: ${reward}</strong><br>
-        🔑 <strong>Code:</strong> <b id="userCode" style="background:#000; padding:4px 8px; border-radius:12px; font-family:monospace;">${code}</b>
-        <button onclick="copyCode()" class="action-btn" style="margin-left:10px;">📋 Copy</button><br><br>
-        <div class="button-group">
-          <button onclick="shareCode('${code}')" class="action-btn whatsapp-btn" style="background:#25D366;">📱 Share on WhatsApp & Earn</button>
+        <div style="text-align: center;">
+          <div style="font-size: 2rem; margin-bottom: 12px;">✅</div>
+          <strong style="font-size: 1.2rem;">ORDER RECEIVED!</strong><br><br>
+          <strong>Order ID:</strong> ${orderId}<br>
+          <strong>Status:</strong> <span style="color: #facc15;">⏳ PENDING VERIFICATION</span><br><br>
+          🔒 <strong>Your reward code will be sent AFTER payment is verified.</strong><br>
+          📸 Screenshot submitted: ${uploadedFileName}<br><br>
+          ⏱️ Verification time: Usually within 24 hours.<br><br>
+          <a href="${whatsappUrl}" target="_blank" class="whatsapp-link" style="background:#25D366; color:white; padding:12px 24px; border-radius:40px; text-decoration:none; display:inline-block;">
+            📱 Contact Support on WhatsApp
+          </a><br><br>
+          📲 You will receive your reward code via WhatsApp/Email after confirmation.
         </div>
-        <br>
-        👥 <strong>Your Referral Code:</strong> <code style="background:#000; padding:4px 8px; border-radius:12px;">${userReferralCode}</code>
-        <button onclick="copyReferralCode()" class="action-btn" style="margin-left:10px;">📋 Copy</button><br><br>
-        ${referralCodeUsed ? `🔗 <strong>Referral used:</strong> ${referralCodeUsed} — thank you for supporting the community!<br>` : ''}
-        ${referralCount > 0 ? `🎉 <strong>Referral count for ${referralCodeUsed}:</strong> ${referralCount}<br>` : ''}
-        💰 When friends use your code, you earn bonuses!<br><br>
-        📧 Confirmation sent to ${email || phone}<br>
-        🧥 ${shirt.name} | Size ${size} | ${delivery}
       `;
-      result.className = "result-box success";
+      result.className = "result-box pending";
+
+      // Store the order ID for reference
+      localStorage.setItem('last_order_id', orderId);
 
       // RESET FORM
       document.getElementById("fullName").value = "";
@@ -830,8 +734,8 @@
       document.getElementById("referralCode").value = "";
       document.getElementById("sizeSelect").value = "";
       document.getElementById("deliverySelect").value = "";
-      uploadedFileName = null;
       uploadedFileData = null;
+      uploadedFileName = null;
       document.getElementById("fileNameDisplay").innerHTML = "";
       document.getElementById("screenshotInput").value = "";
       
@@ -840,7 +744,7 @@
       showMsg(result, "❌ Order failed: " + error.message + ". Please try again.", "error");
     } finally {
       orderBtn.disabled = false;
-      orderBtn.textContent = "✅ COMPLETE ORDER & UNLOCK REWARD";
+      orderBtn.textContent = "✅ SUBMIT ORDER & PAYMENT PROOF";
     }
   }
 
@@ -859,7 +763,7 @@
     
     const entry = localRewardCodesDB[rawCode];
     if(!entry) { 
-      showMsg(resultDiv, '⚠️ Code not found. Please check your code or contact support.', 'error'); 
+      showMsg(resultDiv, '⚠️ Code not found. Rewards are sent after payment verification. Please wait for admin approval.', 'error'); 
       return; 
     }
     if(entry.status === 'used') { showMsg(resultDiv, `⏰ Already redeemed on ${entry.usedDate ? new Date(entry.usedDate).toLocaleString() : 'earlier'}`, 'error'); return; }
@@ -918,8 +822,6 @@
   }
 
   // Make functions global
-  window.copyCode = copyCode;
-  window.shareCode = shareCode;
   window.copyReferralCode = copyReferralCode;
 
   // ======================= INITIALIZATION =======================
