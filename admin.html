@@ -1,0 +1,15 @@
+<h1>NRX Admin Dashboard</h1>
+<div id="orders"></div>
+
+<script>
+fetch("YOUR_SCRIPT_URL?action=orders")
+.then(res => res.json())
+.then(data => {
+  document.getElementById("orders").innerHTML =
+    data.map(o => `
+      <div style="margin:10px;padding:10px;border:1px solid #ccc">
+        ${o.fullName} | ${o.phone} | ${o.shirtName} | ${o.status}
+      </div>
+    `).join("");
+});
+          </script>
