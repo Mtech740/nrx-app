@@ -123,6 +123,7 @@
       display: flex;
       gap: 16px;
       margin-bottom: 24px;
+      flex-wrap: wrap;
     }
     .stat-card {
       background: #1a1a1e;
@@ -153,8 +154,8 @@
 </div>
 
 <script>
-// ✅ YOUR CORRECT SCRIPT URL
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwCqKfnf8HS--TEa_Zwd-hpu6CiZXaNhrOWK_5HY196__4BVa9HyCBkiwfuWozUKW4q/exec";
+// ✅ YOUR CORRECT APPS SCRIPT URL
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby-xiomRBvjdi8u40osxyIVc6fiNdHalDHJxbEvxLiDUAzpgsgqa18QkXw0yMQXyG3o/exec";
 
 // Load orders from backend
 async function loadOrders() {
@@ -271,7 +272,7 @@ async function loadOrders() {
     
   } catch (error) {
     console.error("Error loading orders:", error);
-    document.getElementById("orders").innerHTML = `<p style="color:red;">❌ Error loading orders: ${error.message}</p>`;
+    document.getElementById("orders").innerHTML = `<p style="color:red;">❌ Error loading orders: ${error.message}<br><br>Make sure your Apps Script is deployed correctly with "Anyone" access.</p>`;
   }
 }
 
