@@ -1,341 +1,95 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>NRX Admin Panel</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NRX Admin</title>
   <style>
-    body {
-      background: #050505;
-      color: white;
-      font-family: 'Inter', Arial, sans-serif;
-      padding: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    h2 {
-      color: #22c55e;
-      margin-bottom: 20px;
-    }
-    .refresh-btn {
-      background: #22c55e;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 40px;
-      cursor: pointer;
-      font-weight: 600;
-      margin-bottom: 20px;
-    }
-    .order-card {
-      border: 1px solid #333;
-      border-radius: 16px;
-      padding: 16px;
-      margin: 12px 0;
-      background: #0a0a0c;
-    }
-    .order-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .order-id {
-      font-family: monospace;
-      color: #22c55e;
-      font-weight: bold;
-    }
-    .status {
-      padding: 4px 12px;
-      border-radius: 40px;
-      font-size: 0.8rem;
-      font-weight: bold;
-    }
-    .status-pending {
-      background: #854d0e;
-      color: #fef3c7;
-    }
-    .status-approved {
-      background: #14532d;
-      color: #bbf7d0;
-    }
-    .info-row {
-      display: flex;
-      justify-content: space-between;
-      margin: 8px 0;
-      font-size: 0.9rem;
-    }
-    .info-label {
-      color: #888;
-    }
-    .screenshot-preview {
-      margin: 12px 0;
-      text-align: center;
-    }
-    .screenshot-preview img {
-      max-width: 200px;
-      max-height: 150px;
-      border-radius: 12px;
-      cursor: pointer;
-      border: 1px solid #333;
-    }
-    .approve-btn {
-      background: #22c55e;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 40px;
-      cursor: pointer;
-      font-weight: 600;
-      margin-top: 12px;
-      width: 100%;
-    }
-    .approved-badge {
-      color: #22c55e;
-      text-align: center;
-      margin-top: 12px;
-      font-weight: bold;
-    }
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.95);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-    }
-    .modal img {
-      max-width: 90%;
-      max-height: 90%;
-    }
-    .modal-close {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      font-size: 40px;
-      cursor: pointer;
-      color: white;
-    }
-    .stats {
-      display: flex;
-      gap: 16px;
-      margin-bottom: 24px;
-      flex-wrap: wrap;
-    }
-    .stat-card {
-      background: #1a1a1e;
-      padding: 12px 24px;
-      border-radius: 12px;
-      text-align: center;
-    }
-    .stat-number {
-      font-size: 24px;
-      font-weight: bold;
-      color: #22c55e;
-    }
+    body { background: #050505; color: white; font-family: monospace; padding: 20px; }
+    .order { border: 1px solid #333; margin: 10px 0; padding: 15px; border-radius: 8px; background: #0a0a0c; }
+    .pending { border-left: 4px solid #facc15; }
+    .approved { border-left: 4px solid #22c55e; }
+    button { background: #22c55e; border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer; margin-top: 10px; font-weight: bold; }
+    input { background: #1a1a1e; border: 1px solid #333; padding: 8px; color: white; border-radius: 8px; width: 200px; margin-right: 10px; }
+    h2 { color: #22c55e; margin-bottom: 20px; }
+    .refresh-btn { background: #3b82f6; margin-bottom: 20px; }
   </style>
 </head>
 <body>
+  <h2>🔥 NRX Admin Dashboard</h2>
+  <button class="refresh-btn" onclick="fetchOrders()">🔄 Refresh Orders</button>
+  <div id="orders">Loading...</div>
 
-<h2>🔥 NRX Admin Dashboard</h2>
-
-<div class="stats" id="stats"></div>
-
-<button class="refresh-btn" onclick="loadOrders()">🔄 Refresh Orders</button>
-
-<div id="orders"></div>
-
-<div id="imageModal" class="modal" onclick="closeModal()">
-  <span class="modal-close">&times;</span>
-  <img id="modalImage" src="" alt="Screenshot">
-</div>
-
-<script>
-// ✅ YOUR NEW DEPLOYED APPS SCRIPT URL
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx1968jqkbf96jCf-P26yQT9AhH9AmnpUZinxZ-ez9Y71zGvTpdw3o-e0uuqXYa_imr/exec";
-
-// Load orders from backend
-async function loadOrders() {
-  try {
-    const res = await fetch(SCRIPT_URL);
-    const data = await res.json();
-    console.log("Orders data:", data);
-    
-    // Calculate stats
-    let total = 0, pending = 0, approved = 0;
-    for (let i = 1; i < data.length; i++) {
-      total++;
-      if (data[i][2] === "Pending") pending++;
-      if (data[i][2] === "Approved") approved++;
-    }
-    
-    document.getElementById("stats").innerHTML = `
-      <div class="stat-card"><div class="stat-number">${total}</div><div>Total Orders</div></div>
-      <div class="stat-card"><div class="stat-number">${pending}</div><div>Pending</div></div>
-      <div class="stat-card"><div class="stat-number">${approved}</div><div>Approved</div></div>
-    `;
-    
-    let html = "";
-    
-    for (let i = 1; i < data.length; i++) {
-      const row = data[i];
-      const orderId = row[0];
-      const status = row[2];
-      const name = row[3];
-      const phone = row[4];
-      const email = row[5] || "N/A";
-      const shirt = row[6];
-      const color = row[7];
-      const size = row[8];
-      const delivery = row[9];
-      const payment = row[10];
-      const amount = row[11];
-      const rewardCode = row[12];
-      const rewardValue = row[13];
-      const screenshot = row[18];
-      
-      const statusClass = status === "Pending" ? "status-pending" : "status-approved";
-      
-      html += `
-        <div class="order-card">
-          <div class="order-header">
-            <span class="order-id">📦 ${orderId}</span>
-            <span class="status ${statusClass}">${status}</span>
-          </div>
-          <div class="info-row">
-            <span class="info-label">👤 Customer:</span>
-            <span>${escapeHtml(name)}</span>
-          </div>
-          <div class="info-row">
-            <span class="info-label">📞 Phone:</span>
-            <span>${escapeHtml(phone)}</span>
-          </div>
-          <div class="info-row">
-            <span class="info-label">📧 Email:</span>
-            <span>${escapeHtml(email)}</span>
-          </div>
-          <div class="info-row">
-            <span class="info-label">👕 Shirt:</span>
-            <span>${escapeHtml(shirt)} (${color})</span>
-          </div>
-          <div class="info-row">
-            <span class="info-label">📏 Size:</span>
-            <span>${size}</span>
-          </div>
-          <div class="info-row">
-            <span class="info-label">🚚 Delivery:</span>
-            <span>${delivery}</span>
-          </div>
-          <div class="info-row">
-            <span class="info-label">💵 Payment:</span>
-            <span>${payment} | K${amount}</span>
-          </div>
-      `;
-      
-      // Show screenshot if exists
-      if (screenshot && screenshot.startsWith("data:image")) {
-        html += `
-          <div class="screenshot-preview">
-            <img src="${screenshot}" onclick="event.stopPropagation(); openModal('${screenshot}')">
-            <div style="font-size:0.7rem; color:#888;">Click to enlarge</div>
-          </div>
-        `;
-      }
-      
-      // Show reward info if approved
-      if (status === "Approved" && rewardCode) {
-        html += `
-          <div class="info-row">
-            <span class="info-label">🎁 Reward Code:</span>
-            <span><code>${rewardCode}</code></span>
-          </div>
-          <div class="info-row">
-            <span class="info-label">💰 Reward Value:</span>
-            <span>${rewardValue}</span>
-          </div>
-          <div class="approved-badge">✅ Approved & Reward Sent</div>
-        `;
-      }
-      
-      // Show approve button if pending
-      if (status === "Pending") {
-        html += `<button class="approve-btn" onclick="approveOrder('${orderId}')">✅ Approve Order & Send Reward</button>`;
-      }
-      
-      html += `</div>`;
-    }
-    
-    document.getElementById("orders").innerHTML = html || "<p>No orders found.</p>";
-    
-  } catch (error) {
-    console.error("Error loading orders:", error);
-    document.getElementById("orders").innerHTML = `<p style="color:red;">❌ Error loading orders: ${error.message}<br><br>Make sure your Apps Script is deployed correctly with "Anyone" access.</p>`;
-  }
-}
-
-// Approve order
-async function approveOrder(orderId) {
-  if (!confirm(`Approve order ${orderId}? This will assign a reward code from your NRX sheet.`)) return;
+  <script>
+  // ✅ YOUR SHEET.BEST API URL
+  const SHEETBEST_URL = "https://api.sheetbest.com/sheets/e440b21b-2b2b-466e-8849-1fa3dc3124e6";
   
-  try {
-    const res = await fetch(SCRIPT_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        action: "approve",
-        orderId: orderId
-      })
-    });
-    
-    const result = await res.json();
-    console.log("Approve result:", result);
-    
-    if (result.success) {
-      alert(`✅ Order ${orderId} approved! Reward assigned.`);
+  async function fetchOrders() {
+    try {
+      const response = await fetch(SHEETBEST_URL);
+      const orders = await response.json();
       
-      // Open WhatsApp with correct number (0772566084)
-      if (result.whatsapp) {
-        window.open(result.whatsapp, "_blank");
+      if (orders.length === 0) {
+        document.getElementById('orders').innerHTML = '<p>No orders yet.</p>';
+        return;
       }
       
-      loadOrders(); // Refresh
-    } else {
-      alert(`❌ Error: ${result.message || "Unknown error"}`);
+      document.getElementById('orders').innerHTML = orders.map(order => `
+        <div class="order ${order.Status === 'Pending' ? 'pending' : 'approved'}">
+          <strong>📦 ${order["Order ID"]}</strong><br>
+          👤 ${order.Name} | 📞 ${order.Phone}<br>
+          👕 ${order.Shirt} | Size ${order.Size}<br>
+          📍 ${order.Delivery} | 💵 ${order.Payment}<br>
+          💰 Amount: K${order.Amount}<br>
+          Status: <strong style="color:${order.Status === 'Pending' ? '#facc15' : '#22c55e'}">${order.Status}</strong><br>
+          ${order.Status === "Pending" ? `
+            <div style="margin-top:10px;">
+              <input type="text" id="reward-${order["Order ID"]}" placeholder="Reward Code (e.g., NRX-1001)">
+              <input type="text" id="value-${order["Order ID"]}" placeholder="Reward Value (e.g., $0.20)">
+              <button onclick="approveOrder('${order["Order ID"]}')">✅ Approve Order</button>
+            </div>
+          ` : `
+            <div style="color:#22c55e; margin-top:10px;">
+              🎁 Reward Code: ${order["Reward Code"]} (${order["Reward Value"]})
+            </div>
+          `}
+        </div>
+      `).join('');
+    } catch (error) {
+      document.getElementById('orders').innerHTML = `<p>Error: ${error.message}</p>`;
     }
-  } catch (error) {
-    console.error("Error approving order:", error);
-    alert(`❌ Error: ${error.message}`);
   }
-}
-
-// Modal functions
-function openModal(imgSrc) {
-  const modal = document.getElementById("imageModal");
-  const modalImg = document.getElementById("modalImage");
-  modal.style.display = "flex";
-  modalImg.src = imgSrc;
-}
-
-function closeModal() {
-  const modal = document.getElementById("imageModal");
-  modal.style.display = "none";
-}
-
-function escapeHtml(str) {
-  if (!str) return '';
-  return str.replace(/[&<>]/g, function(m) {
-    if (m === '&') return '&amp;';
-    if (m === '<') return '&lt;';
-    if (m === '>') return '&gt;';
-    return m;
-  });
-}
-
-// Auto load on page load
-loadOrders();
-</script>
+  
+  async function approveOrder(orderId) {
+    const rewardCode = document.getElementById(`reward-${orderId}`).value.trim();
+    const rewardValue = document.getElementById(`value-${orderId}`).value.trim();
+    
+    if (!rewardCode || !rewardValue) {
+      alert('Please enter both reward code and value');
+      return;
+    }
+    
+    try {
+      const response = await fetch(`${SHEETBEST_URL}/Order ID/${orderId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          "Status": "Approved",
+          "Reward Code": rewardCode,
+          "Reward Value": rewardValue
+        })
+      });
+      
+      if (response.ok) {
+        alert(`✅ Order ${orderId} approved!`);
+        fetchOrders();
+      } else {
+        alert('Error approving order');
+      }
+    } catch (error) {
+      alert('Error: ' + error.message);
+    }
+  }
+  
+  fetchOrders();
+  </script>
 </body>
 </html>
