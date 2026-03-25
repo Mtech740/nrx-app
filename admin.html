@@ -1,90 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>NRX Admin</title>
-  <style>
-    body { font-family: Arial; background:#0b0b0d; color:white; padding:20px; }
-    table { width:100%; border-collapse: collapse; margin-top:20px; }
-    th, td { padding:10px; border-bottom:1px solid #222; text-align:left; }
-    th { background:#111; }
-    button {
-      padding:8px 12px;
-      border:none;
-      border-radius:6px;
-      cursor:pointer;
-      font-weight:bold;
-    }
-    .approve { background:limegreen; color:black; }
-    .pending { color:orange; }
-    .approved { color:lime; }
-    img { width:60px; border-radius:6px; }
-  </style>
+  <title>NRX Admin Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body>
 
-<h2>🔥 NRX ADMIN DASHBOARD</h2>
+<body style="background:#050505; color:white; font-family:Arial; padding:20px;">
 
-<button onclick="loadOrders()">🔄 Refresh</button>
+<h2>🔥 NRX Admin Dashboard</h2>
 
-<table id="ordersTable">
-  <thead>
-    <tr>
-      <th>OrderID</th>
-      <th>Name</th>
-      <th>Phone</th>
-      <th>Shirt</th>
-      <th>Amount</th>
-      <th>Status</th>
-      <th>Screenshot</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
+<button onclick="loadOrders()">🔄 Refresh Orders</button>
+
+<div id="orders"></div>
 
 <script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwCqKfnf8HS--TEa_Zwd-hpu6CiZXaNhrOWK_5HY196__4BVa9HyCBkiwfuWozUKW4q/exec";
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz--SAJgrqXAFJrj7ilnEi6oMfD-FyzCcdIHYmEmcSe4fcaQyOC-7CoShE4uaEf7siF/exec";
-
-// LOAD ORDERS
+// ================= LOAD ORDERS =================
 async function loadOrders() {
   const res = await fetch(SCRIPT_URL);
   const data = await res.json();
 
-  const tbody = document.querySelector("#ordersTable tbody");
-  tbody.innerHTML = "";
+  let html = "";
 
-  data.slice(1).forEach(row => {
-    const tr = document.createElement("tr");
+  for (let i = 1; i < data.length; i++) {
+    const row = data[i];
 
-    const orderId = row[0];
-    const name = row[3];
-    const phone = row[4];
-    const shirt = row[6];
-    const amount = row[11];
-    const status = row[2];
-    const screenshot = row[18];
+    html += `
+      <div style="border:1px solid #333; padding:12px; margin:10px 0;">
+        <b>${row[3]}</b> (${row[4]})<br>
+        Shirt: ${row[6]} (${row[7]}) | Size ${row[8]}<br>
+        Payment: ${row[10]} | K${row[11]}<br>
+        Status: <b>${row[2]}</b><br><br>
 
-    tr.innerHTML = `
-      <td>${orderId}</td>
-      <td>${name}</td>
-      <td>${phone}</td>
-      <td>${shirt}</td>
-      <td>K${amount}</td>
-      <td class="${status === 'Pending' ? 'pending' : 'approved'}">${status}</td>
-      <td>${screenshot ? `<img src="${screenshot}">` : "No Image"}</td>
-      <td>
-        ${status === "Pending" 
-          ? `<button class="approve" onclick="approveOrder('${orderId}')">Approve</button>` 
-          : "✅"}
-      </td>
+        ${
+          row[2] === "Pending"
+          ? `<button onclick="approveOrder('${row[0]}')">✅ Approve</button>`
+          : `<span style="color:lightgreen;">✔ Approved</span>`
+        }
+      </div>
     `;
+  }
 
-    tbody.appendChild(tr);
-  });
+  document.getElementById("orders").innerHTML = html;
 }
 
-// APPROVE ORDER
+
+// ================= APPROVE ORDER =================
 async function approveOrder(orderId) {
 
   const res = await fetch(SCRIPT_URL, {
@@ -95,23 +57,24 @@ async function approveOrder(orderId) {
     })
   });
 
-  const data = await res.json();
+  const result = await res.json();
 
-  if (data.success) {
-    alert(`✅ Approved!\nCode: ${data.reward.code}\nReward: $${data.reward.reward}`);
+  if (result.success) {
 
-    // OPEN WHATSAPP WITH YOUR NUMBER
-    window.open(data.whatsapp, "_blank");
+    // 🔥 OPEN WHATSAPP WITH CORRECT NUMBER
+    window.open(result.whatsapp, "_blank");
+
+    alert("✅ Approved & WhatsApp ready");
 
     loadOrders();
+
   } else {
-    alert("Error approving order");
+    alert("❌ Error approving order");
   }
 }
 
-// INIT
+// AUTO LOAD
 loadOrders();
-
 </script>
 
 </body>
