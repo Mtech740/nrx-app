@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>NRX | Premium T-Shirt Drop - Secure Order System</title>
-  <meta name="description" content="NRX T-Shirt Drop — Limited edition streetwear. Secure your shirt with Airtel/MTN mobile money. Rewards given after payment verification.">
+  <title>NRX | Premium T-Shirt Drop - Official Store</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
   <style>
     * {
@@ -143,11 +142,6 @@
       color: #050505;
     }
 
-    .copy-btn:hover, .action-btn:hover {
-      transform: scale(1.02);
-      opacity: 0.9;
-    }
-
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -159,16 +153,13 @@
       background: #111113;
       border-radius: 32px;
       overflow: hidden;
-      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      transition: all 0.3s;
       border: 1px solid rgba(34,197,94,0.2);
-      backdrop-filter: blur(2px);
-      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.6);
     }
 
     .shirt-card-big:hover {
       transform: translateY(-8px);
       border-color: #22c55e;
-      box-shadow: 0 28px 30px -12px rgba(34,197,94,0.2);
     }
 
     .shirt-img-wrapper {
@@ -185,11 +176,6 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
-      transition: transform 0.3s ease;
-    }
-
-    .shirt-card-big:hover .shirt-img-wrapper img {
-      transform: scale(1.02);
     }
 
     .shirt-info {
@@ -200,7 +186,6 @@
     .shirt-name {
       font-size: 1.4rem;
       font-weight: 700;
-      letter-spacing: -0.3px;
     }
 
     .price-badge {
@@ -223,7 +208,6 @@
       background: #111113;
       border-radius: 60px;
       cursor: pointer;
-      transition: 0.2s;
       border: 1px solid #2a2a2e;
     }
 
@@ -231,7 +215,6 @@
       background: #22c55e;
       color: #050505;
       border-color: #22c55e;
-      box-shadow: 0 4px 14px rgba(34,197,94,0.4);
     }
 
     .card-panel {
@@ -240,7 +223,6 @@
       padding: 32px 28px;
       border: 1px solid #222226;
       margin-bottom: 40px;
-      backdrop-filter: blur(4px);
     }
 
     .form-grid {
@@ -255,7 +237,7 @@
       gap: 16px;
     }
 
-    input, select, textarea {
+    input, select {
       background: #010101;
       border: 1px solid #2c2c30;
       padding: 14px 18px;
@@ -263,10 +245,9 @@
       color: white;
       font-size: 1rem;
       outline: none;
-      transition: 0.2s;
     }
 
-    input:focus, select:focus, textarea:focus {
+    input:focus, select:focus {
       border-color: #22c55e;
     }
 
@@ -286,13 +267,11 @@
       text-align: center;
       cursor: pointer;
       font-weight: 600;
-      transition: 0.2s;
     }
 
     .payment-option.selected {
       background: #22c55e;
       color: black;
-      border-color: #22c55e;
     }
 
     .upload-area {
@@ -302,12 +281,6 @@
       padding: 24px;
       text-align: center;
       cursor: pointer;
-      transition: 0.2s;
-      margin-top: 8px;
-    }
-
-    .upload-area small {
-      color: #888;
     }
 
     .btn-primary {
@@ -319,16 +292,17 @@
       border-radius: 60px;
       color: white;
       cursor: pointer;
-      transition: 0.2s;
       width: 100%;
     }
 
-    .btn-primary:active { transform: scale(0.98); }
-    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
 
     .result-box {
       margin-top: 24px;
-      padding: 20px;
+      padding: 16px;
       border-radius: 28px;
       background: #0f0f12;
     }
@@ -346,23 +320,6 @@
       border-left: 3px solid #22c55e;
     }
 
-    .whatsapp-link {
-      display: inline-block;
-      background: #25D366;
-      color: white;
-      padding: 12px 24px;
-      border-radius: 40px;
-      text-decoration: none;
-      font-weight: bold;
-      margin-top: 16px;
-      transition: 0.2s;
-    }
-
-    .whatsapp-link:hover {
-      transform: scale(1.02);
-      opacity: 0.9;
-    }
-
     footer {
       text-align: center;
       padding: 32px 0;
@@ -377,7 +334,6 @@
     @media (max-width: 700px) {
       .gallery-grid { gap: 20px; }
       .hero h1 { font-size: 2.2rem; }
-      .container { padding: 0 16px; }
       .form-row { grid-template-columns: 1fr; }
     }
   </style>
@@ -399,7 +355,6 @@
     <div class="security-badge">🔐 REWARDS GIVEN AFTER PAYMENT VERIFICATION</div>
   </div>
 
-  <!-- REFERRAL BANNER -->
   <div class="referral-banner" id="referralBanner">
     <div>
       🔗 <strong>Your Unique Referral Code:</strong><br>
@@ -480,33 +435,8 @@
 </div>
 
 <script>
-  // ======================= BACKEND CONNECTION =======================
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyorjbDYaizNXV-HoOKqjt_8HUTZMPs3IBUtrPusJ2iX8TYwEWIDxrXeWGGP9J3mdHl/exec";
-
-  // ✅ NEW: Send order WITHOUT reward code (pending verification)
-  async function sendOrderToBackend(orderData) {
-    console.log("📤 Sending order to backend (pending verification):", orderData);
-    
-    return fetch(SCRIPT_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        action: "order",
-        ...orderData
-      })
-    })
-    .then(res => res.json())
-    .then(data => {
-      console.log("✅ Backend response:", data);
-      return data;
-    })
-    .catch(err => {
-      console.error("❌ Error sending order:", err);
-      return { success: false, error: err.message };
-    });
-  }
+  // ======================= BACKEND URL =======================
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwCqKfnf8HS--TEa_Zwd-hpu6CiZXaNhrOWK_5HY196__4BVa9HyCBkiwfuWozUKW4q/exec";
 
   // ======================= REFERRAL SYSTEM =======================
   function getUserReferralCode() {
@@ -523,28 +453,10 @@
     return userCode;
   }
 
-  function getReferralCount(referralCode) {
-    const referralStats = JSON.parse(localStorage.getItem('nrx_referral_stats') || '{}');
-    return referralStats[referralCode] || 0;
-  }
-
-  // ======================= LOCAL REWARD STORAGE (for redemption) =======================
-  let localRewardCodesDB = {};
-  
-  function loadLocalRewards() {
-    const stored = localStorage.getItem('nrx_rewards_db');
-    if(stored) {
-      try { Object.assign(localRewardCodesDB, JSON.parse(stored)); } catch(e) {}
-    }
-  }
-  
-  function saveLocalRewards() { localStorage.setItem('nrx_rewards_db', JSON.stringify(localRewardCodesDB)); }
-
-  // ======================= COPY FUNCTIONS =======================
   function copyReferralCode() {
     const userCode = getUserReferralCode();
     navigator.clipboard.writeText(userCode);
-    alert("✅ Referral code copied to clipboard! Share with friends to earn bonuses.");
+    alert("✅ Referral code copied to clipboard!");
   }
 
   // ======================= SHIRT DATABASE =======================
@@ -556,17 +468,16 @@
     { id: "shirt5", name: "NRX Cobalt Blue", color: "Blue", url: "https://i.postimg.cc/gx8cgV89/file-00000000897c71f7be4c0ed9a59f2619.png" }
   ];
 
-  // ======================= RENDER GALLERY =======================
   function renderBigGallery() {
     const container = document.getElementById('galleryContainer');
     if(!container) return;
     container.innerHTML = shirtInventory.map(shirt => `
       <div class="shirt-card-big">
         <div class="shirt-img-wrapper">
-          <img src="${shirt.url}" alt="${shirt.name}" loading="lazy" onerror="this.src='https://placehold.co/600x600/1e1e2a/22c55e?text=NRX'">
+          <img src="${shirt.url}" alt="${shirt.name}">
         </div>
         <div class="shirt-info">
-          <div class="shirt-name">${escapeHtml(shirt.name)}</div>
+          <div class="shirt-name">${shirt.name}</div>
           <div class="price-badge">K180</div>
           <div style="color:#a0a0a5; font-size:0.8rem;">🎁 reward after payment verification</div>
         </div>
@@ -616,13 +527,11 @@
         reader.readAsDataURL(file);
       } else {
         alert('Please select a valid JPG/PNG image');
-        uploadedFileData = null;
-        uploadedFileName = null;
       }
     });
   }
 
-  // ======================= MAIN ORDER HANDLER (NO REWARD GIVEN INSTANTLY) =======================
+  // ======================= ORDER HANDLER =======================
   async function handleOrder() {
     const name = document.getElementById("fullName").value.trim();
     const phone = document.getElementById("phoneNumber").value.trim();
@@ -652,61 +561,38 @@
     const orderId = "NRX-" + Date.now();
     const timestamp = new Date().toISOString();
     const userReferralCode = getUserReferralCode();
-    
-    // Get referral count for the code being used
-    let referralCount = 0;
-    if (referralCodeUsed) {
-      referralCount = getReferralCount(referralCodeUsed);
-    }
-    
-    const videoBonus = 0;
-    const totalBonus = referralCount * 2 + videoBonus;
+
+    const orderData = {
+      action: "order",
+      orderId: orderId,
+      date: timestamp,
+      name: name,
+      phone: phone,
+      email: email || "",
+      shirt: shirt.name,
+      color: shirt.color,
+      size: size,
+      delivery: delivery,
+      payment: selectedPayment.toUpperCase(),
+      amount: total,
+      referralCodeUsed: referralCodeUsed,
+      screenshot: uploadedFileData
+    };
 
     showMsg(result, "⏳ Submitting order for verification...", "loading");
     orderBtn.disabled = true;
     orderBtn.textContent = "⏳ Processing...";
 
     try {
-      // ✅ NEW: Order WITHOUT reward code (pending approval)
-      const orderData = {
-        orderId: orderId,
-        date: timestamp,
-        status: "Pending", // IMPORTANT: Pending verification
-        name: name,
-        phone: phone,
-        email: email || "",
-        shirt: shirt.name,
-        color: shirt.color,
-        size: size,
-        delivery: delivery,
-        deliveryFee: deliveryFee,
-        amount: total,
-        paymentMethod: selectedPayment.toUpperCase(),
-        paymentNumber: paymentDetailsMap[selectedPayment].number,
-        // 🔒 NO REWARD CODE YET
-        rewardCode: "",
-        rewardValue: "",
-        referralCodeUsed: referralCodeUsed,
-        userReferralCode: userReferralCode,
-        referralCount: referralCount,
-        videoBonus: videoBonus,
-        totalBonus: totalBonus,
-        screenshot: uploadedFileData,
-        screenshotName: uploadedFileName
-      };
-
-      // Send to backend
-      const response = await sendOrderToBackend(orderData);
+      const response = await fetch(SCRIPT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderData)
+      });
       
-      // Store order locally
-      let orders = JSON.parse(localStorage.getItem('nrx_orders') || '[]');
-      orders.push(orderData);
-      localStorage.setItem('nrx_orders', JSON.stringify(orders));
+      const data = await response.json();
+      console.log("Order response:", data);
 
-      // ✅ SUCCESS MESSAGE - NO REWARD CODE YET
-      const whatsappMsg = `Hello NRX Team! I just placed an order.\nOrder ID: ${orderId}\nName: ${name}\nPhone: ${phone}\nShirt: ${shirt.name}\nSize: ${size}\nDelivery: ${delivery}\nPayment: ${selectedPayment.toUpperCase()}\nAmount: K${total}\n\nPlease verify my payment screenshot. Thank you!`;
-      const whatsappUrl = `https://wa.me/260760000000?text=${encodeURIComponent(whatsappMsg)}`;
-      
       result.innerHTML = `
         <div style="text-align: center;">
           <div style="font-size: 2rem; margin-bottom: 12px;">✅</div>
@@ -716,18 +602,12 @@
           🔒 <strong>Your reward code will be sent AFTER payment is verified.</strong><br>
           📸 Screenshot submitted: ${uploadedFileName}<br><br>
           ⏱️ Verification time: Usually within 24 hours.<br><br>
-          <a href="${whatsappUrl}" target="_blank" class="whatsapp-link" style="background:#25D366; color:white; padding:12px 24px; border-radius:40px; text-decoration:none; display:inline-block;">
-            📱 Contact Support on WhatsApp
-          </a><br><br>
-          📲 You will receive your reward code via WhatsApp/Email after confirmation.
+          📲 You will receive your reward code via WhatsApp after confirmation.
         </div>
       `;
       result.className = "result-box pending";
 
-      // Store the order ID for reference
-      localStorage.setItem('last_order_id', orderId);
-
-      // RESET FORM
+      // Reset form
       document.getElementById("fullName").value = "";
       document.getElementById("phoneNumber").value = "";
       document.getElementById("emailAddress").value = "";
@@ -754,31 +634,39 @@
   }
 
   // ======================= REDEEM HANDLER =======================
+  let localRewardCodesDB = {};
+  
+  function loadLocalRewards() {
+    const stored = localStorage.getItem('nrx_rewards_db');
+    if(stored) {
+      try { Object.assign(localRewardCodesDB, JSON.parse(stored)); } catch(e) {}
+    }
+  }
+  
+  function saveLocalRewards() { localStorage.setItem('nrx_rewards_db', JSON.stringify(localRewardCodesDB)); }
+
   function handleRedeem() {
     let rawCode = document.getElementById('redeemCode').value.trim().toUpperCase();
     const resultDiv = document.getElementById('redeemResultMsg');
     if(!rawCode) { showMsg(resultDiv, '🔑 Please enter reward code', 'error'); return; }
     if(!rawCode.startsWith('NRX-') && /^[A-Z0-9]{8}$/.test(rawCode)) rawCode = `NRX-${rawCode}`;
-    if(!rawCode.startsWith('NRX-')) { showMsg(resultDiv, '❌ Invalid format (should be NRX-XXXXXXXX)', 'error'); return; }
     
     const entry = localRewardCodesDB[rawCode];
     if(!entry) { 
-      showMsg(resultDiv, '⚠️ Code not found. Rewards are sent after payment verification. Please wait for admin approval.', 'error'); 
+      showMsg(resultDiv, '⚠️ Code not found. Rewards are sent after payment verification.', 'error'); 
       return; 
     }
-    if(entry.status === 'used') { showMsg(resultDiv, `⏰ Already redeemed on ${entry.usedDate ? new Date(entry.usedDate).toLocaleString() : 'earlier'}`, 'error'); return; }
+    if(entry.status === 'used') { showMsg(resultDiv, '⏰ Already redeemed', 'error'); return; }
     
     entry.status = 'used';
     entry.usedDate = new Date().toISOString();
     saveLocalRewards();
-    resultDiv.innerHTML = `<div>🎉 <strong>Reward claimed!</strong> 🎉<br>✨ ${entry.reward} has been activated.<br>🔑 Code ${rawCode} is now redeemed.<br>📧 Our team will contact you within 24h to deliver your reward.</div>`;
+    resultDiv.innerHTML = `<div>🎉 <strong>Reward claimed!</strong> 🎉<br>✨ ${entry.reward} has been activated.</div>`;
     resultDiv.className = 'result-box success';
     document.getElementById('redeemCode').value = '';
   }
 
-  // ======================= UI HELPERS =======================
-  function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
-
+  // ======================= UI SETUP =======================
   function setupTabs() {
     const tabs = document.querySelectorAll('.tab');
     const buyDiv = document.getElementById('buy');
@@ -821,10 +709,8 @@
     }
   }
 
-  // Make functions global
   window.copyReferralCode = copyReferralCode;
 
-  // ======================= INITIALIZATION =======================
   function init() {
     loadLocalRewards();
     renderBigGallery();
