@@ -3,79 +3,338 @@
 <head>
   <title>NRX Admin Panel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: #050505;
+      color: white;
+      font-family: 'Inter', Arial, sans-serif;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h2 {
+      color: #22c55e;
+      margin-bottom: 20px;
+    }
+    .refresh-btn {
+      background: #22c55e;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 40px;
+      cursor: pointer;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .order-card {
+      border: 1px solid #333;
+      border-radius: 16px;
+      padding: 16px;
+      margin: 12px 0;
+      background: #0a0a0c;
+    }
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .order-id {
+      font-family: monospace;
+      color: #22c55e;
+      font-weight: bold;
+    }
+    .status {
+      padding: 4px 12px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+    .status-pending {
+      background: #854d0e;
+      color: #fef3c7;
+    }
+    .status-approved {
+      background: #14532d;
+      color: #bbf7d0;
+    }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 8px 0;
+      font-size: 0.9rem;
+    }
+    .info-label {
+      color: #888;
+    }
+    .screenshot-preview {
+      margin: 12px 0;
+      text-align: center;
+    }
+    .screenshot-preview img {
+      max-width: 200px;
+      max-height: 150px;
+      border-radius: 12px;
+      cursor: pointer;
+      border: 1px solid #333;
+    }
+    .approve-btn {
+      background: #22c55e;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 40px;
+      cursor: pointer;
+      font-weight: 600;
+      margin-top: 12px;
+      width: 100%;
+    }
+    .approved-badge {
+      color: #22c55e;
+      text-align: center;
+      margin-top: 12px;
+      font-weight: bold;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.95);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal img {
+      max-width: 90%;
+      max-height: 90%;
+    }
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
+      cursor: pointer;
+      color: white;
+    }
+    .stats {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: #1a1a1e;
+      padding: 12px 24px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 24px;
+      font-weight: bold;
+      color: #22c55e;
+    }
+  </style>
 </head>
-
-<body style="background:#050505; color:white; font-family:Arial; padding:20px;">
+<body>
 
 <h2>🔥 NRX Admin Dashboard</h2>
 
-<button onclick="loadOrders()">🔄 Refresh Orders</button>
+<div class="stats" id="stats"></div>
+
+<button class="refresh-btn" onclick="loadOrders()">🔄 Refresh Orders</button>
 
 <div id="orders"></div>
 
+<div id="imageModal" class="modal" onclick="closeModal()">
+  <span class="modal-close">&times;</span>
+  <img id="modalImage" src="" alt="Screenshot">
+</div>
+
 <script>
+// ✅ YOUR CORRECT SCRIPT URL
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwCqKfnf8HS--TEa_Zwd-hpu6CiZXaNhrOWK_5HY196__4BVa9HyCBkiwfuWozUKW4q/exec";
 
-// ================= LOAD ORDERS =================
+// Load orders from backend
 async function loadOrders() {
-  const res = await fetch(SCRIPT_URL);
-  const data = await res.json();
-
-  let html = "";
-
-  for (let i = 1; i < data.length; i++) {
-    const row = data[i];
-
-    html += `
-      <div style="border:1px solid #333; padding:12px; margin:10px 0;">
-        <b>${row[3]}</b> (${row[4]})<br>
-        Shirt: ${row[6]} (${row[7]}) | Size ${row[8]}<br>
-        Payment: ${row[10]} | K${row[11]}<br>
-        Status: <b>${row[2]}</b><br><br>
-
-        ${
-          row[2] === "Pending"
-          ? `<button onclick="approveOrder('${row[0]}')">✅ Approve</button>`
-          : `<span style="color:lightgreen;">✔ Approved</span>`
-        }
-      </div>
+  try {
+    const res = await fetch(SCRIPT_URL);
+    const data = await res.json();
+    console.log("Orders data:", data);
+    
+    // Calculate stats
+    let total = 0, pending = 0, approved = 0;
+    for (let i = 1; i < data.length; i++) {
+      total++;
+      if (data[i][2] === "Pending") pending++;
+      if (data[i][2] === "Approved") approved++;
+    }
+    
+    document.getElementById("stats").innerHTML = `
+      <div class="stat-card"><div class="stat-number">${total}</div><div>Total Orders</div></div>
+      <div class="stat-card"><div class="stat-number">${pending}</div><div>Pending</div></div>
+      <div class="stat-card"><div class="stat-number">${approved}</div><div>Approved</div></div>
     `;
+    
+    let html = "";
+    
+    for (let i = 1; i < data.length; i++) {
+      const row = data[i];
+      const orderId = row[0];
+      const status = row[2];
+      const name = row[3];
+      const phone = row[4];
+      const email = row[5] || "N/A";
+      const shirt = row[6];
+      const color = row[7];
+      const size = row[8];
+      const delivery = row[9];
+      const payment = row[10];
+      const amount = row[11];
+      const rewardCode = row[12];
+      const rewardValue = row[13];
+      const screenshot = row[18];
+      
+      const statusClass = status === "Pending" ? "status-pending" : "status-approved";
+      
+      html += `
+        <div class="order-card">
+          <div class="order-header">
+            <span class="order-id">📦 ${orderId}</span>
+            <span class="status ${statusClass}">${status}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">👤 Customer:</span>
+            <span>${escapeHtml(name)}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">📞 Phone:</span>
+            <span>${escapeHtml(phone)}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">📧 Email:</span>
+            <span>${escapeHtml(email)}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">👕 Shirt:</span>
+            <span>${escapeHtml(shirt)} (${color})</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">📏 Size:</span>
+            <span>${size}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">🚚 Delivery:</span>
+            <span>${delivery}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">💵 Payment:</span>
+            <span>${payment} | K${amount}</span>
+          </div>
+      `;
+      
+      // Show screenshot if exists
+      if (screenshot && screenshot.startsWith("data:image")) {
+        html += `
+          <div class="screenshot-preview">
+            <img src="${screenshot}" onclick="event.stopPropagation(); openModal('${screenshot}')">
+            <div style="font-size:0.7rem; color:#888;">Click to enlarge</div>
+          </div>
+        `;
+      }
+      
+      // Show reward info if approved
+      if (status === "Approved" && rewardCode) {
+        html += `
+          <div class="info-row">
+            <span class="info-label">🎁 Reward Code:</span>
+            <span><code>${rewardCode}</code></span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">💰 Reward Value:</span>
+            <span>${rewardValue}</span>
+          </div>
+          <div class="approved-badge">✅ Approved & Reward Sent</div>
+        `;
+      }
+      
+      // Show approve button if pending
+      if (status === "Pending") {
+        html += `<button class="approve-btn" onclick="approveOrder('${orderId}')">✅ Approve Order & Send Reward</button>`;
+      }
+      
+      html += `</div>`;
+    }
+    
+    document.getElementById("orders").innerHTML = html || "<p>No orders found.</p>";
+    
+  } catch (error) {
+    console.error("Error loading orders:", error);
+    document.getElementById("orders").innerHTML = `<p style="color:red;">❌ Error loading orders: ${error.message}</p>`;
   }
-
-  document.getElementById("orders").innerHTML = html;
 }
 
-
-// ================= APPROVE ORDER =================
+// Approve order
 async function approveOrder(orderId) {
-
-  const res = await fetch(SCRIPT_URL, {
-    method: "POST",
-    body: JSON.stringify({
-      action: "approve",
-      orderId: orderId
-    })
-  });
-
-  const result = await res.json();
-
-  if (result.success) {
-
-    // 🔥 OPEN WHATSAPP WITH CORRECT NUMBER
-    window.open(result.whatsapp, "_blank");
-
-    alert("✅ Approved & WhatsApp ready");
-
-    loadOrders();
-
-  } else {
-    alert("❌ Error approving order");
+  if (!confirm(`Approve order ${orderId}? This will assign a reward code from your NRX sheet.`)) return;
+  
+  try {
+    const res = await fetch(SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: "approve",
+        orderId: orderId
+      })
+    });
+    
+    const result = await res.json();
+    console.log("Approve result:", result);
+    
+    if (result.success) {
+      alert(`✅ Order ${orderId} approved! Reward assigned.`);
+      
+      // Open WhatsApp with correct number (0772566084)
+      if (result.whatsapp) {
+        window.open(result.whatsapp, "_blank");
+      }
+      
+      loadOrders(); // Refresh
+    } else {
+      alert(`❌ Error: ${result.message || "Unknown error"}`);
+    }
+  } catch (error) {
+    console.error("Error approving order:", error);
+    alert(`❌ Error: ${error.message}`);
   }
 }
 
-// AUTO LOAD
+// Modal functions
+function openModal(imgSrc) {
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("modalImage");
+  modal.style.display = "flex";
+  modalImg.src = imgSrc;
+}
+
+function closeModal() {
+  const modal = document.getElementById("imageModal");
+  modal.style.display = "none";
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/[&<>]/g, function(m) {
+    if (m === '&') return '&amp;';
+    if (m === '<') return '&lt;';
+    if (m === '>') return '&gt;';
+    return m;
+  });
+}
+
+// Auto load on page load
 loadOrders();
 </script>
-
 </body>
 </html>
