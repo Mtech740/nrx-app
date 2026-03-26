@@ -72,6 +72,29 @@
       font-size: 0.75rem;
       border: 1px solid rgba(34,197,94,0.4);
     }
+    /* WhatsApp Support Button */
+    .whatsapp-support {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 100;
+    }
+    .whatsapp-support a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #25D366;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 60px;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(37,211,102,0.3);
+      transition: transform 0.2s;
+    }
+    .whatsapp-support a:hover {
+      transform: scale(1.05);
+    }
     /* Hero */
     .hero {
       text-align: center;
@@ -302,6 +325,13 @@
     <div class="badge">⚡ LIMITED EDITION | K180</div>
   </div>
 
+  <!-- WhatsApp Support Button -->
+  <div class="whatsapp-support">
+    <a href="https://wa.me/260772566084?text=Hello%20NRX%20Support%2C%20I%20need%20help%20with%20my%20order" target="_blank">
+      📱 Need Help? Chat with Support
+    </a>
+  </div>
+
   <div class="hero">
     <h1>NRX STREETWEAR DROP</h1>
     <p>Premium quality tees • Hidden rewards up to $10 • Free pickup in Lusaka</p>
@@ -318,47 +348,47 @@
     <button class="copy-btn" id="copyReferralBtn">📋 Copy Code</button>
   </div>
 
-  <!-- GALLERY - BEAUTIFUL SHIRT IMAGES -->
+  <!-- GALLERY - YOUR NRX SHIRT IMAGES -->
   <div class="gallery" id="shirtGallery">
-    <div class="shirt-card" data-shirt="Black" data-name="NRX Onyx Black">
+    <div class="shirt-card" data-shirt="Black" data-name="NRX Onyx Black" data-url="https://i.postimg.cc/QF1NfQ52/file-000000000bb071f587d3192da8b5aff2.png">
       <div class="shirt-img">
-        <img src="https://placehold.co/400x500/1a1a1a/22c55e?text=NRX+BLACK" alt="NRX Black">
+        <img src="https://i.postimg.cc/QF1NfQ52/file-000000000bb071f587d3192da8b5aff2.png" alt="NRX Black">
       </div>
       <div class="shirt-info">
         <div class="shirt-name">NRX Onyx Black</div>
         <div class="shirt-price">K180</div>
       </div>
     </div>
-    <div class="shirt-card" data-shirt="White" data-name="NRX Arctic White">
+    <div class="shirt-card" data-shirt="White" data-name="NRX Arctic White" data-url="https://i.postimg.cc/bZkYmxkj/file-000000000ecc722fa0aa9ba18400aa71.png">
       <div class="shirt-img">
-        <img src="https://placehold.co/400x500/2a2a2a/22c55e?text=NRX+WHITE" alt="NRX White">
+        <img src="https://i.postimg.cc/bZkYmxkj/file-000000000ecc722fa0aa9ba18400aa71.png" alt="NRX White">
       </div>
       <div class="shirt-info">
         <div class="shirt-name">NRX Arctic White</div>
         <div class="shirt-price">K180</div>
       </div>
     </div>
-    <div class="shirt-card" data-shirt="Gold" data-name="NRX Golden Era">
+    <div class="shirt-card" data-shirt="Gold" data-name="NRX Golden Era" data-url="https://i.postimg.cc/gnfkySwV/file-000000006e8c71fd8e3efd99a47710e9.png">
       <div class="shirt-img">
-        <img src="https://placehold.co/400x500/3a2a1a/facc15?text=NRX+GOLD" alt="NRX Gold">
+        <img src="https://i.postimg.cc/gnfkySwV/file-000000006e8c71fd8e3efd99a47710e9.png" alt="NRX Gold">
       </div>
       <div class="shirt-info">
         <div class="shirt-name">NRX Golden Era</div>
         <div class="shirt-price">K180</div>
       </div>
     </div>
-    <div class="shirt-card" data-shirt="Red" data-name="NRX Crimson">
+    <div class="shirt-card" data-shirt="Red" data-name="NRX Crimson" data-url="https://i.postimg.cc/3kmrtXmT/file-0000000086d0722f9c1bac970b3af52f.png">
       <div class="shirt-img">
-        <img src="https://placehold.co/400x500/4a1a1a/ef4444?text=NRX+RED" alt="NRX Red">
+        <img src="https://i.postimg.cc/3kmrtXmT/file-0000000086d0722f9c1bac970b3af52f.png" alt="NRX Red">
       </div>
       <div class="shirt-info">
         <div class="shirt-name">NRX Crimson</div>
         <div class="shirt-price">K180</div>
       </div>
     </div>
-    <div class="shirt-card" data-shirt="Blue" data-name="NRX Cobalt Blue">
+    <div class="shirt-card" data-shirt="Blue" data-name="NRX Cobalt Blue" data-url="https://i.postimg.cc/gx8cgV89/file-00000000897c71f7be4c0ed9a59f2619.png">
       <div class="shirt-img">
-        <img src="https://placehold.co/400x500/1a2a4a/3b82f6?text=NRX+BLUE" alt="NRX Blue">
+        <img src="https://i.postimg.cc/gx8cgV89/file-00000000897c71f7be4c0ed9a59f2619.png" alt="NRX Blue">
       </div>
       <div class="shirt-info">
         <div class="shirt-name">NRX Cobalt Blue</div>
@@ -465,6 +495,7 @@
   // ======================= SHIRT SELECTION =======================
   let selectedShirt = "Black";
   let selectedShirtName = "NRX Onyx Black";
+  let selectedShirtUrl = "";
   
   document.querySelectorAll('.shirt-card').forEach(card => {
     card.addEventListener('click', () => {
@@ -472,20 +503,22 @@
       card.classList.add('selected');
       selectedShirt = card.dataset.shirt;
       selectedShirtName = card.dataset.name;
+      selectedShirtUrl = card.dataset.url;
       document.getElementById('shirtColorSelect').value = selectedShirt;
     });
   });
   
   document.getElementById('shirtColorSelect').onchange = (e) => {
     selectedShirt = e.target.value;
-    const shirtNames = {
-      'Black': 'NRX Onyx Black',
-      'White': 'NRX Arctic White', 
-      'Gold': 'NRX Golden Era',
-      'Red': 'NRX Crimson',
-      'Blue': 'NRX Cobalt Blue'
+    const shirtMap = {
+      'Black': { name: 'NRX Onyx Black', url: 'https://i.postimg.cc/QF1NfQ52/file-000000000bb071f587d3192da8b5aff2.png' },
+      'White': { name: 'NRX Arctic White', url: 'https://i.postimg.cc/bZkYmxkj/file-000000000ecc722fa0aa9ba18400aa71.png' },
+      'Gold': { name: 'NRX Golden Era', url: 'https://i.postimg.cc/gnfkySwV/file-000000006e8c71fd8e3efd99a47710e9.png' },
+      'Red': { name: 'NRX Crimson', url: 'https://i.postimg.cc/3kmrtXmT/file-0000000086d0722f9c1bac970b3af52f.png' },
+      'Blue': { name: 'NRX Cobalt Blue', url: 'https://i.postimg.cc/gx8cgV89/file-00000000897c71f7be4c0ed9a59f2619.png' }
     };
-    selectedShirtName = shirtNames[selectedShirt] || selectedShirt;
+    selectedShirtName = shirtMap[selectedShirt]?.name || selectedShirt;
+    selectedShirtUrl = shirtMap[selectedShirt]?.url || '';
   };
   
   // ======================= PAYMENT DETAILS =======================
@@ -542,7 +575,6 @@
     const resultDiv = document.getElementById('result');
     const submitBtn = document.getElementById('submitBtn');
     
-    // Validation
     if (!name || !phone || !shirtColor || !size || !delivery || !paymentMethod || !uploadedScreenshot) {
       resultDiv.innerHTML = '❌ Please fill all required fields and upload payment screenshot';
       resultDiv.className = 'result-box error';
@@ -578,7 +610,6 @@
     submitBtn.disabled = true;
     
     try {
-      // Try to save to SheetBest
       const response = await fetch(SHEETBEST_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -586,7 +617,6 @@
       });
       
       if (response.ok) {
-        // Save to local backup
         localOrders.push(orderData);
         localStorage.setItem('nrx_orders', JSON.stringify(localOrders));
         
@@ -596,11 +626,12 @@
           📍 <strong>Status:</strong> <span style="color:#facc15;">⏳ PENDING VERIFICATION</span><br>
           💰 <strong>Amount:</strong> K${total}<br><br>
           🔒 <strong>Your reward code will be sent AFTER payment is verified.</strong><br>
-          📸 Screenshot submitted: ${uploadedScreenshot.substring(0, 50)}...<br><br>
+          📸 Screenshot submitted<br><br>
           ⏱️ Verification time: Usually within 24 hours.<br>
           📲 You will receive your reward code via WhatsApp after confirmation.<br><br>
           🔗 <strong>Your Referral Code:</strong> ${userReferralCode}<br>
-          Share this code with friends to earn bonuses!
+          Share this code with friends to earn bonuses!<br><br>
+          📞 <strong>Need help?</strong> Contact us on WhatsApp: 0772566084
         `;
         resultDiv.className = 'result-box pending';
         
@@ -617,7 +648,6 @@
         fileInput.value = '';
         
       } else {
-        // Fallback: Save locally only
         localOrders.push(orderData);
         localStorage.setItem('nrx_orders', JSON.stringify(localOrders));
         
@@ -628,14 +658,14 @@
           💰 <strong>Amount:</strong> K${total}<br><br>
           🔒 Your order has been saved. Admin will verify payment shortly.<br>
           🔗 <strong>Your Referral Code:</strong> ${userReferralCode}<br>
-          Share this code with friends to earn bonuses!
+          Share this code with friends to earn bonuses!<br><br>
+          📞 <strong>Need help?</strong> Contact us on WhatsApp: 0772566084
         `;
         resultDiv.className = 'result-box pending';
       }
       
     } catch (error) {
       console.error("Error:", error);
-      // Fallback: Save locally
       localOrders.push(orderData);
       localStorage.setItem('nrx_orders', JSON.stringify(localOrders));
       
@@ -646,7 +676,8 @@
         💰 <strong>Amount:</strong> K${total}<br><br>
         🔒 Your order has been saved. Admin will verify payment shortly.<br>
         🔗 <strong>Your Referral Code:</strong> ${userReferralCode}<br>
-        Share this code with friends to earn bonuses!
+        Share this code with friends to earn bonuses!<br><br>
+        📞 <strong>Need help?</strong> Contact us on WhatsApp: 0772566084
       `;
       resultDiv.className = 'result-box pending';
     } finally {
@@ -667,7 +698,6 @@
       return;
     }
     
-    // Check local orders for approved codes
     let found = localOrders.find(o => o["Reward Code"] === code);
     
     if (found && found.Status === "Approved") {
@@ -696,7 +726,6 @@
   });
   
   // ======================= ADMIN HELPER =======================
-  // To view orders in admin, open console and type: viewOrders()
   window.viewOrders = () => {
     console.log('=== NRX ORDERS ===');
     console.log(JSON.parse(localStorage.getItem('nrx_orders') || '[]'));
