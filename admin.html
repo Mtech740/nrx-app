@@ -81,7 +81,8 @@
   let allOrders = [];
   
   function checkLogin() {
-    if (document.getElementById('adminPin').value === ADMIN_PIN) {
+    const pin = document.getElementById('adminPin').value;
+    if (pin === ADMIN_PIN) {
       localStorage.setItem('nrx_admin_logged_in', 'true');
       document.getElementById('loginBox').style.display = 'none';
       document.getElementById('adminContent').style.display = 'block';
@@ -106,74 +107,55 @@
     loadOrders();
   }
   
-  // ======================= LOAD AVAILABLE REWARDS =======================
-  async function loadRewards() {
+  function loadRewards() {
     const rewardsInfo = document.getElementById('rewardsInfo');
-    rewardsInfo.innerHTML = '⏳ Loading rewards from Google Sheet...';
+    rewardsInfo.innerHTML = '⏳ Loading rewards...';
     
-    try {
-      // Fetch all data from SheetBest (this includes both Orders and Rewards)
-      const response = await fetch(SHEETBEST_URL);
-      const allData = await response.json();
-      console.log("All data from SheetBest:", allData);
-      
-      // Filter for rewards (look for entries with "Code" and "Status" fields)
-      // Since SheetBest returns all data from the first sheet, we need to check if your Rewards sheet is separate
-      // For now, let's use the hardcoded rewards we know from your NRX sheet
-      // In your actual setup, you'd have a separate sheet for Rewards
-      
-      // Check if we have a dedicated rewards array or if we need to fetch from another endpoint
-      // Since your Rewards sheet is a separate tab, SheetBest only returns the first sheet (Orders)
-      // You need to create a separate API for the Rewards sheet
-      
-      // For now, let's use the rewards you mentioned (121100)
+    // Load rewards from local storage or create default
+    let savedRewards = localStorage.getItem('nrx_rewards_list');
+    if (savedRewards) {
+      availableRewards = JSON.parse(savedRewards);
+    } else {
+      // Default rewards - you can add more here
       availableRewards = [
-        { code: "NRX-001", reward: "$0.20", status: "NO" },
-        { code: "NRX-002", reward: "$0.20", status: "NO" },
-        { code: "NRX-003", reward: "$0.20", status: "NO" },
-        { code: "NRX-004", reward: "$0.20", status: "NO" },
-        { code: "NRX-005", reward: "$5.00", status: "NO" }, // WINNER!
-        { code: "NRX-006", reward: "$0.20", status: "NO" },
-        { code: "NRX-007", reward: "$0.20", status: "NO" },
-        { code: "NRX-008", reward: "$0.20", status: "NO" },
-        { code: "NRX-009", reward: "$0.20", status: "NO" },
-        { code: "NRX-010", reward: "$0.20", status: "NO" }
+        { code: "NRX-001", reward: "$0.20", used: false },
+        { code: "NRX-002", reward: "$0.20", used: false },
+        { code: "NRX-003", reward: "$0.20", used: false },
+        { code: "NRX-004", reward: "$0.20", used: false },
+        { code: "NRX-005", reward: "$5.00", used: false },
+        { code: "NRX-006", reward: "$0.20", used: false },
+        { code: "NRX-007", reward: "$0.20", used: false },
+        { code: "NRX-008", reward: "$0.20", used: false },
+        { code: "NRX-009", reward: "$0.20", used: false },
+        { code: "NRX-010", reward: "$0.20", used: false }
       ];
-      
-      // Check local storage for used rewards
-      const usedRewards = JSON.parse(localStorage.getItem('used_rewards') || '[]');
-      availableRewards = availableRewards.filter(r => !usedRewards.includes(r.code));
-      
-      const totalRewards = availableRewards.length;
-      const nextReward = availableRewards[0];
-      
-      rewardsInfo.innerHTML = `
-        🎁 <strong>Available Rewards:</strong> ${totalRewards} codes remaining<br>
-        🔥 <strong>Next Reward:</strong> ${nextReward ? `${nextReward.code} (${nextReward.reward})` : 'No rewards left!'}
-      `;
-      
-    } catch (error) {
-      console.error("Error loading rewards:", error);
-      rewardsInfo.innerHTML = '⚠️ Could not load rewards. Using local list.';
+      localStorage.setItem('nrx_rewards_list', JSON.stringify(availableRewards));
     }
+    
+    const unusedRewards = availableRewards.filter(r => !r.used);
+    const nextReward = unusedRewards[0];
+    
+    rewardsInfo.innerHTML = `
+      🎁 <strong>Available Rewards:</strong> ${unusedRewards.length} codes remaining<br>
+      🔥 <strong>Next Reward:</strong> ${nextReward ? `${nextReward.code} (${nextReward.reward})` : '⚠️ NO REWARDS LEFT! Add more codes below.'}
+    `;
   }
   
-  // ======================= GET NEXT REWARD =======================
   function getNextReward() {
-    if (availableRewards.length === 0) {
-      return null;
-    }
-    const next = availableRewards[0];
-    // Mark as used
-    const usedRewards = JSON.parse(localStorage.getItem('used_rewards') || '[]');
-    usedRewards.push(next.code);
-    localStorage.setItem('used_rewards', JSON.stringify(usedRewards));
-    // Remove from available
-    availableRewards.shift();
+    const unusedRewards = availableRewards.filter(r => !r.used);
+    if (unusedRewards.length === 0) return null;
+    
+    const next = unusedRewards[0];
+    next.used = true;
+    localStorage.setItem('nrx_rewards_list', JSON.stringify(availableRewards));
     return next;
   }
   
-  // ======================= LOAD ORDERS =======================
+  function getNextRewardPreview() {
+    const unusedRewards = availableRewards.filter(r => !r.used);
+    return unusedRewards[0] || null;
+  }
+  
   async function loadOrders() {
     const ordersDiv = document.getElementById('orders');
     ordersDiv.innerHTML = '<div class="empty">⏳ Loading orders...</div>';
@@ -214,6 +196,9 @@
       <div class="stat-card"><div class="stat-number">${approved}</div><div class="stat-label">Approved</div></div>
     `;
     
+    const nextRewardPreview = getNextRewardPreview();
+    const previewText = nextRewardPreview ? `🎁 Next: ${nextRewardPreview.code} (${nextRewardPreview.reward})` : '⚠️ No rewards left!';
+    
     ordersDiv.innerHTML = allOrders.map(order => {
       const orderId = order["Order ID"] || order.orderId || "N/A";
       const status = order.Status || order.status || "Pending";
@@ -250,20 +235,15 @@
           
           ${status === "Pending" ? `
             <div class="approve-section">
-              <div class="next-reward" id="next-reward-display-${orderId}">
-                🔄 Loading next reward...
+              <div class="next-reward" id="preview-${orderId}">
+                ${previewText}
               </div>
-              <button class="approve-btn" onclick="approveOrderWithAutoReward('${orderId}')">✅ Approve & Send Reward</button>
+              <button class="approve-btn" onclick="approveOrder('${orderId}')">✅ Approve & Send Reward</button>
             </div>
-            <script>
-              // Display next available reward
-              const nextReward = getNextRewardPreview();
-              document.getElementById('next-reward-display-${orderId}').innerHTML = nextReward ? '🎁 Next reward: <strong>' + nextReward.code + '</strong> (' + nextReward.reward + ')' : '⚠️ No rewards left!';
-            </script>
           ` : `
             <div class="reward-badge">
               🎁 <strong>Reward Code:</strong> ${rewardCode || 'N/A'} | <strong>Value:</strong> ${rewardValue || 'N/A'}
-              ${phone ? `<button class="whatsapp-btn" onclick="sendRewardWhatsApp('${orderId}', '${rewardCode}', '${rewardValue}', '${phone}')">📱 Send via WhatsApp</button>` : ''}
+              ${phone ? `<button class="whatsapp-btn" onclick="sendWhatsApp('${phone}', '${orderId}', '${rewardCode}', '${rewardValue}')">📱 Send via WhatsApp</button>` : ''}
             </div>
           `}
         </div>
@@ -271,18 +251,11 @@
     }).join('');
   }
   
-  // ======================= PREVIEW NEXT REWARD =======================
-  function getNextRewardPreview() {
-    if (availableRewards.length === 0) return null;
-    return availableRewards[0];
-  }
-  
-  // ======================= APPROVE WITH AUTO REWARD =======================
-  async function approveOrderWithAutoReward(orderId) {
+  async function approveOrder(orderId) {
     const nextReward = getNextReward();
     
     if (!nextReward) {
-      alert('❌ No rewards left! Please add more reward codes to your sheet.');
+      alert('❌ No rewards left! Please add more reward codes.');
       return;
     }
     
@@ -291,7 +264,6 @@
     
     if (!confirm(`Approve order ${orderId} with reward: ${rewardCode} (${rewardValue})?`)) return;
     
-    // Find the order to get phone number
     let orders = JSON.parse(localStorage.getItem('nrx_orders') || '[]');
     let orderPhone = "";
     let orderName = "";
@@ -327,30 +299,25 @@
     
     if (orderPhone) {
       if (confirm(`Send reward code to ${orderName} via WhatsApp?`)) {
-        sendRewardWhatsApp(orderId, rewardCode, rewardValue, orderPhone);
+        sendWhatsApp(orderPhone, orderId, rewardCode, rewardValue);
       }
-    } else {
-      alert("⚠️ No phone number found for this order.");
     }
     
-    // Refresh rewards and orders
-    await loadRewards();
+    loadRewards();
     loadOrders();
   }
   
-  function sendRewardWhatsApp(orderId, rewardCode, rewardValue, phone) {
+  function sendWhatsApp(phone, orderId, rewardCode, rewardValue) {
     if (!phone || phone === "") {
-      alert("❌ No phone number available for this customer.");
+      alert("❌ No phone number available.");
       return;
     }
     
-    // Clean phone number (remove spaces and special chars)
-    const cleanPhone = phone.replace(/\s/g, '').replace(/^0/, '260');
+    let cleanPhone = phone.replace(/\s/g, '').replace(/^0/, '260');
     
     const msg = `🔥 NRX DROP 🔥\n\n✅ Your order ${orderId} has been APPROVED!\n\n🎁 REWARD CODE: ${rewardCode}\n💰 VALUE: ${rewardValue}\n\nTo claim your reward, go to the NRX website and enter your code in the Redeem tab.\n\nThank you for shopping with NRX! 🚀`;
     
     const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(msg)}`;
-    console.log("Opening WhatsApp:", whatsappUrl);
     window.open(whatsappUrl, "_blank");
   }
   
@@ -376,12 +343,15 @@
     });
   }
   
-  // Make functions globally available
-  window.approveOrderWithAutoReward = approveOrderWithAutoReward;
-  window.sendRewardWhatsApp = sendRewardWhatsApp;
+  // Make functions global
+  window.checkLogin = checkLogin;
+  window.logout = logout;
+  window.loadOrders = loadOrders;
+  window.loadRewards = loadRewards;
+  window.approveOrder = approveOrder;
+  window.sendWhatsApp = sendWhatsApp;
   window.openModal = openModal;
   window.closeModal = closeModal;
-  window.getNextRewardPreview = getNextRewardPreview;
 </script>
 </body>
 </html>
