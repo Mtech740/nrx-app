@@ -26,7 +26,7 @@
     .status-pending { background: #854d0e; color: #fef3c7; }
     .status-approved { background: #14532d; color: #bbf7d0; }
     .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 12px 0; }
-    .info-item { font-size: 0.85rem; }
+    .info-item { font-size: 0.85rem; word-break: break-word; }
     .info-label { color: #888; }
     .screenshot-preview { margin: 12px 0; text-align: center; }
     .screenshot-preview img { max-width: 200px; max-height: 150px; border-radius: 12px; cursor: pointer; border: 1px solid #333; }
@@ -41,6 +41,7 @@
     .empty { text-align: center; padding: 40px; color: #888; }
     .logout-btn { background: #ef4444; border: none; padding: 8px 16px; border-radius: 40px; cursor: pointer; font-weight: 600; margin-bottom: 20px; color: white; }
     .admin-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 20px; }
+    .phone-number { font-family: monospace; background: #1a1a1e; padding: 4px 8px; border-radius: 8px; }
   </style>
 </head>
 <body>
@@ -78,75 +79,205 @@
       document.getElementById('loginError').innerHTML = '❌ Wrong PIN! Try again.';
     }
   }
+  
   function logout() {
     localStorage.removeItem('nrx_admin_logged_in');
     document.getElementById('adminContent').style.display = 'none';
     document.getElementById('loginBox').style.display = 'block';
     document.getElementById('adminPin').value = '';
   }
+  
   if (localStorage.getItem('nrx_admin_logged_in') === 'true') {
     document.getElementById('loginBox').style.display = 'none';
     document.getElementById('adminContent').style.display = 'block';
     loadOrders();
   }
+  
   let allOrders = [];
+  
   async function loadOrders() {
     const ordersDiv = document.getElementById('orders');
     ordersDiv.innerHTML = '<div class="empty">⏳ Loading orders...</div>';
+    
     try {
       const response = await fetch(SHEETBEST_URL);
       const apiOrders = await response.json();
-      allOrders = (apiOrders && apiOrders.length) ? apiOrders : JSON.parse(localStorage.getItem('nrx_orders') || '[]');
+      console.log("API Orders:", apiOrders);
+      
+      if (apiOrders && apiOrders.length > 0) {
+        allOrders = apiOrders;
+        localStorage.setItem('nrx_orders', JSON.stringify(allOrders));
+      } else {
+        allOrders = JSON.parse(localStorage.getItem('nrx_orders') || '[]');
+      }
     } catch(e) {
+      console.log("API error, using local storage:", e);
       allOrders = JSON.parse(localStorage.getItem('nrx_orders') || '[]');
     }
+    
+    console.log("All Orders:", allOrders);
+    
     if (allOrders.length === 0) {
-      ordersDiv.innerHTML = '<div class="empty">📭 No orders yet.</div>';
-      document.getElementById('stats').innerHTML = `<div class="stat-card"><div class="stat-number">0</div><div class="stat-label">Total Orders</div></div><div class="stat-card"><div class="stat-number">0</div><div class="stat-label">Pending</div></div><div class="stat-card"><div class="stat-number">0</div><div class="stat-label">Approved</div></div>`;
+      ordersDiv.innerHTML = '<div class="empty">📭 No orders yet. Customers will appear here after placing orders.</div>';
+      document.getElementById('stats').innerHTML = `
+        <div class="stat-card"><div class="stat-number">0</div><div class="stat-label">Total Orders</div></div>
+        <div class="stat-card"><div class="stat-number">0</div><div class="stat-label">Pending</div></div>
+        <div class="stat-card"><div class="stat-number">0</div><div class="stat-label">Approved</div></div>
+      `;
       return;
     }
-    const total = allOrders.length, pending = allOrders.filter(o => o.Status === "Pending").length, approved = allOrders.filter(o => o.Status === "Approved").length;
-    document.getElementById('stats').innerHTML = `<div class="stat-card"><div class="stat-number">${total}</div><div class="stat-label">Total Orders</div></div><div class="stat-card"><div class="stat-number">${pending}</div><div class="stat-label">Pending</div></div><div class="stat-card"><div class="stat-number">${approved}</div><div class="stat-label">Approved</div></div>`;
-    ordersDiv.innerHTML = allOrders.map(order => `
-      <div class="order-card ${order.Status === 'Pending' ? 'pending' : 'approved'}">
-        <div class="order-header"><span class="order-id">📦 ${order["Order ID"]}</span><span class="status ${order.Status === 'Pending' ? 'status-pending' : 'status-approved'}">${order.Status}</span></div>
-        <div class="info-grid">
-          <div class="info-item"><span class="info-label">👤 Customer:</span> ${escapeHtml(order.Name)}</div>
-          <div class="info-item"><span class="info-label">📞 Phone:</span> ${escapeHtml(order.Phone)}</div>
-          <div class="info-item"><span class="info-label">👕 Shirt:</span> ${escapeHtml(order.Shirt)}</div>
-          <div class="info-item"><span class="info-label">📏 Size:</span> ${order.Size}</div>
-          <div class="info-item"><span class="info-label">📍 Delivery:</span> ${order.Delivery}</div>
-          <div class="info-item"><span class="info-label">💵 Payment:</span> ${order.Payment} | K${order.Amount}</div>
-        </div>
-        ${order.Screenshot ? `<div class="screenshot-preview"><img src="${order.Screenshot.substring(0,100)}" onclick="openModal('${order.Screenshot}')"><div style="font-size:0.7rem;">Click to enlarge</div></div>` : ''}
-        ${order.Status === "Pending" ? `
-          <div class="approve-section">
-            <input type="text" id="reward-${order["Order ID"]}" placeholder="Reward Code (e.g., NRX-1001)">
-            <input type="text" id="value-${order["Order ID"]}" placeholder="Reward Value (e.g., $0.20)">
-            <button class="approve-btn" onclick="approveOrder('${order["Order ID"]}')">✅ Approve & Send Reward</button>
+    
+    const total = allOrders.length;
+    const pending = allOrders.filter(o => o.Status === "Pending").length;
+    const approved = allOrders.filter(o => o.Status === "Approved").length;
+    
+    document.getElementById('stats').innerHTML = `
+      <div class="stat-card"><div class="stat-number">${total}</div><div class="stat-label">Total Orders</div></div>
+      <div class="stat-card"><div class="stat-number">${pending}</div><div class="stat-label">Pending</div></div>
+      <div class="stat-card"><div class="stat-number">${approved}</div><div class="stat-label">Approved</div></div>
+    `;
+    
+    ordersDiv.innerHTML = allOrders.map(order => {
+      // Safe data extraction with fallbacks
+      const orderId = order["Order ID"] || order.orderId || "N/A";
+      const status = order.Status || order.status || "Pending";
+      const name = order.Name || order.name || "N/A";
+      const phone = order.Phone || order.phone || "";
+      const email = order.Email || order.email || "N/A";
+      const shirt = order.Shirt || order.shirt || order["Shirt Name"] || "N/A";
+      const size = order.Size || order.size || "N/A";
+      const delivery = order.Delivery || order.delivery || "N/A";
+      const payment = order.Payment || order.payment || "N/A";
+      const amount = order.Amount || order.amount || "180";
+      const rewardCode = order["Reward Code"] || order.rewardCode || "";
+      const rewardValue = order["Reward Value"] || order.rewardValue || "";
+      const screenshot = order.Screenshot || order.screenshot || "";
+      
+      const statusClass = status === "Pending" ? "status-pending" : "status-approved";
+      
+      return `
+        <div class="order-card ${status === 'Pending' ? 'pending' : 'approved'}">
+          <div class="order-header">
+            <span class="order-id">📦 ${orderId}</span>
+            <span class="status ${statusClass}">${status}</span>
           </div>
-        ` : `<div class="reward-badge">🎁 Reward Code: ${order["Reward Code"] || 'N/A'} | Value: ${order["Reward Value"] || 'N/A'}<button class="whatsapp-btn" onclick="sendRewardWhatsApp('${order["Order ID"]}', '${order["Reward Code"]}', '${order["Reward Value"]}', '${order.Phone}')">📱 Send via WhatsApp</button></div>`}
-      </div>`).join('');
+          <div class="info-grid">
+            <div class="info-item"><span class="info-label">👤 Customer:</span> ${escapeHtml(name)}</div>
+            <div class="info-item"><span class="info-label">📞 Phone:</span> <span class="phone-number">${escapeHtml(phone)}</span></div>
+            <div class="info-item"><span class="info-label">📧 Email:</span> ${escapeHtml(email)}</div>
+            <div class="info-item"><span class="info-label">👕 Shirt:</span> ${escapeHtml(shirt)}</div>
+            <div class="info-item"><span class="info-label">📏 Size:</span> ${escapeHtml(size)}</div>
+            <div class="info-item"><span class="info-label">📍 Delivery:</span> ${escapeHtml(delivery)}</div>
+            <div class="info-item"><span class="info-label">💵 Payment:</span> ${escapeHtml(payment)} | K${amount}</div>
+          </div>
+          ${screenshot ? `<div class="screenshot-preview"><img src="${screenshot.substring(0, 200)}" onclick="event.stopPropagation(); openModal('${screenshot}')"><div style="font-size:0.7rem;">Click to enlarge</div></div>` : '<div style="color:#888; font-size:0.7rem;">📸 No screenshot uploaded</div>'}
+          
+          ${status === "Pending" ? `
+            <div class="approve-section">
+              <input type="text" id="reward-${orderId}" placeholder="Reward Code (e.g., NRX-1001)">
+              <input type="text" id="value-${orderId}" placeholder="Reward Value (e.g., $0.20)">
+              <button class="approve-btn" onclick="approveOrder('${orderId}')">✅ Approve & Send Reward</button>
+            </div>
+          ` : `
+            <div class="reward-badge">
+              🎁 <strong>Reward Code:</strong> ${rewardCode || 'N/A'} | <strong>Value:</strong> ${rewardValue || 'N/A'}
+              ${phone ? `<button class="whatsapp-btn" onclick="sendRewardWhatsApp('${orderId}', '${rewardCode}', '${rewardValue}', '${phone}')">📱 Send via WhatsApp</button>` : ''}
+            </div>
+          `}
+        </div>
+      `;
+    }).join('');
   }
+  
   async function approveOrder(orderId) {
     const rewardCode = document.getElementById(`reward-${orderId}`).value.trim();
     const rewardValue = document.getElementById(`value-${orderId}`).value.trim();
-    if (!rewardCode || !rewardValue) { alert('❌ Please enter both reward code and value'); return; }
+    
+    if (!rewardCode || !rewardValue) {
+      alert('❌ Please enter both reward code and value');
+      return;
+    }
+    
+    // Find the order to get phone number
     let orders = JSON.parse(localStorage.getItem('nrx_orders') || '[]');
-    orders = orders.map(o => { if (o["Order ID"] === orderId) { o.Status = "Approved"; o["Reward Code"] = rewardCode; o["Reward Value"] = rewardValue; } return o; });
+    let orderPhone = "";
+    
+    orders = orders.map(o => {
+      const oId = o["Order ID"] || o.orderId;
+      if (oId === orderId) {
+        o.Status = "Approved";
+        o["Reward Code"] = rewardCode;
+        o["Reward Value"] = rewardValue;
+        orderPhone = o.Phone || o.phone || "";
+      }
+      return o;
+    });
     localStorage.setItem('nrx_orders', JSON.stringify(orders));
-    try { await fetch(`${SHEETBEST_URL}/Order ID/${orderId}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ "Status": "Approved", "Reward Code": rewardCode, "Reward Value": rewardValue }) }); } catch(e) {}
-    const order = orders.find(o => o["Order ID"] === orderId);
-    if (order && order.Phone) sendRewardWhatsApp(orderId, rewardCode, rewardValue, order.Phone);
-    alert(`✅ Order ${orderId} approved!`); loadOrders();
+    
+    try {
+      await fetch(`${SHEETBEST_URL}/Order ID/${orderId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          "Status": "Approved",
+          "Reward Code": rewardCode,
+          "Reward Value": rewardValue
+        })
+      });
+    } catch(e) {
+      console.log("API update failed, but saved locally");
+    }
+    
+    alert(`✅ Order ${orderId} approved!\n\nReward Code: ${rewardCode}\nReward Value: ${rewardValue}`);
+    
+    if (orderPhone) {
+      if (confirm("Send reward code via WhatsApp to customer?")) {
+        sendRewardWhatsApp(orderId, rewardCode, rewardValue, orderPhone);
+      }
+    } else {
+      alert("⚠️ No phone number found for this order.");
+    }
+    
+    loadOrders();
   }
+  
   function sendRewardWhatsApp(orderId, rewardCode, rewardValue, phone) {
+    if (!phone || phone === "") {
+      alert("❌ No phone number available for this customer.");
+      return;
+    }
+    
+    // Clean phone number (remove spaces and special chars)
+    const cleanPhone = phone.replace(/\s/g, '').replace(/^0/, '260');
+    
     const msg = `🔥 NRX DROP 🔥\n\n✅ Your order ${orderId} has been APPROVED!\n\n🎁 REWARD CODE: ${rewardCode}\n💰 VALUE: ${rewardValue}\n\nTo claim your reward, go to the NRX website and enter your code in the Redeem tab.\n\nThank you for shopping with NRX! 🚀`;
-    window.open(`https://wa.me/${phone.replace(/\s/g, '')}?text=${encodeURIComponent(msg)}`, "_blank");
+    
+    const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(msg)}`;
+    console.log("Opening WhatsApp:", whatsappUrl);
+    window.open(whatsappUrl, "_blank");
   }
-  function openModal(imgSrc) { document.getElementById("imageModal").style.display = "flex"; document.getElementById("modalImage").src = imgSrc; }
-  function closeModal() { document.getElementById("imageModal").style.display = "none"; }
-  function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, function(m) { if (m==='&') return '&amp;'; if (m==='<') return '&lt;'; if (m==='>') return '&gt;'; return m; }); }
+  
+  function openModal(imgSrc) {
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImage");
+    modal.style.display = "flex";
+    modalImg.src = imgSrc;
+  }
+  
+  function closeModal() {
+    const modal = document.getElementById("imageModal");
+    modal.style.display = "none";
+  }
+  
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
 </script>
 </body>
 </html>
