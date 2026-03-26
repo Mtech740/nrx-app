@@ -34,7 +34,6 @@
       position: relative;
       z-index: 2;
     }
-    /* Header */
     .navbar {
       display: flex;
       justify-content: space-between;
@@ -72,7 +71,6 @@
       font-size: 0.75rem;
       border: 1px solid rgba(34,197,94,0.4);
     }
-    /* WhatsApp Support Button */
     .whatsapp-support {
       position: fixed;
       bottom: 24px;
@@ -95,7 +93,6 @@
     .whatsapp-support a:hover {
       transform: scale(1.05);
     }
-    /* Hero */
     .hero {
       text-align: center;
       padding: 48px 0 32px;
@@ -121,7 +118,6 @@
       font-size: 0.7rem;
       margin-top: 16px;
     }
-    /* Gallery */
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -177,7 +173,6 @@
       font-weight: 800;
       color: #facc15;
     }
-    /* Tabs */
     .tabs {
       display: flex;
       justify-content: center;
@@ -198,7 +193,6 @@
       color: #000;
       border-color: #22c55e;
     }
-    /* Forms */
     .form-container {
       background: #0c0c0e;
       border-radius: 32px;
@@ -325,7 +319,6 @@
     <div class="badge">⚡ LIMITED EDITION | K180</div>
   </div>
 
-  <!-- WhatsApp Support Button -->
   <div class="whatsapp-support">
     <a href="https://wa.me/260772566084?text=Hello%20NRX%20Support%2C%20I%20need%20help%20with%20my%20order" target="_blank">
       📱 Need Help? Chat with Support
@@ -338,7 +331,6 @@
     <div class="security-badge">🔐 REWARD GIVEN AFTER PAYMENT VERIFICATION</div>
   </div>
 
-  <!-- REFERRAL BANNER -->
   <div class="referral-banner">
     <div>
       🔗 <strong>Your Referral Code:</strong><br>
@@ -348,7 +340,6 @@
     <button class="copy-btn" id="copyReferralBtn">📋 Copy Code</button>
   </div>
 
-  <!-- GALLERY - YOUR NRX SHIRT IMAGES -->
   <div class="gallery" id="shirtGallery">
     <div class="shirt-card" data-shirt="Black" data-name="NRX Onyx Black" data-url="https://i.postimg.cc/QF1NfQ52/file-000000000bb071f587d3192da8b5aff2.png">
       <div class="shirt-img">
@@ -402,7 +393,6 @@
     <div class="tab" data-tab="redeem">🎁 UNLOCK REWARD</div>
   </div>
 
-  <!-- BUY SECTION -->
   <div id="buy" class="form-container">
     <h2>🛒 Place Your Order</h2>
     <div class="form-row">
@@ -455,7 +445,6 @@
     <div id="result" class="result-box"></div>
   </div>
 
-  <!-- REDEEM SECTION -->
   <div id="redeem" class="form-container hidden">
     <h2>🔓 Unlock Your Reward</h2>
     <p>Enter the reward code you received after payment verification:</p>
@@ -470,13 +459,9 @@
 </div>
 
 <script>
-  // ======================= YOUR SHEET.BEST API =======================
   const SHEETBEST_URL = "https://api.sheetbest.com/sheets/e440b21b-2b2b-466e-8849-1fa3dc3124e6";
-  
-  // Store orders locally as backup
   let localOrders = JSON.parse(localStorage.getItem('nrx_orders') || '[]');
   
-  // ======================= REFERRAL SYSTEM =======================
   function getUserReferralCode() {
     let code = localStorage.getItem('nrx_user_code');
     if (!code) {
@@ -492,10 +477,8 @@
     alert('✅ Referral code copied! Share with friends to earn bonuses.');
   };
   
-  // ======================= SHIRT SELECTION =======================
   let selectedShirt = "Black";
   let selectedShirtName = "NRX Onyx Black";
-  let selectedShirtUrl = "";
   
   document.querySelectorAll('.shirt-card').forEach(card => {
     card.addEventListener('click', () => {
@@ -503,7 +486,6 @@
       card.classList.add('selected');
       selectedShirt = card.dataset.shirt;
       selectedShirtName = card.dataset.name;
-      selectedShirtUrl = card.dataset.url;
       document.getElementById('shirtColorSelect').value = selectedShirt;
     });
   });
@@ -511,17 +493,12 @@
   document.getElementById('shirtColorSelect').onchange = (e) => {
     selectedShirt = e.target.value;
     const shirtMap = {
-      'Black': { name: 'NRX Onyx Black', url: 'https://i.postimg.cc/QF1NfQ52/file-000000000bb071f587d3192da8b5aff2.png' },
-      'White': { name: 'NRX Arctic White', url: 'https://i.postimg.cc/bZkYmxkj/file-000000000ecc722fa0aa9ba18400aa71.png' },
-      'Gold': { name: 'NRX Golden Era', url: 'https://i.postimg.cc/gnfkySwV/file-000000006e8c71fd8e3efd99a47710e9.png' },
-      'Red': { name: 'NRX Crimson', url: 'https://i.postimg.cc/3kmrtXmT/file-0000000086d0722f9c1bac970b3af52f.png' },
-      'Blue': { name: 'NRX Cobalt Blue', url: 'https://i.postimg.cc/gx8cgV89/file-00000000897c71f7be4c0ed9a59f2619.png' }
+      'Black': 'NRX Onyx Black', 'White': 'NRX Arctic White', 'Gold': 'NRX Golden Era',
+      'Red': 'NRX Crimson', 'Blue': 'NRX Cobalt Blue'
     };
-    selectedShirtName = shirtMap[selectedShirt]?.name || selectedShirt;
-    selectedShirtUrl = shirtMap[selectedShirt]?.url || '';
+    selectedShirtName = shirtMap[selectedShirt] || selectedShirt;
   };
   
-  // ======================= PAYMENT DETAILS =======================
   const paymentDetailsMap = {
     MTN: { number: "076 9939546", name: "Mumba Sampa" },
     Airtel: { number: "0772566084", name: "Mumba Sampa" }
@@ -535,13 +512,12 @@
       ${method}: ${paymentDetailsMap[method].number}<br>
       Name: ${paymentDetailsMap[method].name}<br>
       Amount: K180 (add K40 if delivery selected)<br>
-      <span style="color:#facc15;">✅ After transfer, upload screenshot below and submit order</span>`;
+      <span style="color:#facc15;">✅ After transfer, upload screenshot below</span>`;
     } else {
       details.innerHTML = '💰 Select payment method above to see details';
     }
   };
   
-  // ======================= FILE UPLOAD =======================
   let uploadedScreenshot = null;
   const uploadArea = document.getElementById('uploadArea');
   const fileInput = document.getElementById('screenshot');
@@ -561,13 +537,10 @@
     }
   };
   
-  // ======================= ORDER SUBMISSION =======================
   async function submitOrder() {
     const name = document.getElementById('fullName').value.trim();
     const phone = document.getElementById('phone').value.trim();
     const email = document.getElementById('email').value.trim();
-    const shirtColor = selectedShirt;
-    const shirtName = selectedShirtName;
     const size = document.getElementById('sizeSelect').value;
     const delivery = document.getElementById('deliverySelect').value;
     const paymentMethod = document.getElementById('paymentSelect').value;
@@ -575,7 +548,7 @@
     const resultDiv = document.getElementById('result');
     const submitBtn = document.getElementById('submitBtn');
     
-    if (!name || !phone || !shirtColor || !size || !delivery || !paymentMethod || !uploadedScreenshot) {
+    if (!name || !phone || !selectedShirt || !size || !delivery || !paymentMethod || !uploadedScreenshot) {
       resultDiv.innerHTML = '❌ Please fill all required fields and upload payment screenshot';
       resultDiv.className = 'result-box error';
       return;
@@ -587,22 +560,11 @@
     const userReferralCode = getUserReferralCode();
     
     const orderData = {
-      "Order ID": orderId,
-      "Date": new Date().toISOString(),
-      "Status": "Pending",
-      "Name": name,
-      "Phone": phone,
-      "Email": email,
-      "Shirt": shirtName,
-      "Size": size,
-      "Delivery": delivery,
-      "Payment": paymentMethod,
-      "Amount": total,
-      "Reward Code": "",
-      "Reward Value": "",
-      "Referral Used": referralInput,
-      "User Referral Code": userReferralCode,
-      "Screenshot": uploadedScreenshot.substring(0, 200) + "..."
+      "Order ID": orderId, "Date": new Date().toISOString(), "Status": "Pending",
+      "Name": name, "Phone": phone, "Email": email, "Shirt": selectedShirtName,
+      "Size": size, "Delivery": delivery, "Payment": paymentMethod, "Amount": total,
+      "Reward Code": "", "Reward Value": "", "Referral Used": referralInput,
+      "User Referral Code": userReferralCode, "Screenshot": uploadedScreenshot.substring(0, 200)
     };
     
     resultDiv.innerHTML = '⏳ Submitting order...';
@@ -610,98 +572,30 @@
     submitBtn.disabled = true;
     
     try {
-      const response = await fetch(SHEETBEST_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(orderData)
-      });
-      
-      if (response.ok) {
-        localOrders.push(orderData);
-        localStorage.setItem('nrx_orders', JSON.stringify(localOrders));
-        
-        resultDiv.innerHTML = `
-          ✅ <strong>ORDER RECEIVED!</strong><br><br>
-          📦 <strong>Order ID:</strong> ${orderId}<br>
-          📍 <strong>Status:</strong> <span style="color:#facc15;">⏳ PENDING VERIFICATION</span><br>
-          💰 <strong>Amount:</strong> K${total}<br><br>
-          🔒 <strong>Your reward code will be sent AFTER payment is verified.</strong><br>
-          📸 Screenshot submitted<br><br>
-          ⏱️ Verification time: Usually within 24 hours.<br>
-          📲 You will receive your reward code via WhatsApp after confirmation.<br><br>
-          🔗 <strong>Your Referral Code:</strong> ${userReferralCode}<br>
-          Share this code with friends to earn bonuses!<br><br>
-          📞 <strong>Need help?</strong> Contact us on WhatsApp: 0772566084
-        `;
-        resultDiv.className = 'result-box pending';
-        
-        // Reset form
-        document.getElementById('fullName').value = '';
-        document.getElementById('phone').value = '';
-        document.getElementById('email').value = '';
-        document.getElementById('referralInput').value = '';
-        document.getElementById('sizeSelect').value = '';
-        document.getElementById('deliverySelect').value = '';
-        document.getElementById('paymentSelect').value = '';
-        uploadedScreenshot = null;
-        document.getElementById('fileName').innerHTML = '';
-        fileInput.value = '';
-        
-      } else {
-        localOrders.push(orderData);
-        localStorage.setItem('nrx_orders', JSON.stringify(localOrders));
-        
-        resultDiv.innerHTML = `
-          ✅ <strong>ORDER RECEIVED! (Saved Locally)</strong><br><br>
-          📦 <strong>Order ID:</strong> ${orderId}<br>
-          📍 <strong>Status:</strong> <span style="color:#facc15;">⏳ PENDING VERIFICATION</span><br>
-          💰 <strong>Amount:</strong> K${total}<br><br>
-          🔒 Your order has been saved. Admin will verify payment shortly.<br>
-          🔗 <strong>Your Referral Code:</strong> ${userReferralCode}<br>
-          Share this code with friends to earn bonuses!<br><br>
-          📞 <strong>Need help?</strong> Contact us on WhatsApp: 0772566084
-        `;
-        resultDiv.className = 'result-box pending';
-      }
-      
-    } catch (error) {
-      console.error("Error:", error);
+      await fetch(SHEETBEST_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(orderData) });
       localOrders.push(orderData);
       localStorage.setItem('nrx_orders', JSON.stringify(localOrders));
-      
-      resultDiv.innerHTML = `
-        ✅ <strong>ORDER RECEIVED! (Saved Locally)</strong><br><br>
-        📦 <strong>Order ID:</strong> ${orderId}<br>
-        📍 <strong>Status:</strong> <span style="color:#facc15;">⏳ PENDING VERIFICATION</span><br>
-        💰 <strong>Amount:</strong> K${total}<br><br>
-        🔒 Your order has been saved. Admin will verify payment shortly.<br>
-        🔗 <strong>Your Referral Code:</strong> ${userReferralCode}<br>
-        Share this code with friends to earn bonuses!<br><br>
-        📞 <strong>Need help?</strong> Contact us on WhatsApp: 0772566084
-      `;
+      resultDiv.innerHTML = `✅ ORDER RECEIVED!<br><br>📦 Order ID: ${orderId}<br>📍 Status: ⏳ PENDING VERIFICATION<br>💰 Amount: K${total}<br><br>🔒 Your reward code will be sent AFTER payment is verified.<br>🔗 Your Referral Code: ${userReferralCode}<br><br>📞 Need help? Contact us on WhatsApp: 0772566084`;
       resultDiv.className = 'result-box pending';
-    } finally {
-      submitBtn.disabled = false;
-    }
+      document.getElementById('fullName').value = ''; document.getElementById('phone').value = ''; document.getElementById('email').value = '';
+      document.getElementById('referralInput').value = ''; document.getElementById('sizeSelect').value = ''; document.getElementById('deliverySelect').value = '';
+      document.getElementById('paymentSelect').value = ''; uploadedScreenshot = null; document.getElementById('fileName').innerHTML = ''; fileInput.value = '';
+    } catch (error) {
+      localOrders.push(orderData); localStorage.setItem('nrx_orders', JSON.stringify(localOrders));
+      resultDiv.innerHTML = `✅ ORDER RECEIVED! (Saved Locally)<br><br>📦 Order ID: ${orderId}<br>📍 Status: ⏳ PENDING VERIFICATION<br>💰 Amount: K${total}<br><br>🔗 Your Referral Code: ${userReferralCode}<br><br>📞 Need help? Contact us on WhatsApp: 0772566084`;
+      resultDiv.className = 'result-box pending';
+    } finally { submitBtn.disabled = false; }
   }
   
   document.getElementById('submitBtn').onclick = submitOrder;
   
-  // ======================= REDEEM =======================
   function redeemReward() {
     const code = document.getElementById('rewardCode').value.trim().toUpperCase();
     const resultDiv = document.getElementById('redeemResult');
-    
-    if (!code) {
-      resultDiv.innerHTML = '❌ Please enter a reward code';
-      resultDiv.className = 'result-box error';
-      return;
-    }
-    
+    if (!code) { resultDiv.innerHTML = '❌ Please enter a reward code'; resultDiv.className = 'result-box error'; return; }
     let found = localOrders.find(o => o["Reward Code"] === code);
-    
     if (found && found.Status === "Approved") {
-      resultDiv.innerHTML = `🎉 <strong>REWARD CLAIMED!</strong> 🎉<br><br>Your reward: ${found["Reward Value"]}<br>Thank you for shopping with NRX! 🔥`;
+      resultDiv.innerHTML = `🎉 REWARD CLAIMED! 🎉<br><br>Your reward: ${found["Reward Value"]}<br>Thank you for shopping with NRX! 🔥`;
       resultDiv.className = 'result-box success';
     } else if (found && found.Status === "Pending") {
       resultDiv.innerHTML = '⏳ This order is pending verification. Please wait for admin approval.';
@@ -714,7 +608,6 @@
   
   document.getElementById('redeemBtn').onclick = redeemReward;
   
-  // ======================= TABS =======================
   document.querySelectorAll('.tab').forEach(tab => {
     tab.onclick = () => {
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -724,12 +617,6 @@
       document.getElementById(tab.dataset.tab).classList.remove('hidden');
     };
   });
-  
-  // ======================= ADMIN HELPER =======================
-  window.viewOrders = () => {
-    console.log('=== NRX ORDERS ===');
-    console.log(JSON.parse(localStorage.getItem('nrx_orders') || '[]'));
-  };
 </script>
 </body>
 </html>
