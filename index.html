@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>NRX | Premium Streetwear - Limited Edition Drops</title>
-  <meta name="description" content="NRX Premium Streetwear - Limited edition T-shirts. Buy now and get rewards up to $10. Free pickup in Lusaka.">
+  <title>NRX | Premium Streetwear</title>
+  <meta name="description" content="NRX Premium Streetwear - Limited edition T-shirts. Free pickup in Lusaka. Earn $1 per video wearing NRX.">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
@@ -16,48 +16,25 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background: #0a0a0a;
-      color: #ffffff;
+      background: #f5f5f7;
+      color: #1a1a1a;
       scroll-behavior: smooth;
-    }
-
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #1a1a1a;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #22c55e;
-      border-radius: 4px;
-    }
-
-    .bg-glow {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 30% 20%, rgba(34,197,94,0.08), transparent 70%);
-      pointer-events: none;
-      z-index: 0;
     }
 
     .container {
       max-width: 1400px;
       margin: 0 auto;
-      padding: 0 32px;
-      position: relative;
-      z-index: 2;
+      padding: 0 40px;
     }
 
+    /* Navigation */
     .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       padding: 20px 0;
-      border-bottom: 1px solid rgba(34,197,94,0.2);
+      border-bottom: 1px solid #e5e5e7;
     }
 
     .logo {
@@ -67,13 +44,18 @@
     }
 
     .logo img {
-      height: 50px;
+      height: 45px;
       width: auto;
-      transition: transform 0.3s ease;
     }
 
-    .logo img:hover {
-      transform: scale(1.05);
+    .logo-text {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #1a1a1a, #333);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
     }
 
     .nav-links {
@@ -83,14 +65,14 @@
     }
 
     .nav-links a {
-      color: #ffffff;
+      color: #1a1a1a;
       text-decoration: none;
       font-weight: 500;
       transition: color 0.3s;
     }
 
     .nav-links a:hover {
-      color: #22c55e;
+      color: #000;
     }
 
     .whatsapp-nav {
@@ -100,6 +82,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      color: white !important;
     }
 
     .whatsapp-nav:hover {
@@ -107,107 +90,133 @@
       color: white !important;
     }
 
+    /* Hero Section */
     .hero {
       text-align: center;
-      padding: 60px 0 40px;
+      padding: 80px 0 60px;
+      background: linear-gradient(135deg, #f8f9fa, #ffffff);
     }
 
     .hero h1 {
-      font-size: 3.5rem;
+      font-size: 4rem;
       font-weight: 800;
-      background: linear-gradient(135deg, #ffffff, #22c55e);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
+      letter-spacing: -1px;
+      color: #1a1a1a;
       margin-bottom: 16px;
     }
 
+    .hero h1 span {
+      background: linear-gradient(135deg, #000, #333);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
     .hero p {
-      color: #a0a0a0;
+      color: #666;
       font-size: 1.1rem;
       max-width: 600px;
       margin: 0 auto;
     }
 
-    .reward-tiers {
-      background: linear-gradient(135deg, #1a2a1f, #0f2a1f);
-      border-radius: 20px;
-      padding: 20px 32px;
-      margin: 30px 0;
+    /* Video Bonus Banner */
+    .video-bonus {
+      background: linear-gradient(135deg, #000, #1a1a1a);
+      border-radius: 24px;
+      padding: 40px;
+      margin: 40px 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 20px;
-      border: 1px solid rgba(34,197,94,0.3);
+      gap: 30px;
+      color: white;
     }
 
-    .reward-tier-item {
-      text-align: center;
+    .video-bonus-content {
+      flex: 1;
     }
 
-    .reward-tier-value {
-      font-size: 1.5rem;
+    .video-bonus-content h2 {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+
+    .video-bonus-content p {
+      color: #ccc;
+      font-size: 1rem;
+      margin-bottom: 16px;
+    }
+
+    .video-bonus-highlight {
+      font-size: 2.5rem;
       font-weight: 800;
       color: #facc15;
     }
 
-    .reward-tier-label {
-      font-size: 0.8rem;
-      color: #aaa;
+    .video-bonus-icon {
+      font-size: 4rem;
+      background: rgba(255,255,255,0.1);
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .jackpot-badge {
-      background: #f59e0b;
+    .bonus-tag {
+      display: inline-block;
+      background: #facc15;
       color: #000;
-      padding: 4px 12px;
+      padding: 6px 16px;
       border-radius: 40px;
       font-weight: 600;
-      font-size: 0.7rem;
+      font-size: 0.8rem;
+      margin-top: 12px;
     }
 
+    /* Gallery Section */
     .section-title {
       font-size: 2rem;
       font-weight: 700;
-      margin: 40px 0 24px;
+      margin: 60px 0 32px;
       text-align: center;
-    }
-
-    .section-title span {
-      color: #22c55e;
+      color: #1a1a1a;
     }
 
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 30px;
-      margin: 40px 0;
+      margin: 40px 0 60px;
     }
 
     .shirt-card {
-      background: #111113;
-      border-radius: 24px;
+      background: #ffffff;
+      border-radius: 20px;
       overflow: hidden;
-      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      border: 1px solid #2a2a2e;
+      transition: all 0.4s ease;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
       cursor: pointer;
+      border: 1px solid #eee;
     }
 
     .shirt-card:hover {
       transform: translateY(-8px);
-      border-color: #22c55e;
-      box-shadow: 0 20px 35px -12px rgba(34,197,94,0.2);
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.15);
+      border-color: #ddd;
     }
 
     .shirt-card.selected {
-      border-color: #22c55e;
-      box-shadow: 0 0 0 2px rgba(34,197,94,0.3);
+      border: 2px solid #000;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
     }
 
     .shirt-img {
       width: 100%;
       aspect-ratio: 1 / 1;
-      background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+      background: #fafafa;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -228,57 +237,23 @@
     .shirt-info {
       padding: 20px;
       text-align: center;
+      border-top: 1px solid #f0f0f0;
     }
 
     .shirt-name {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 600;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
+      color: #1a1a1a;
     }
 
     .shirt-price {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: #facc15;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #000;
     }
 
-    .video-bonus {
-      background: linear-gradient(135deg, #1e2a3a, #0f1a2a);
-      border-radius: 24px;
-      padding: 32px;
-      margin: 40px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 24px;
-      border: 1px solid #3b82f6;
-    }
-
-    .video-bonus-content {
-      flex: 1;
-    }
-
-    .video-bonus-content h3 {
-      font-size: 1.5rem;
-      margin-bottom: 8px;
-    }
-
-    .video-bonus-content p {
-      color: #aaa;
-    }
-
-    .video-bonus-icon {
-      font-size: 3rem;
-      background: #3b82f6;
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
+    /* Tabs */
     .tabs {
       display: flex;
       justify-content: center;
@@ -289,25 +264,28 @@
     .tab {
       padding: 12px 32px;
       font-weight: 600;
-      background: #111113;
+      background: #ffffff;
       border-radius: 60px;
       cursor: pointer;
       transition: 0.2s;
-      border: 1px solid #2a2a2e;
+      border: 1px solid #e5e5e7;
+      color: #666;
     }
 
     .tab.active {
-      background: #22c55e;
-      color: #000;
-      border-color: #22c55e;
+      background: #000;
+      color: white;
+      border-color: #000;
     }
 
+    /* Form Container */
     .form-container {
-      background: #0c0c0e;
-      border-radius: 32px;
-      padding: 32px;
-      border: 1px solid #2a2a2e;
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 40px;
+      border: 1px solid #e5e5e7;
       margin-bottom: 40px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
     }
 
     .form-row {
@@ -318,11 +296,11 @@
     }
 
     input, select {
-      background: #010101;
-      border: 1px solid #2c2c30;
+      background: #f8f9fa;
+      border: 1px solid #e5e5e7;
       padding: 14px 18px;
-      border-radius: 16px;
-      color: white;
+      border-radius: 12px;
+      color: #1a1a1a;
       font-size: 1rem;
       width: 100%;
       outline: none;
@@ -330,22 +308,22 @@
     }
 
     input:focus, select:focus {
-      border-color: #22c55e;
-      box-shadow: 0 0 0 2px rgba(34,197,94,0.2);
+      border-color: #000;
+      box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
     }
 
     .payment-details {
-      background: #1a2a1f;
+      background: #f8f9fa;
       padding: 16px;
       border-radius: 16px;
       margin: 16px 0;
-      border-left: 3px solid #22c55e;
+      border-left: 3px solid #000;
     }
 
     .upload-area {
-      background: #0a0a0c;
-      border: 2px dashed #22c55e;
-      border-radius: 20px;
+      background: #f8f9fa;
+      border: 2px dashed #ddd;
+      border-radius: 16px;
       padding: 24px;
       text-align: center;
       cursor: pointer;
@@ -354,16 +332,16 @@
     }
 
     .upload-area:hover {
-      background: #111;
-      border-color: #facc15;
+      background: #f0f0f0;
+      border-color: #000;
     }
 
     button {
-      background: linear-gradient(95deg, #22c55e, #16a34a);
+      background: #000;
       border: none;
       padding: 16px;
-      border-radius: 60px;
-      font-weight: 700;
+      border-radius: 40px;
+      font-weight: 600;
       font-size: 1rem;
       color: white;
       cursor: pointer;
@@ -373,8 +351,8 @@
     }
 
     button:hover {
+      background: #333;
       transform: translateY(-2px);
-      box-shadow: 0 10px 20px -8px rgba(34,197,94,0.4);
     }
 
     button:disabled {
@@ -389,12 +367,12 @@
       border-radius: 16px;
     }
 
-    .pending { background: #854d0e; border-left: 4px solid #facc15; }
-    .success { background: #14532d; border-left: 4px solid #4ade80; }
-    .error { background: #7f1a1a; border-left: 4px solid #f87171; }
+    .pending { background: #fff3e0; border-left: 4px solid #facc15; color: #663c00; }
+    .success { background: #e8f5e9; border-left: 4px solid #4caf50; color: #1e4620; }
+    .error { background: #ffebee; border-left: 4px solid #f44336; color: #b71c1c; }
 
     .referral-banner {
-      background: linear-gradient(135deg, #1e3a2f, #0f2a1f);
+      background: #f8f9fa;
       border-radius: 20px;
       padding: 16px 24px;
       margin: 20px 0;
@@ -403,25 +381,27 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 16px;
+      border: 1px solid #e5e5e7;
     }
 
     .referral-banner code {
-      background: #00000066;
+      background: #fff;
       padding: 8px 16px;
       border-radius: 40px;
       font-family: monospace;
       font-size: 1rem;
+      border: 1px solid #e5e5e7;
     }
 
     .copy-btn {
-      background: #22c55e;
+      background: #000;
       border: none;
       padding: 8px 20px;
       border-radius: 40px;
       cursor: pointer;
       width: auto;
       margin: 0;
-      font-weight: 600;
+      font-weight: 500;
     }
 
     .hidden { display: none; }
@@ -429,9 +409,9 @@
     footer {
       text-align: center;
       padding: 32px;
-      border-top: 1px solid #1f1f23;
+      border-top: 1px solid #e5e5e7;
       margin-top: 32px;
-      color: #666;
+      color: #888;
       font-size: 0.8rem;
     }
 
@@ -440,21 +420,13 @@
         padding: 0 20px;
       }
       .hero h1 {
-        font-size: 2rem;
+        font-size: 2.5rem;
       }
       .form-row {
         grid-template-columns: 1fr;
       }
       .gallery {
         gap: 20px;
-      }
-      .reward-tiers {
-        flex-direction: column;
-        text-align: center;
-      }
-      .video-bonus {
-        flex-direction: column;
-        text-align: center;
       }
       .navbar {
         flex-direction: column;
@@ -464,19 +436,19 @@
         flex-wrap: wrap;
         justify-content: center;
       }
-      .logo img {
-        height: 40px;
+      .video-bonus h2 {
+        font-size: 1.5rem;
       }
     }
   </style>
 </head>
 <body>
-<div class="bg-glow"></div>
 <div class="container">
-  <!-- Navigation with Logo -->
+  <!-- Navigation -->
   <div class="navbar">
     <div class="logo">
       <img src="https://i.postimg.cc/Jz4HNBqc/image-1774485418192.jpg" alt="NRX Logo">
+      <span class="logo-text">NRX</span>
     </div>
     <div class="nav-links">
       <a href="#">Home</a>
@@ -488,44 +460,17 @@
 
   <!-- Hero Section -->
   <div class="hero">
-    <h1>NRX STREETWEAR DROP</h1>
+    <h1>NRX <span>STREETWEAR</span></h1>
     <p>Premium quality tees • Limited edition • Free pickup in Lusaka</p>
   </div>
 
-  <!-- Reward Tiers Banner -->
-  <div class="reward-tiers">
-    <div class="reward-tier-item">
-      <div class="reward-tier-value">Orders 1-4</div>
-      <div class="reward-tier-label">$0.20 Reward</div>
-    </div>
-    <div class="reward-tier-item">
-      <div class="reward-tier-value">Order #5</div>
-      <div class="reward-tier-label">$5.00 Reward</div>
-    </div>
-    <div class="reward-tier-item">
-      <div class="reward-tier-value">Orders 6-999</div>
-      <div class="reward-tier-label">$0.20 Reward</div>
-    </div>
-    <div class="reward-tier-item">
-      <div class="reward-tier-value">Orders 1000-1004</div>
-      <div class="reward-tier-label">$5 - $10 Rewards</div>
-    </div>
-    <div class="reward-tier-item">
-      <div class="reward-tier-value">Orders 1005+</div>
-      <div class="reward-tier-label">$1.00 Reward</div>
-    </div>
-    <div class="reward-tier-item">
-      <div class="jackpot-badge">🎲 FRIDAY JACKPOT</div>
-      <div class="reward-tier-label">$30 Random Winner!</div>
-    </div>
-  </div>
-
-  <!-- Video Bonus Banner -->
+  <!-- Video Bonus Banner - Only Reward Shown -->
   <div class="video-bonus">
     <div class="video-bonus-content">
-      <h3>🎥 Earn $1 Per Video! 🎥</h3>
-      <p>Post a TikTok, Instagram Reel, or any content wearing your NRX t-shirt and earn $1 per video! Share your link with us to claim your bonus.</p>
-      <p style="font-size: 0.8rem; margin-top: 8px;">🔥 Unlimited videos = Unlimited earnings! Tag @NRX and get featured.</p>
+      <h2>🎥 Earn $1 Per Video! 🎥</h2>
+      <p>Post a TikTok, Instagram Reel, or any content wearing your NRX t-shirt and earn <span class="video-bonus-highlight">$1 per video</span>!</p>
+      <p>Share your link with us to claim your bonus. Unlimited videos = Unlimited earnings!</p>
+      <span class="bonus-tag">🔥 Tag @NRX to get featured</span>
     </div>
     <div class="video-bonus-icon">
       <i class="fab fa-tiktok"></i>
@@ -533,7 +478,7 @@
   </div>
 
   <!-- Gallery Section with 4K Images -->
-  <div class="section-title" id="collection">🔥 <span>NRX Collection</span> 🔥</div>
+  <div class="section-title" id="collection">🔥 Latest Drop 🔥</div>
   <div class="gallery" id="shirtGallery">
     <div class="shirt-card" data-shirt="Black" data-name="NRX Onyx Black" data-url="https://i.postimg.cc/QF1NfQ52/file-000000000bb071f587d3192da8b5aff2.png">
       <div class="shirt-img">
@@ -584,13 +529,13 @@
 
   <!-- Tabs -->
   <div class="tabs">
-    <div class="tab active" data-tab="buy">🔥 ORDER NOW</div>
+    <div class="tab active" data-tab="buy">🛒 ORDER NOW</div>
     <div class="tab" data-tab="redeem">🎁 UNLOCK REWARD</div>
   </div>
 
   <!-- Buy Section -->
   <div id="buy" class="form-container">
-    <h2>🛒 Place Your Order</h2>
+    <h2 style="margin-bottom: 24px;">Place Your Order</h2>
     <div class="form-row">
       <input type="text" id="fullName" placeholder="Full Name *">
       <input type="tel" id="phone" placeholder="Phone Number *">
@@ -632,7 +577,7 @@
     
     <div class="upload-area" id="uploadArea">
       📸 Click to upload payment screenshot<br>
-      <small style="color:#888;">After sending payment, upload proof here</small>
+      <small>After sending payment, upload proof here</small>
       <input type="file" id="screenshot" accept="image/*" style="display:none;">
     </div>
     <div id="fileName" style="font-size:0.7rem; color:#888; margin-top:6px;"></div>
@@ -654,13 +599,13 @@
     <div>
       🔗 <strong>Your Referral Code:</strong><br>
       <code id="userReferralCode">NRX-LOADING</code>
-      <span style="font-size:0.7rem;">Share & earn bonuses!</span>
+      <span>Share & earn bonuses!</span>
     </div>
     <button class="copy-btn" id="copyReferralBtn">📋 Copy Code</button>
   </div>
 
   <footer>
-    © NRX Drops | Rewards given after payment verification | Post a video wearing NRX → Earn $1 per video! | Share your referral code & earn bonuses
+    © NRX Drops | Post a video wearing NRX → Earn $1 per video! | Share your referral code & earn bonuses
   </footer>
 </div>
 
@@ -718,7 +663,7 @@
       ${method}: ${paymentDetailsMap[method].number}<br>
       Name: ${paymentDetailsMap[method].name}<br>
       Amount: K180 (add K40 if delivery selected)<br>
-      <span style="color:#facc15;">✅ After transfer, upload screenshot below</span>`;
+      <span style="color:#000;">✅ After transfer, upload screenshot below</span>`;
     } else {
       details.innerHTML = '💰 Select payment method above to see details';
     }
