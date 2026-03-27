@@ -481,48 +481,53 @@
     </div>
   </div>
 
-  <!-- Gallery Section with High Quality Images -->
+  <!-- Gallery Section - READY FOR YOUR GITHUB IMAGES -->
   <div class="section-title" id="collection">Latest Collection</div>
   <div class="gallery" id="shirtGallery">
-    <div class="shirt-card" data-shirt="Black" data-name="NRX Onyx Black" data-url="https://i.postimg.cc/QF1NfQ52/file-000000000bb071f587d3192da8b5aff2.png">
+    <!-- Black Shirt -->
+    <div class="shirt-card" data-shirt="Black" data-name="NRX Onyx Black">
       <div class="shirt-img">
-        <img src="https://i.postimg.cc/QF1NfQ52/file-000000000bb071f587d3192da8b5aff2.png" alt="NRX Black">
+        <img id="img-black" src="" alt="NRX Black" onerror="this.src='https://placehold.co/600x600/111/22c55e?text=NRX+BLACK'">
       </div>
       <div class="shirt-info">
         <div class="shirt-name">NRX Onyx Black</div>
         <div class="shirt-price">K180</div>
       </div>
     </div>
-    <div class="shirt-card" data-shirt="White" data-name="NRX Arctic White" data-url="https://i.postimg.cc/2b9DwXD3/file-000000000ecc722fa0aa9ba18400aa71.png">
+    <!-- White Shirt -->
+    <div class="shirt-card" data-shirt="White" data-name="NRX Arctic White">
       <div class="shirt-img">
-        <img src="https://i.postimg.cc/2b9DwXD3/file-000000000ecc722fa0aa9ba18400aa71.png" alt="NRX White">
+        <img id="img-white" src="" alt="NRX White" onerror="this.src='https://placehold.co/600x600/222/22c55e?text=NRX+WHITE'">
       </div>
       <div class="shirt-info">
         <div class="shirt-name">NRX Arctic White</div>
         <div class="shirt-price">K180</div>
       </div>
     </div>
-    <div class="shirt-card" data-shirt="Gold" data-name="NRX Golden Era" data-url="https://i.postimg.cc/XG1b8Dbq/file-000000006e8c71fd8e3efd99a47710e9.png">
+    <!-- Gold Shirt -->
+    <div class="shirt-card" data-shirt="Gold" data-name="NRX Golden Era">
       <div class="shirt-img">
-        <img src="https://i.postimg.cc/XG1b8Dbq/file-000000006e8c71fd8e3efd99a47710e9.png" alt="NRX Gold">
+        <img id="img-gold" src="" alt="NRX Gold" onerror="this.src='https://placehold.co/600x600/3a2a1a/facc15?text=NRX+GOLD'">
       </div>
       <div class="shirt-info">
         <div class="shirt-name">NRX Golden Era</div>
         <div class="shirt-price">K180</div>
       </div>
     </div>
-    <div class="shirt-card" data-shirt="Red" data-name="NRX Crimson" data-url="https://i.postimg.cc/9RghpNhf/file-0000000086d0722f9c1bac970b3af52f.png">
+    <!-- Red Shirt -->
+    <div class="shirt-card" data-shirt="Red" data-name="NRX Crimson">
       <div class="shirt-img">
-        <img src="https://i.postimg.cc/9RghpNhf/file-0000000086d0722f9c1bac970b3af52f.png" alt="NRX Red">
+        <img id="img-red" src="" alt="NRX Red" onerror="this.src='https://placehold.co/600x600/4a1a1a/ef4444?text=NRX+RED'">
       </div>
       <div class="shirt-info">
         <div class="shirt-name">NRX Crimson</div>
         <div class="shirt-price">K180</div>
       </div>
     </div>
-    <div class="shirt-card" data-shirt="Blue" data-name="NRX Cobalt Blue" data-url="https://i.postimg.cc/2bSYnNP6/file-00000000386871fda7f237fb9db6dd8c.png">
+    <!-- Blue Shirt -->
+    <div class="shirt-card" data-shirt="Blue" data-name="NRX Cobalt Blue">
       <div class="shirt-img">
-        <img src="https://i.postimg.cc/2bSYnNP6/file-00000000386871fda7f237fb9db6dd8c.png" alt="NRX Blue">
+        <img id="img-blue" src="" alt="NRX Blue" onerror="this.src='https://placehold.co/600x600/1a2a4a/3b82f6?text=NRX+BLUE'">
       </div>
       <div class="shirt-info">
         <div class="shirt-name">NRX Cobalt Blue</div>
@@ -618,6 +623,23 @@
   const SHEETBEST_URL = "https://api.sheetbest.com/sheets/e440b21b-2b2b-466e-8849-1fa3dc3124e6";
   let localOrders = JSON.parse(localStorage.getItem('nrx_orders') || '[]');
   
+  // ======================= SET YOUR GITHUB IMAGE URLs HERE =======================
+  // After uploading images to GitHub, replace these URLs with your raw image links
+  const IMAGE_URLS = {
+    black: "https://raw.githubusercontent.com/mtech740/nrx-app/main/images/black-shirt.png",
+    white: "https://raw.githubusercontent.com/mtech740/nrx-app/main/images/white-shirt.png",
+    gold: "https://raw.githubusercontent.com/mtech740/nrx-app/main/images/gold-shirt.png",
+    red: "https://raw.githubusercontent.com/mtech740/nrx-app/main/images/red-shirt.png",
+    blue: "https://raw.githubusercontent.com/mtech740/nrx-app/main/images/blue-shirt.png"
+  };
+  
+  // Load images
+  document.getElementById('img-black').src = IMAGE_URLS.black;
+  document.getElementById('img-white').src = IMAGE_URLS.white;
+  document.getElementById('img-gold').src = IMAGE_URLS.gold;
+  document.getElementById('img-red').src = IMAGE_URLS.red;
+  document.getElementById('img-blue').src = IMAGE_URLS.blue;
+  
   function getUserReferralCode() {
     let code = localStorage.getItem('nrx_user_code');
     if (!code) {
@@ -641,7 +663,7 @@
       document.querySelectorAll('.shirt-card').forEach(c => c.classList.remove('selected'));
       card.classList.add('selected');
       selectedShirt = card.dataset.shirt;
-      selectedShirtName = card.dataset.name;
+      selectedShirtName = card.querySelector('.shirt-name').textContent;
       document.getElementById('shirtColorSelect').value = selectedShirt;
     });
   });
