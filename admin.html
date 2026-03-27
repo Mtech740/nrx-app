@@ -17,10 +17,10 @@
     .stat-number { font-size: 2rem; font-weight: bold; color: #22c55e; }
     .stat-label { font-size: 0.8rem; color: #888; }
     .refresh-btn { background: #3b82f6; border: none; padding: 10px 24px; border-radius: 40px; cursor: pointer; font-weight: 600; margin-bottom: 24px; color: white; }
-    .refresh-rewards-btn { background: #f59e0b; border: none; padding: 10px 24px; border-radius: 40px; cursor: pointer; font-weight: 600; margin-left: 12px; color: white; }
     .order-card { background: #0c0c0e; border: 1px solid #2a2a2e; border-radius: 20px; padding: 20px; margin-bottom: 16px; }
     .order-card.pending { border-left: 4px solid #facc15; }
     .order-card.approved { border-left: 4px solid #22c55e; }
+    .order-card.jackpot { border-left: 4px solid #f59e0b; background: #1e2a1f; }
     .order-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 12px; }
     .order-id { font-family: monospace; color: #22c55e; font-weight: bold; }
     .status { padding: 4px 12px; border-radius: 40px; font-size: 0.7rem; font-weight: bold; }
@@ -32,9 +32,11 @@
     .screenshot-preview { margin: 12px 0; text-align: center; }
     .screenshot-preview img { max-width: 200px; max-height: 150px; border-radius: 12px; cursor: pointer; border: 1px solid #333; }
     .approve-section { margin-top: 16px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-    .next-reward { background: #1e3a2f; padding: 10px 16px; border-radius: 40px; font-family: monospace; flex: 1; text-align: center; }
+    .reward-preview { background: #1e3a2f; padding: 10px 16px; border-radius: 40px; flex: 1; text-align: center; font-weight: bold; }
+    .jackpot-badge { background: #f59e0b; color: #000; padding: 4px 12px; border-radius: 40px; font-size: 0.8rem; font-weight: bold; margin-left: 8px; }
     .approve-btn { background: #22c55e; border: none; padding: 10px 24px; border-radius: 40px; cursor: pointer; font-weight: 600; }
-    .reward-badge { background: #1e3a2f; padding: 8px 12px; border-radius: 12px; margin-top: 12px; font-family: monospace; }
+    .video-btn { background: #3b82f6; border: none; padding: 8px 16px; border-radius: 40px; cursor: pointer; font-weight: 600; margin-left: 8px; }
+    .reward-badge { background: #1e3a2f; padding: 8px 12px; border-radius: 12px; margin-top: 12px; }
     .whatsapp-btn { background: #25D366; border: none; padding: 8px 16px; border-radius: 40px; cursor: pointer; font-weight: 600; margin-left: 12px; }
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; }
     .modal img { max-width: 90%; max-height: 90%; border-radius: 16px; }
@@ -42,8 +44,7 @@
     .empty { text-align: center; padding: 40px; color: #888; }
     .logout-btn { background: #ef4444; border: none; padding: 8px 16px; border-radius: 40px; cursor: pointer; font-weight: 600; margin-bottom: 20px; color: white; }
     .admin-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 20px; }
-    .phone-number { font-family: monospace; background: #1a1a1e; padding: 4px 8px; border-radius: 8px; }
-    .reward-preview { background: #0f172a; padding: 8px 12px; border-radius: 40px; font-size: 0.85rem; margin-top: 8px; }
+    .reward-info { background: #1a2a1f; padding: 12px 16px; border-radius: 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
   </style>
 </head>
 <body>
@@ -52,16 +53,24 @@
     <h1>🔥 NRX Admin Dashboard</h1>
     <button class="logout-btn" onclick="logout()">🚪 Logout</button>
   </div>
+  
+  <div class="reward-info" id="rewardInfo">
+    <span>📊 Next Order #: <strong id="nextOrderNum">-</strong></span>
+    <span>🎁 Next Reward: <strong id="nextReward">-</strong></span>
+    <span>💰 Total Rewards Given: <strong id="totalRewards">0</strong></span>
+  </div>
+  
   <div class="stats" id="stats"></div>
-  <div style="margin-bottom: 20px;">
+  
+  <div style="margin-bottom: 20px; display: flex; gap: 12px; flex-wrap: wrap;">
     <button class="refresh-btn" onclick="loadOrders()">🔄 Refresh Orders</button>
-    <button class="refresh-rewards-btn" onclick="loadRewards()">🎁 Refresh Rewards</button>
+    <button class="refresh-btn" onclick="openVideoBonus()" style="background: #3b82f6;">🎥 Approve Video Bonus</button>
+    <button class="refresh-btn" onclick="showJackpotHistory()" style="background: #f59e0b;">🏆 Jackpot History</button>
   </div>
-  <div id="rewardsInfo" style="background: #1a2a1f; padding: 12px 16px; border-radius: 16px; margin-bottom: 20px;">
-    ⏳ Loading available rewards...
-  </div>
+  
   <div id="orders"></div>
 </div>
+
 <div id="loginBox" class="login-box">
   <h2>🔐 Admin Access</h2>
   <p>Enter your 4-digit PIN to continue</p>
@@ -69,24 +78,60 @@
   <button onclick="checkLogin()">Login</button>
   <div id="loginError" class="error"></div>
 </div>
+
 <div id="imageModal" class="modal" onclick="closeModal()">
   <span class="modal-close">&times;</span>
   <img id="modalImage" src="" alt="Screenshot">
 </div>
+
+<div id="videoModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:1001; justify-content:center; align-items:center;">
+  <div style="background:#0c0c0e; padding:32px; border-radius:24px; max-width:400px; margin:auto;">
+    <h3>🎥 Video Bonus Approval</h3>
+    <p>Customer posted a video wearing NRX shirt</p>
+    <input type="text" id="videoPhone" placeholder="Customer Phone Number" style="width:100%; margin:16px 0; padding:12px; border-radius:12px;">
+    <input type="text" id="videoLink" placeholder="TikTok/Instagram Link" style="width:100%; margin:16px 0; padding:12px; border-radius:12px;">
+    <button onclick="approveVideoBonus()" style="background:#22c55e; margin-top:12px;">✅ Approve $1 Bonus</button>
+    <button onclick="closeVideoModal()" style="background:#666; margin-top:8px;">Cancel</button>
+  </div>
+</div>
+
 <script>
   const ADMIN_PIN = "1234";
   const SHEETBEST_URL = "https://api.sheetbest.com/sheets/e440b21b-2b2b-466e-8849-1fa3dc3124e6";
   
-  let availableRewards = [];
   let allOrders = [];
   
+  // ======================= REWARD CALCULATOR =======================
+  function calculateReward(orderNumber) {
+    if (orderNumber <= 4) return "$0.20";
+    if (orderNumber === 5) return "$5.00";
+    if (orderNumber >= 6 && orderNumber <= 999) return "$0.20";
+    if (orderNumber === 1000) return "$5.00";
+    if (orderNumber === 1001) return "$5.00";
+    if (orderNumber === 1002) return "$10.00";
+    if (orderNumber === 1003) return "$10.00";
+    if (orderNumber === 1004) return "$5.00";
+    if (orderNumber >= 1005) return "$1.00";
+    return "$0.20";
+  }
+  
+  function isFridayJackpotWinner(orderNumber) {
+    const isFriday = new Date().getDay() === 5;
+    if (!isFriday) return false;
+    const chance = (orderNumber * 7) % 100;
+    return chance < 2;
+  }
+  
+  function generateRewardCode(orderNumber) {
+    return `NRX-${String(orderNumber).padStart(6, '0')}`;
+  }
+  
+  // ======================= LOGIN =======================
   function checkLogin() {
-    const pin = document.getElementById('adminPin').value;
-    if (pin === ADMIN_PIN) {
+    if (document.getElementById('adminPin').value === ADMIN_PIN) {
       localStorage.setItem('nrx_admin_logged_in', 'true');
       document.getElementById('loginBox').style.display = 'none';
       document.getElementById('adminContent').style.display = 'block';
-      loadRewards();
       loadOrders();
     } else {
       document.getElementById('loginError').innerHTML = '❌ Wrong PIN! Try again.';
@@ -103,59 +148,10 @@
   if (localStorage.getItem('nrx_admin_logged_in') === 'true') {
     document.getElementById('loginBox').style.display = 'none';
     document.getElementById('adminContent').style.display = 'block';
-    loadRewards();
     loadOrders();
   }
   
-  function loadRewards() {
-    const rewardsInfo = document.getElementById('rewardsInfo');
-    rewardsInfo.innerHTML = '⏳ Loading rewards...';
-    
-    // Load rewards from local storage or create default
-    let savedRewards = localStorage.getItem('nrx_rewards_list');
-    if (savedRewards) {
-      availableRewards = JSON.parse(savedRewards);
-    } else {
-      // Default rewards - you can add more here
-      availableRewards = [
-        { code: "NRX-001", reward: "$0.20", used: false },
-        { code: "NRX-002", reward: "$0.20", used: false },
-        { code: "NRX-003", reward: "$0.20", used: false },
-        { code: "NRX-004", reward: "$0.20", used: false },
-        { code: "NRX-005", reward: "$5.00", used: false },
-        { code: "NRX-006", reward: "$0.20", used: false },
-        { code: "NRX-007", reward: "$0.20", used: false },
-        { code: "NRX-008", reward: "$0.20", used: false },
-        { code: "NRX-009", reward: "$0.20", used: false },
-        { code: "NRX-010", reward: "$0.20", used: false }
-      ];
-      localStorage.setItem('nrx_rewards_list', JSON.stringify(availableRewards));
-    }
-    
-    const unusedRewards = availableRewards.filter(r => !r.used);
-    const nextReward = unusedRewards[0];
-    
-    rewardsInfo.innerHTML = `
-      🎁 <strong>Available Rewards:</strong> ${unusedRewards.length} codes remaining<br>
-      🔥 <strong>Next Reward:</strong> ${nextReward ? `${nextReward.code} (${nextReward.reward})` : '⚠️ NO REWARDS LEFT! Add more codes below.'}
-    `;
-  }
-  
-  function getNextReward() {
-    const unusedRewards = availableRewards.filter(r => !r.used);
-    if (unusedRewards.length === 0) return null;
-    
-    const next = unusedRewards[0];
-    next.used = true;
-    localStorage.setItem('nrx_rewards_list', JSON.stringify(availableRewards));
-    return next;
-  }
-  
-  function getNextRewardPreview() {
-    const unusedRewards = availableRewards.filter(r => !r.used);
-    return unusedRewards[0] || null;
-  }
-  
+  // ======================= LOAD ORDERS =======================
   async function loadOrders() {
     const ordersDiv = document.getElementById('orders');
     ordersDiv.innerHTML = '<div class="empty">⏳ Loading orders...</div>';
@@ -163,8 +159,6 @@
     try {
       const response = await fetch(SHEETBEST_URL);
       const apiOrders = await response.json();
-      console.log("API Orders:", apiOrders);
-      
       if (apiOrders && apiOrders.length > 0) {
         allOrders = apiOrders;
         localStorage.setItem('nrx_orders', JSON.stringify(allOrders));
@@ -172,12 +166,19 @@
         allOrders = JSON.parse(localStorage.getItem('nrx_orders') || '[]');
       }
     } catch(e) {
-      console.log("API error, using local storage:", e);
       allOrders = JSON.parse(localStorage.getItem('nrx_orders') || '[]');
     }
     
+    const nextOrderNum = allOrders.filter(o => o.Status === "Approved").length + 1;
+    const nextReward = calculateReward(nextOrderNum);
+    const isFriday = new Date().getDay() === 5;
+    
+    document.getElementById('nextOrderNum').innerHTML = nextOrderNum;
+    document.getElementById('nextReward').innerHTML = nextReward + (isFriday ? ' 🎲 (Friday Jackpot chance 2%)' : '');
+    document.getElementById('totalRewards').innerHTML = allOrders.filter(o => o.Status === "Approved").length;
+    
     if (allOrders.length === 0) {
-      ordersDiv.innerHTML = '<div class="empty">📭 No orders yet. Customers will appear here after placing orders.</div>';
+      ordersDiv.innerHTML = '<div class="empty">📭 No orders yet.</div>';
       document.getElementById('stats').innerHTML = `
         <div class="stat-card"><div class="stat-number">0</div><div class="stat-label">Total Orders</div></div>
         <div class="stat-card"><div class="stat-number">0</div><div class="stat-label">Pending</div></div>
@@ -196,37 +197,49 @@
       <div class="stat-card"><div class="stat-number">${approved}</div><div class="stat-label">Approved</div></div>
     `;
     
-    const nextRewardPreview = getNextRewardPreview();
-    const previewText = nextRewardPreview ? `🎁 Next: ${nextRewardPreview.code} (${nextRewardPreview.reward})` : '⚠️ No rewards left!';
-    
-    ordersDiv.innerHTML = allOrders.map(order => {
+    let approvedCount = 0;
+    ordersDiv.innerHTML = allOrders.map((order, index) => {
       const orderId = order["Order ID"] || order.orderId || "N/A";
       const status = order.Status || order.status || "Pending";
       const name = order.Name || order.name || "N/A";
       const phone = order.Phone || order.phone || "";
       const email = order.Email || order.email || "N/A";
       const shirt = order.Shirt || order.shirt || "N/A";
+      const color = order.Color || order.color || "N/A";
       const size = order.Size || order.size || "N/A";
       const delivery = order.Delivery || order.delivery || "N/A";
       const payment = order.Payment || order.payment || "N/A";
       const amount = order.Amount || order.amount || "180";
-      const rewardCode = order["Reward Code"] || order.rewardCode || "";
+      const rewardCode = order["Code Reward"] || order["Reward Code"] || order.rewardCode || "";
       const rewardValue = order["Reward Value"] || order.rewardValue || "";
       const screenshot = order.Screenshot || order.screenshot || "";
       
+      let orderNumber = 0;
+      if (status === "Approved") {
+        approvedCount++;
+        orderNumber = approvedCount;
+      } else {
+        orderNumber = approvedCount + 1;
+      }
+      
+      const isJackpot = order.Jackpot === true;
+      const willBeJackpot = status === "Pending" && isFridayJackpotWinner(orderNumber);
+      const orderReward = calculateReward(orderNumber);
+      
       const statusClass = status === "Pending" ? "status-pending" : "status-approved";
+      const cardClass = isJackpot ? "jackpot" : (status === "Pending" ? "pending" : "approved");
       
       return `
-        <div class="order-card ${status === 'Pending' ? 'pending' : 'approved'}">
+        <div class="order-card ${cardClass}">
           <div class="order-header">
-            <span class="order-id">📦 ${orderId}</span>
-            <span class="status ${statusClass}">${status}</span>
+            <span class="order-id">#${orderNumber} | 📦 ${orderId}</span>
+            <span class="status ${statusClass}">${status} ${isJackpot ? '🏆 JACKPOT!' : ''}</span>
           </div>
           <div class="info-grid">
             <div class="info-item"><span class="info-label">👤 Customer:</span> ${escapeHtml(name)}</div>
-            <div class="info-item"><span class="info-label">📞 Phone:</span> <span class="phone-number">${escapeHtml(phone)}</span></div>
+            <div class="info-item"><span class="info-label">📞 Phone:</span> ${escapeHtml(phone)}</div>
             <div class="info-item"><span class="info-label">📧 Email:</span> ${escapeHtml(email)}</div>
-            <div class="info-item"><span class="info-label">👕 Shirt:</span> ${escapeHtml(shirt)}</div>
+            <div class="info-item"><span class="info-label">👕 Shirt:</span> ${escapeHtml(shirt)} (${color})</div>
             <div class="info-item"><span class="info-label">📏 Size:</span> ${escapeHtml(size)}</div>
             <div class="info-item"><span class="info-label">📍 Delivery:</span> ${escapeHtml(delivery)}</div>
             <div class="info-item"><span class="info-label">💵 Payment:</span> ${escapeHtml(payment)} | K${amount}</div>
@@ -235,15 +248,19 @@
           
           ${status === "Pending" ? `
             <div class="approve-section">
-              <div class="next-reward" id="preview-${orderId}">
-                ${previewText}
+              <div class="reward-preview">
+                🎁 Reward for Order #${orderNumber}: <strong>${orderReward}</strong>
+                ${willBeJackpot ? '<span class="jackpot-badge">🏆 JACKPOT ELIGIBLE! 🏆</span>' : ''}
+                ${new Date().getDay() === 5 && !willBeJackpot ? '<span style="font-size:0.7rem;">🎲 Friday Jackpot chance: 2%</span>' : ''}
               </div>
-              <button class="approve-btn" onclick="approveOrder('${orderId}')">✅ Approve & Send Reward</button>
+              <button class="approve-btn" onclick="approveOrder('${orderId}', ${orderNumber})">✅ Approve & Send Reward</button>
             </div>
           ` : `
             <div class="reward-badge">
               🎁 <strong>Reward Code:</strong> ${rewardCode || 'N/A'} | <strong>Value:</strong> ${rewardValue || 'N/A'}
+              ${isJackpot ? ' 🏆 JACKPOT WINNER! 🏆' : ''}
               ${phone ? `<button class="whatsapp-btn" onclick="sendWhatsApp('${phone}', '${orderId}', '${rewardCode}', '${rewardValue}')">📱 Send via WhatsApp</button>` : ''}
+              <button class="video-btn" onclick="openVideoBonusForCustomer('${phone}')">🎥 Video Bonus</button>
             </div>
           `}
         </div>
@@ -251,18 +268,14 @@
     }).join('');
   }
   
-  async function approveOrder(orderId) {
-    const nextReward = getNextReward();
+  // ======================= APPROVE ORDER =======================
+  async function approveOrder(orderId, orderNum) {
+    const rewardValue = calculateReward(orderNum);
+    const isJackpotWinner = isFridayJackpotWinner(orderNum);
+    const finalReward = isJackpotWinner ? "$30.00" : rewardValue;
+    const rewardCode = generateRewardCode(orderNum);
     
-    if (!nextReward) {
-      alert('❌ No rewards left! Please add more reward codes.');
-      return;
-    }
-    
-    const rewardCode = nextReward.code;
-    const rewardValue = nextReward.reward;
-    
-    if (!confirm(`Approve order ${orderId} with reward: ${rewardCode} (${rewardValue})?`)) return;
+    if (!confirm(`Approve order #${orderNum} with reward: ${finalReward}?${isJackpotWinner ? ' 🏆 JACKPOT WINNER! 🏆' : ''}`)) return;
     
     let orders = JSON.parse(localStorage.getItem('nrx_orders') || '[]');
     let orderPhone = "";
@@ -272,8 +285,9 @@
       const oId = o["Order ID"] || o.orderId;
       if (oId === orderId) {
         o.Status = "Approved";
-        o["Reward Code"] = rewardCode;
-        o["Reward Value"] = rewardValue;
+        o["Code Reward"] = rewardCode;
+        o["Reward Value"] = finalReward;
+        o.Jackpot = isJackpotWinner;
         orderPhone = o.Phone || o.phone || "";
         orderName = o.Name || o.name || "";
       }
@@ -287,40 +301,92 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           "Status": "Approved",
-          "Reward Code": rewardCode,
-          "Reward Value": rewardValue
+          "Code Reward": rewardCode,
+          "Reward Value": finalReward,
+          "Jackpot": isJackpotWinner ? "Yes" : "No"
         })
       });
-    } catch(e) {
-      console.log("API update failed, but saved locally");
-    }
+    } catch(e) {}
     
-    alert(`✅ Order ${orderId} approved!\n\n🎁 Reward Code: ${rewardCode}\n💰 Value: ${rewardValue}`);
+    alert(`✅ Order #${orderNum} approved!\n\n🎁 Reward Code: ${rewardCode}\n💰 Value: ${finalReward}${isJackpotWinner ? '\n🏆 JACKPOT WINNER! 🏆' : ''}`);
     
     if (orderPhone) {
       if (confirm(`Send reward code to ${orderName} via WhatsApp?`)) {
-        sendWhatsApp(orderPhone, orderId, rewardCode, rewardValue);
+        sendWhatsApp(orderPhone, orderId, rewardCode, finalReward, isJackpotWinner);
       }
     }
     
-    loadRewards();
     loadOrders();
   }
   
-  function sendWhatsApp(phone, orderId, rewardCode, rewardValue) {
-    if (!phone || phone === "") {
+  // ======================= VIDEO BONUS =======================
+  function openVideoBonus() {
+    document.getElementById('videoModal').style.display = 'flex';
+    document.getElementById('videoPhone').value = '';
+    document.getElementById('videoLink').value = '';
+  }
+  
+  function openVideoBonusForCustomer(phone) {
+    document.getElementById('videoModal').style.display = 'flex';
+    document.getElementById('videoPhone').value = phone;
+    document.getElementById('videoLink').value = '';
+  }
+  
+  function closeVideoModal() {
+    document.getElementById('videoModal').style.display = 'none';
+  }
+  
+  function approveVideoBonus() {
+    const phone = document.getElementById('videoPhone').value.trim();
+    const videoLink = document.getElementById('videoLink').value.trim();
+    
+    if (!phone) {
+      alert("❌ Please enter customer phone number");
+      return;
+    }
+    
+    const videoRewardCode = `VIDEO-${Date.now()}`;
+    
+    alert(`✅ Video Bonus Approved!\n\n🎁 Reward: $1.00\n📱 Send to: ${phone}\n🔗 Link: ${videoLink || 'Not provided'}`);
+    
+    const msg = `🎥 NRX VIDEO BONUS 🎥\n\nThank you for posting a video wearing your NRX shirt!\n\n🎁 BONUS: $1.00\n🔑 Code: ${videoRewardCode}\n\nKeep sharing and earning more! 🔥`;
+    const whatsappUrl = `https://wa.me/${phone.replace(/\s/g, '').replace(/^0/, '260')}?text=${encodeURIComponent(msg)}`;
+    window.open(whatsappUrl, "_blank");
+    
+    closeVideoModal();
+  }
+  
+  // ======================= JACKPOT HISTORY =======================
+  function showJackpotHistory() {
+    const jackpotWinners = allOrders.filter(o => o.Jackpot === true);
+    if (jackpotWinners.length === 0) {
+      alert("🏆 No jackpot winners yet! Approve orders on Fridays for a 2% chance to win $30!");
+    } else {
+      let msg = "🏆 JACKPOT WINNERS 🏆\n\n";
+      jackpotWinners.forEach((winner, i) => {
+        msg += `${i+1}. Order ${winner["Order ID"]} - ${winner.Name || winner.name} - ${winner["Reward Value"]}\n`;
+      });
+      alert(msg);
+    }
+  }
+  
+  // ======================= WHATSAPP =======================
+  function sendWhatsApp(phone, orderId, rewardCode, rewardValue, isJackpot = false) {
+    if (!phone) {
       alert("❌ No phone number available.");
       return;
     }
     
-    let cleanPhone = phone.replace(/\s/g, '').replace(/^0/, '260');
+    const cleanPhone = phone.replace(/\s/g, '').replace(/^0/, '260');
+    const jackpotMsg = isJackpot ? "\n\n🏆 CONGRATULATIONS! You won the FRIDAY JACKPOT! 🏆" : "";
     
-    const msg = `🔥 NRX DROP 🔥\n\n✅ Your order ${orderId} has been APPROVED!\n\n🎁 REWARD CODE: ${rewardCode}\n💰 VALUE: ${rewardValue}\n\nTo claim your reward, go to the NRX website and enter your code in the Redeem tab.\n\nThank you for shopping with NRX! 🚀`;
+    const msg = `🔥 NRX DROP 🔥\n\n✅ Your order ${orderId} has been APPROVED!\n\n🎁 REWARD CODE: ${rewardCode}\n💰 VALUE: ${rewardValue}${jackpotMsg}\n\nTo claim your reward, go to the NRX website and enter your code in the Redeem tab.\n\nThank you for shopping with NRX! 🚀`;
     
     const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(msg)}`;
     window.open(whatsappUrl, "_blank");
   }
   
+  // ======================= MODAL =======================
   function openModal(imgSrc) {
     const modal = document.getElementById("imageModal");
     const modalImg = document.getElementById("modalImage");
@@ -343,15 +409,18 @@
     });
   }
   
-  // Make functions global
   window.checkLogin = checkLogin;
   window.logout = logout;
   window.loadOrders = loadOrders;
-  window.loadRewards = loadRewards;
   window.approveOrder = approveOrder;
   window.sendWhatsApp = sendWhatsApp;
   window.openModal = openModal;
   window.closeModal = closeModal;
+  window.openVideoBonus = openVideoBonus;
+  window.openVideoBonusForCustomer = openVideoBonusForCustomer;
+  window.closeVideoModal = closeVideoModal;
+  window.approveVideoBonus = approveVideoBonus;
+  window.showJackpotHistory = showJackpotHistory;
 </script>
 </body>
 </html>
