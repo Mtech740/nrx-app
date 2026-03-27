@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>NRX | Premium Streetwear</title>
-  <meta name="description" content="NRX Premium Streetwear - Limited edition T-shirts. Free pickup in Lusaka. Earn $1 per video wearing NRX.">
+  <meta name="description" content="NRX Premium Streetwear - Limited edition T-shirts. Earn $10 on every purchase. Free pickup in Lusaka.">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
@@ -16,8 +16,8 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background: #f5f5f7;
-      color: #1a1a1a;
+      background: #ffffff;
+      color: #111111;
       scroll-behavior: smooth;
     }
 
@@ -33,8 +33,8 @@
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      padding: 20px 0;
-      border-bottom: 1px solid #e5e5e7;
+      padding: 24px 0;
+      border-bottom: 1px solid #f0f0f0;
     }
 
     .logo {
@@ -44,7 +44,7 @@
     }
 
     .logo img {
-      height: 45px;
+      height: 48px;
       width: auto;
     }
 
@@ -52,10 +52,6 @@
       font-size: 24px;
       font-weight: 700;
       letter-spacing: -0.5px;
-      background: linear-gradient(135deg, #1a1a1a, #333);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
     }
 
     .nav-links {
@@ -65,17 +61,17 @@
     }
 
     .nav-links a {
-      color: #1a1a1a;
+      color: #111111;
       text-decoration: none;
       font-weight: 500;
       transition: color 0.3s;
     }
 
     .nav-links a:hover {
-      color: #000;
+      color: #666;
     }
 
-    .whatsapp-nav {
+    .support-link {
       background: #25D366;
       padding: 8px 20px;
       border-radius: 40px;
@@ -85,7 +81,7 @@
       color: white !important;
     }
 
-    .whatsapp-nav:hover {
+    .support-link:hover {
       background: #20b859;
       color: white !important;
     }
@@ -94,22 +90,17 @@
     .hero {
       text-align: center;
       padding: 80px 0 60px;
-      background: linear-gradient(135deg, #f8f9fa, #ffffff);
     }
 
     .hero h1 {
       font-size: 4rem;
       font-weight: 800;
       letter-spacing: -1px;
-      color: #1a1a1a;
       margin-bottom: 16px;
     }
 
     .hero h1 span {
-      background: linear-gradient(135deg, #000, #333);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
+      color: #000;
     }
 
     .hero p {
@@ -119,9 +110,36 @@
       margin: 0 auto;
     }
 
+    /* Reward Banner */
+    .reward-banner {
+      background: linear-gradient(135deg, #f8f9fa, #ffffff);
+      border: 1px solid #f0f0f0;
+      border-radius: 24px;
+      padding: 32px;
+      margin: 40px 0;
+      text-align: center;
+    }
+
+    .reward-banner h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .reward-amount {
+      font-size: 3rem;
+      font-weight: 800;
+      color: #000;
+      margin: 16px 0;
+    }
+
+    .reward-banner p {
+      color: #666;
+    }
+
     /* Video Bonus Banner */
     .video-bonus {
-      background: linear-gradient(135deg, #000, #1a1a1a);
+      background: #f8f9fa;
       border-radius: 24px;
       padding: 40px;
       margin: 40px 0;
@@ -130,50 +148,42 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 30px;
-      color: white;
+      border: 1px solid #f0f0f0;
     }
 
     .video-bonus-content {
       flex: 1;
     }
 
-    .video-bonus-content h2 {
-      font-size: 2rem;
+    .video-bonus-content h3 {
+      font-size: 1.8rem;
+      font-weight: 700;
       margin-bottom: 12px;
     }
 
     .video-bonus-content p {
-      color: #ccc;
+      color: #666;
       font-size: 1rem;
       margin-bottom: 16px;
     }
 
-    .video-bonus-highlight {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: #facc15;
+    .bonus-detail {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #000;
+      margin-top: 12px;
     }
 
     .video-bonus-icon {
       font-size: 4rem;
-      background: rgba(255,255,255,0.1);
+      background: #ffffff;
       width: 100px;
       height: 100px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-
-    .bonus-tag {
-      display: inline-block;
-      background: #facc15;
-      color: #000;
-      padding: 6px 16px;
-      border-radius: 40px;
-      font-weight: 600;
-      font-size: 0.8rem;
-      margin-top: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
     }
 
     /* Gallery Section */
@@ -182,35 +192,31 @@
       font-weight: 700;
       margin: 60px 0 32px;
       text-align: center;
-      color: #1a1a1a;
     }
 
     .gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
       margin: 40px 0 60px;
     }
 
     .shirt-card {
       background: #ffffff;
-      border-radius: 20px;
+      border-radius: 24px;
       overflow: hidden;
       transition: all 0.4s ease;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
       cursor: pointer;
-      border: 1px solid #eee;
+      border: 1px solid #f0f0f0;
     }
 
     .shirt-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.15);
-      border-color: #ddd;
+      transform: translateY(-6px);
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
     }
 
     .shirt-card.selected {
       border: 2px solid #000;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
     }
 
     .shirt-img {
@@ -220,7 +226,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 30px;
+      padding: 20px;
     }
 
     .shirt-img img {
@@ -231,26 +237,24 @@
     }
 
     .shirt-card:hover .shirt-img img {
-      transform: scale(1.05);
+      transform: scale(1.03);
     }
 
     .shirt-info {
       padding: 20px;
       text-align: center;
-      border-top: 1px solid #f0f0f0;
+      border-top: 1px solid #f5f5f5;
     }
 
     .shirt-name {
       font-size: 1.1rem;
       font-weight: 600;
       margin-bottom: 6px;
-      color: #1a1a1a;
     }
 
     .shirt-price {
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       font-weight: 700;
-      color: #000;
     }
 
     /* Tabs */
@@ -265,10 +269,10 @@
       padding: 12px 32px;
       font-weight: 600;
       background: #ffffff;
-      border-radius: 60px;
+      border-radius: 40px;
       cursor: pointer;
       transition: 0.2s;
-      border: 1px solid #e5e5e7;
+      border: 1px solid #e5e5e5;
       color: #666;
     }
 
@@ -283,9 +287,8 @@
       background: #ffffff;
       border-radius: 24px;
       padding: 40px;
-      border: 1px solid #e5e5e7;
+      border: 1px solid #f0f0f0;
       margin-bottom: 40px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
     }
 
     .form-row {
@@ -296,11 +299,11 @@
     }
 
     input, select {
-      background: #f8f9fa;
-      border: 1px solid #e5e5e7;
+      background: #fafafa;
+      border: 1px solid #e5e5e5;
       padding: 14px 18px;
       border-radius: 12px;
-      color: #1a1a1a;
+      color: #111;
       font-size: 1rem;
       width: 100%;
       outline: none;
@@ -309,11 +312,11 @@
 
     input:focus, select:focus {
       border-color: #000;
-      box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
+      background: #ffffff;
     }
 
     .payment-details {
-      background: #f8f9fa;
+      background: #fafafa;
       padding: 16px;
       border-radius: 16px;
       margin: 16px 0;
@@ -321,8 +324,8 @@
     }
 
     .upload-area {
-      background: #f8f9fa;
-      border: 2px dashed #ddd;
+      background: #fafafa;
+      border: 2px dashed #e5e5e5;
       border-radius: 16px;
       padding: 24px;
       text-align: center;
@@ -332,7 +335,7 @@
     }
 
     .upload-area:hover {
-      background: #f0f0f0;
+      background: #f5f5f5;
       border-color: #000;
     }
 
@@ -355,42 +358,36 @@
       transform: translateY(-2px);
     }
 
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-    }
-
     .result-box {
       margin-top: 20px;
       padding: 16px;
       border-radius: 16px;
     }
 
-    .pending { background: #fff3e0; border-left: 4px solid #facc15; color: #663c00; }
-    .success { background: #e8f5e9; border-left: 4px solid #4caf50; color: #1e4620; }
-    .error { background: #ffebee; border-left: 4px solid #f44336; color: #b71c1c; }
+    .pending { background: #fef9e6; border-left: 4px solid #f5a623; }
+    .success { background: #e8f5e9; border-left: 4px solid #4caf50; }
+    .error { background: #ffebee; border-left: 4px solid #f44336; }
 
-    .referral-banner {
-      background: #f8f9fa;
+    .referral-section {
+      background: #fafafa;
       border-radius: 20px;
-      padding: 16px 24px;
+      padding: 20px 24px;
       margin: 20px 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       gap: 16px;
-      border: 1px solid #e5e5e7;
+      border: 1px solid #f0f0f0;
     }
 
-    .referral-banner code {
-      background: #fff;
+    .referral-section code {
+      background: #ffffff;
       padding: 8px 16px;
       border-radius: 40px;
       font-family: monospace;
       font-size: 1rem;
-      border: 1px solid #e5e5e7;
+      border: 1px solid #e5e5e5;
     }
 
     .copy-btn {
@@ -408,9 +405,9 @@
 
     footer {
       text-align: center;
-      padding: 32px;
-      border-top: 1px solid #e5e5e7;
-      margin-top: 32px;
+      padding: 40px;
+      border-top: 1px solid #f0f0f0;
+      margin-top: 40px;
       color: #888;
       font-size: 0.8rem;
     }
@@ -436,8 +433,8 @@
         flex-wrap: wrap;
         justify-content: center;
       }
-      .video-bonus h2 {
-        font-size: 1.5rem;
+      .reward-amount {
+        font-size: 2rem;
       }
     }
   </style>
@@ -454,31 +451,38 @@
       <a href="#">Home</a>
       <a href="#collection">Collection</a>
       <a href="#order">Order Now</a>
-      <a href="https://wa.me/260772566084?text=Hello%20NRX%20Support%2C%20I%20need%20help" target="_blank" class="whatsapp-nav">📱 Support</a>
+      <a href="https://wa.me/260772566084?text=Hello%20NRX%20Support%2C%20I%20need%20help" target="_blank" class="support-link"><i class="fab fa-whatsapp"></i> Support</a>
     </div>
   </div>
 
   <!-- Hero Section -->
   <div class="hero">
-    <h1>NRX <span>STREETWEAR</span></h1>
-    <p>Premium quality tees • Limited edition • Free pickup in Lusaka</p>
+    <h1>NRX <span>Streetwear</span></h1>
+    <p>Premium quality limited edition tees • Free pickup in Lusaka</p>
   </div>
 
-  <!-- Video Bonus Banner - Only Reward Shown -->
+  <!-- Reward Banner -->
+  <div class="reward-banner">
+    <h2>Every Purchase Earns You</h2>
+    <div class="reward-amount">$10 REWARD</div>
+    <p>Plus additional earnings when you share and create content</p>
+  </div>
+
+  <!-- Video Bonus Banner -->
   <div class="video-bonus">
     <div class="video-bonus-content">
-      <h2>🎥 Earn $1 Per Video! 🎥</h2>
-      <p>Post a TikTok, Instagram Reel, or any content wearing your NRX t-shirt and earn <span class="video-bonus-highlight">$1 per video</span>!</p>
-      <p>Share your link with us to claim your bonus. Unlimited videos = Unlimited earnings!</p>
-      <span class="bonus-tag">🔥 Tag @NRX to get featured</span>
+      <h3><i class="fab fa-tiktok"></i> TikTok Creator Bonus</h3>
+      <p>Post a video wearing your NRX t-shirt and earn <strong>$1 per video</strong>!</p>
+      <p>When your followers buy using your referral code, you earn even more.</p>
+      <div class="bonus-detail">Your referral code = Your earning code</div>
     </div>
     <div class="video-bonus-icon">
       <i class="fab fa-tiktok"></i>
     </div>
   </div>
 
-  <!-- Gallery Section with 4K Images -->
-  <div class="section-title" id="collection">🔥 Latest Drop 🔥</div>
+  <!-- Gallery Section with High Quality Images -->
+  <div class="section-title" id="collection">Latest Collection</div>
   <div class="gallery" id="shirtGallery">
     <div class="shirt-card" data-shirt="Black" data-name="NRX Onyx Black" data-url="https://i.postimg.cc/QF1NfQ52/file-000000000bb071f587d3192da8b5aff2.png">
       <div class="shirt-img">
@@ -529,8 +533,8 @@
 
   <!-- Tabs -->
   <div class="tabs">
-    <div class="tab active" data-tab="buy">🛒 ORDER NOW</div>
-    <div class="tab" data-tab="redeem">🎁 UNLOCK REWARD</div>
+    <div class="tab active" data-tab="buy">Order Now</div>
+    <div class="tab" data-tab="redeem">Claim Reward</div>
   </div>
 
   <!-- Buy Section -->
@@ -541,8 +545,8 @@
       <input type="tel" id="phone" placeholder="Phone Number *">
     </div>
     <div class="form-row">
-      <input type="email" id="email" placeholder="Email (optional)">
-      <input type="text" id="referralInput" placeholder="Referral Code (optional)">
+      <input type="email" id="email" placeholder="Email">
+      <input type="text" id="referralInput" placeholder="Referral Code">
     </div>
     <div class="form-row">
       <select id="shirtColorSelect">
@@ -561,51 +565,52 @@
     <div class="form-row">
       <select id="deliverySelect">
         <option value="">Delivery Method *</option>
-        <option value="Pickup">📍 Pickup (Woodlands / Leopard Hill Road - Free)</option>
-        <option value="Delivery">🚚 Delivery (Lusaka only - +K40)</option>
+        <option value="Pickup">Pickup - Woodlands / Leopard Hill Road (Free)</option>
+        <option value="Delivery">Delivery - Lusaka only (+K40)</option>
       </select>
       <select id="paymentSelect">
         <option value="">Payment Method *</option>
-        <option value="MTN">📱 MTN Mobile Money</option>
-        <option value="Airtel">📶 Airtel Money</option>
+        <option value="MTN">MTN Mobile Money</option>
+        <option value="Airtel">Airtel Money</option>
       </select>
     </div>
     
     <div class="payment-details" id="paymentDetails">
-      💰 Select payment method above to see details
+      Select payment method above to see details
     </div>
     
     <div class="upload-area" id="uploadArea">
-      📸 Click to upload payment screenshot<br>
+      <i class="fas fa-camera"></i> Click to upload payment screenshot<br>
       <small>After sending payment, upload proof here</small>
       <input type="file" id="screenshot" accept="image/*" style="display:none;">
     </div>
     <div id="fileName" style="font-size:0.7rem; color:#888; margin-top:6px;"></div>
     
-    <button id="submitBtn">✅ SUBMIT ORDER & PAYMENT PROOF</button>
+    <button id="submitBtn">Submit Order & Payment Proof</button>
     <div id="result" class="result-box"></div>
   </div>
 
   <!-- Redeem Section -->
   <div id="redeem" class="form-container hidden">
-    <h2>🔓 Unlock Your Reward</h2>
+    <h2>Claim Your Reward</h2>
     <p>Enter the reward code you received after payment verification:</p>
     <input type="text" id="rewardCode" placeholder="e.g., NRX-000001" style="width:100%; margin:16px 0;">
-    <button id="redeemBtn">💎 CLAIM REWARD</button>
+    <button id="redeemBtn">Claim Reward</button>
     <div id="redeemResult" class="result-box"></div>
   </div>
 
-  <div class="referral-banner">
+  <!-- Referral Section -->
+  <div class="referral-section">
     <div>
-      🔗 <strong>Your Referral Code:</strong><br>
+      <strong><i class="fas fa-link"></i> Your Referral Code:</strong><br>
       <code id="userReferralCode">NRX-LOADING</code>
-      <span>Share & earn bonuses!</span>
+      <span>Share to earn bonuses</span>
     </div>
-    <button class="copy-btn" id="copyReferralBtn">📋 Copy Code</button>
+    <button class="copy-btn" id="copyReferralBtn">Copy Code</button>
   </div>
 
   <footer>
-    © NRX Drops | Post a video wearing NRX → Earn $1 per video! | Share your referral code & earn bonuses
+    <i class="far fa-copyright"></i> NRX Drops | $10 reward on every purchase | Post a video wearing NRX → $1 per video | Your referral code = your earning code
   </footer>
 </div>
 
@@ -625,7 +630,7 @@
   document.getElementById('userReferralCode').textContent = getUserReferralCode();
   document.getElementById('copyReferralBtn').onclick = () => {
     navigator.clipboard.writeText(getUserReferralCode());
-    alert('✅ Referral code copied! Share with friends to earn bonuses.');
+    alert('Referral code copied! Share with friends to earn bonuses.');
   };
   
   let selectedShirt = "Black";
@@ -659,13 +664,13 @@
     const method = document.getElementById('paymentSelect').value;
     const details = document.getElementById('paymentDetails');
     if (method && paymentDetailsMap[method]) {
-      details.innerHTML = `<strong>💰 Send payment to:</strong><br>
+      details.innerHTML = `<strong>Send payment to:</strong><br>
       ${method}: ${paymentDetailsMap[method].number}<br>
       Name: ${paymentDetailsMap[method].name}<br>
       Amount: K180 (add K40 if delivery selected)<br>
-      <span style="color:#000;">✅ After transfer, upload screenshot below</span>`;
+      After transfer, upload screenshot below`;
     } else {
-      details.innerHTML = '💰 Select payment method above to see details';
+      details.innerHTML = 'Select payment method above to see details';
     }
   };
   
@@ -680,7 +685,7 @@
       const reader = new FileReader();
       reader.onload = (ev) => {
         uploadedScreenshot = ev.target.result;
-        document.getElementById('fileName').innerHTML = `✅ Screenshot loaded: ${file.name}`;
+        document.getElementById('fileName').innerHTML = `Screenshot loaded: ${file.name}`;
       };
       reader.readAsDataURL(file);
     } else {
@@ -700,7 +705,7 @@
     const submitBtn = document.getElementById('submitBtn');
     
     if (!name || !phone || !selectedShirt || !size || !delivery || !paymentMethod || !uploadedScreenshot) {
-      resultDiv.innerHTML = '❌ Please fill all required fields and upload payment screenshot';
+      resultDiv.innerHTML = 'Please fill all required fields and upload payment screenshot';
       resultDiv.className = 'result-box error';
       return;
     }
@@ -718,7 +723,7 @@
       "User Referral Code": userReferralCode, "Screenshot": uploadedScreenshot.substring(0, 200)
     };
     
-    resultDiv.innerHTML = '⏳ Submitting order...';
+    resultDiv.innerHTML = 'Submitting order...';
     resultDiv.className = 'result-box pending';
     submitBtn.disabled = true;
     
@@ -727,15 +732,15 @@
       localOrders.push(orderData);
       localStorage.setItem('nrx_orders', JSON.stringify(localOrders));
       resultDiv.innerHTML = `
-        ✅ <strong>ORDER RECEIVED!</strong><br><br>
-        📦 <strong>Order ID:</strong> ${orderId}<br>
-        📍 <strong>Status:</strong> <span style="color:#facc15;">⏳ PENDING VERIFICATION</span><br>
-        💰 <strong>Amount:</strong> K${total}<br><br>
-        🔒 Your reward code will be sent AFTER payment is verified.<br>
-        🎥 <strong>BONUS:</strong> Post a video wearing your NRX shirt on TikTok/Instagram and earn $1 per video!<br>
-        🔗 <strong>Your Referral Code:</strong> ${userReferralCode}<br>
+        ORDER RECEIVED!<br><br>
+        Order ID: ${orderId}<br>
+        Status: PENDING VERIFICATION<br>
+        Amount: K${total}<br><br>
+        Your $10 reward code will be sent AFTER payment is verified.<br>
+        Post a video wearing your NRX shirt on TikTok and earn $1 per video!<br>
+        Your Referral Code: ${userReferralCode}<br>
         Share this code with friends to earn bonuses!<br><br>
-        📞 Need help? Contact us on WhatsApp: 0772566084
+        Need help? Contact us on WhatsApp: 0772566084
       `;
       resultDiv.className = 'result-box pending';
       document.getElementById('fullName').value = ''; document.getElementById('phone').value = ''; document.getElementById('email').value = '';
@@ -744,13 +749,13 @@
     } catch (error) {
       localOrders.push(orderData); localStorage.setItem('nrx_orders', JSON.stringify(localOrders));
       resultDiv.innerHTML = `
-        ✅ <strong>ORDER RECEIVED!</strong><br><br>
-        📦 <strong>Order ID:</strong> ${orderId}<br>
-        📍 <strong>Status:</strong> <span style="color:#facc15;">⏳ PENDING VERIFICATION</span><br>
-        💰 <strong>Amount:</strong> K${total}<br><br>
-        🎥 <strong>BONUS:</strong> Post a video wearing your NRX shirt on TikTok/Instagram and earn $1 per video!<br>
-        🔗 <strong>Your Referral Code:</strong> ${userReferralCode}<br>
-        📞 Need help? Contact us on WhatsApp: 0772566084
+        ORDER RECEIVED!<br><br>
+        Order ID: ${orderId}<br>
+        Status: PENDING VERIFICATION<br>
+        Amount: K${total}<br><br>
+        Post a video wearing your NRX shirt on TikTok and earn $1 per video!<br>
+        Your Referral Code: ${userReferralCode}<br>
+        Need help? Contact us on WhatsApp: 0772566084
       `;
       resultDiv.className = 'result-box pending';
     } finally { submitBtn.disabled = false; }
@@ -761,16 +766,16 @@
   function redeemReward() {
     const code = document.getElementById('rewardCode').value.trim().toUpperCase();
     const resultDiv = document.getElementById('redeemResult');
-    if (!code) { resultDiv.innerHTML = '❌ Please enter a reward code'; resultDiv.className = 'result-box error'; return; }
+    if (!code) { resultDiv.innerHTML = 'Please enter a reward code'; resultDiv.className = 'result-box error'; return; }
     let found = localOrders.find(o => o["Code Reward"] === code);
     if (found && found.Status === "Approved") {
-      resultDiv.innerHTML = `🎉 <strong>REWARD CLAIMED!</strong> 🎉<br><br>Your reward: ${found["Reward Value"]}<br>Thank you for shopping with NRX! 🔥<br><br>🎥 Remember: Post a video wearing NRX and earn $1 per video!`;
+      resultDiv.innerHTML = `REWARD CLAIMED!<br><br>Your reward: ${found["Reward Value"]}<br>Thank you for shopping with NRX!<br><br>Post a video wearing NRX and earn $1 per video!`;
       resultDiv.className = 'result-box success';
     } else if (found && found.Status === "Pending") {
-      resultDiv.innerHTML = '⏳ This order is pending verification. Please wait for admin approval.';
+      resultDiv.innerHTML = 'This order is pending verification. Please wait for admin approval.';
       resultDiv.className = 'result-box pending';
     } else {
-      resultDiv.innerHTML = '⚠️ Invalid code. Rewards are sent via WhatsApp after payment verification.';
+      resultDiv.innerHTML = 'Invalid code. Rewards are sent via WhatsApp after payment verification.';
       resultDiv.className = 'result-box error';
     }
   }
