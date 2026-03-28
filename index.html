@@ -186,7 +186,7 @@
       box-shadow: 0 4px 20px rgba(0,0,0,0.05);
     }
 
-    /* Gallery Section - PERFECT FOR 1024x1536 PORTRAIT IMAGES */
+    /* Gallery Section - ULTRA SHARP IMAGES */
     .section-title {
       font-size: 2rem;
       font-weight: 700;
@@ -196,7 +196,7 @@
 
     .gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 40px;
       margin: 40px 0 60px;
     }
@@ -208,9 +208,6 @@
       transition: all 0.4s ease;
       cursor: pointer;
       border: 1px solid #f0f0f0;
-      max-width: 400px;
-      margin: 0 auto;
-      width: 100%;
     }
 
     .shirt-card:hover {
@@ -222,24 +219,35 @@
       border: 2px solid #000;
     }
 
+    /* ULTRA SHARP IMAGE STYLES */
     .shirt-img {
       width: 100%;
       background: #fafafa;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+      overflow: hidden;
+      position: relative;
     }
 
-    /* FIXED: Images at correct aspect ratio for 1024x1536 */
     .shirt-img img {
       width: 100%;
       height: auto;
-      max-width: 100%;
       display: block;
       aspect-ratio: 2 / 3;
       object-fit: cover;
       object-position: center;
+      image-rendering: crisp-edges;
+      image-rendering: -webkit-optimize-contrast;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.5s ease, transform 0.4s ease;
+    }
+
+    .shirt-img img.loaded {
+      opacity: 1;
+    }
+
+    .shirt-card:hover .shirt-img img {
+      transform: scale(1.05);
     }
 
     .shirt-info {
@@ -425,7 +433,6 @@
         grid-template-columns: 1fr;
       }
       .gallery {
-        grid-template-columns: 1fr;
         gap: 30px;
       }
       .navbar {
@@ -484,13 +491,13 @@
     </div>
   </div>
 
-  <!-- Gallery Section - OPTIMIZED FOR 1024x1536 -->
+  <!-- Gallery Section - ULTRA SHARP IMAGES -->
   <div class="section-title" id="collection">Latest Collection</div>
   <div class="gallery" id="shirtGallery">
     <!-- Black Shirt -->
     <div class="shirt-card" data-shirt="Black" data-name="NRX Onyx Black">
       <div class="shirt-img">
-        <img src="https://i.postimg.cc/QF1NfQ52/file-000000000bb071f587d3192da8b5aff2.png" alt="NRX Black">
+        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/file_000000000bb071f587d3192da8b5aff2.png" alt="NRX Black" loading="lazy">
       </div>
       <div class="shirt-info">
         <div class="shirt-name">NRX Onyx Black</div>
@@ -500,7 +507,7 @@
     <!-- White Shirt -->
     <div class="shirt-card" data-shirt="White" data-name="NRX Arctic White">
       <div class="shirt-img">
-        <img src="https://i.postimg.cc/2b9DwXD3/file-000000000ecc722fa0aa9ba18400aa71.png" alt="NRX White">
+        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/file_000000000ecc722fa0aa9ba18400aa71.png" alt="NRX White" loading="lazy">
       </div>
       <div class="shirt-info">
         <div class="shirt-name">NRX Arctic White</div>
@@ -510,7 +517,7 @@
     <!-- Gold Shirt -->
     <div class="shirt-card" data-shirt="Gold" data-name="NRX Golden Era">
       <div class="shirt-img">
-        <img src="https://i.postimg.cc/XG1b8Dbq/file-000000006e8c71fd8e3efd99a47710e9.png" alt="NRX Gold">
+        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/file_000000006e8c71fd8e3efd99a47710e9.png" alt="NRX Gold" loading="lazy">
       </div>
       <div class="shirt-info">
         <div class="shirt-name">NRX Golden Era</div>
@@ -520,7 +527,7 @@
     <!-- Red Shirt -->
     <div class="shirt-card" data-shirt="Red" data-name="NRX Crimson">
       <div class="shirt-img">
-        <img src="https://i.postimg.cc/9RghpNhf/file-0000000086d0722f9c1bac970b3af52f.png" alt="NRX Red">
+        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/file_0000000086d0722f9c1bac970b3af52f.png" alt="NRX Red" loading="lazy">
       </div>
       <div class="shirt-info">
         <div class="shirt-name">NRX Crimson</div>
@@ -530,7 +537,7 @@
     <!-- Blue Shirt -->
     <div class="shirt-card" data-shirt="Blue" data-name="NRX Cobalt Blue">
       <div class="shirt-img">
-        <img src="https://i.postimg.cc/2bSYnNP6/file-00000000386871fda7f237fb9db6dd8c.png" alt="NRX Blue">
+        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/file_00000000897c71f7be4c0ed9a59f2619.png" alt="NRX Blue" loading="lazy">
       </div>
       <div class="shirt-info">
         <div class="shirt-name">NRX Cobalt Blue</div>
@@ -798,6 +805,15 @@
       document.getElementById('redeem').classList.add('hidden');
       document.getElementById(tab.dataset.tab).classList.remove('hidden');
     };
+  });
+  
+  // 🔥 IMAGE FADE-IN LOADER (Ultra Sharp)
+  document.querySelectorAll('.shirt-img img').forEach(img => {
+    if (img.complete) {
+      img.classList.add('loaded');
+    } else {
+      img.onload = () => img.classList.add('loaded');
+    }
   });
 </script>
 </body>
