@@ -1,140 +1,789 @@
-<!-- Gallery Section - OPTIMIZED HD + FAST -->
-<div class="section-title" id="collection">Latest Collection</div>
-<div class="gallery" id="shirtGallery">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>NRX | Premium Streetwear</title>
+  <meta name="description" content="NRX Premium Streetwear - Limited edition T-shirts. Earn $10 on every purchase. Free pickup in Lusaka.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  <!-- BLACK -->
-  <div class="shirt-card" data-shirt="Black">
-    <div class="shirt-img">
-      <picture>
-        <source 
-          type="image/webp"
-          srcset="
-          https://raw.githubusercontent.com/mtech740/nrx-app/main/images/black.webp 400w,
-          https://raw.githubusercontent.com/mtech740/nrx-app/main/images/black.webp 800w,
-          https://raw.githubusercontent.com/mtech740/nrx-app/main/images/black.webp 1200w"
-          sizes="(max-width:768px) 100vw, 400px">
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #ffffff;
+      color: #111111;
+      scroll-behavior: smooth;
+    }
 
-        <img 
-          src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/black.png"
-          alt="NRX Onyx Black"
-          width="400"
-          height="600"
-          loading="lazy"
-          decoding="async">
-      </picture>
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 24px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo img {
+      height: 48px;
+      width: auto;
+    }
+
+    .logo-text {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: #111111;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #666;
+    }
+
+    .support-link {
+      background: #25D366;
+      padding: 8px 20px;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: white !important;
+    }
+
+    .support-link:hover {
+      background: #20b859;
+      color: white !important;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 80px 0 60px;
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 span {
+      color: #000;
+    }
+
+    .hero p {
+      color: #666;
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .reward-banner {
+      background: linear-gradient(135deg, #f8f9fa, #ffffff);
+      border: 1px solid #f0f0f0;
+      border-radius: 24px;
+      padding: 32px;
+      margin: 40px 0;
+      text-align: center;
+    }
+
+    .reward-banner h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .reward-amount {
+      font-size: 3rem;
+      font-weight: 800;
+      color: #000;
+      margin: 16px 0;
+    }
+
+    .reward-banner p {
+      color: #666;
+    }
+
+    .video-bonus {
+      background: #f8f9fa;
+      border-radius: 24px;
+      padding: 40px;
+      margin: 40px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      border: 1px solid #f0f0f0;
+    }
+
+    .video-bonus-content {
+      flex: 1;
+    }
+
+    .video-bonus-content h3 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .video-bonus-content p {
+      color: #666;
+      font-size: 1rem;
+      margin-bottom: 16px;
+    }
+
+    .bonus-detail {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #000;
+      margin-top: 12px;
+    }
+
+    .video-bonus-icon {
+      font-size: 4rem;
+      background: #ffffff;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 60px 0 32px;
+      text-align: center;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+      margin: 40px 0 60px;
+    }
+
+    .shirt-card {
+      background: #ffffff;
+      border-radius: 24px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      cursor: pointer;
+      border: 1px solid #f0f0f0;
+    }
+
+    .shirt-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
+    }
+
+    .shirt-card.selected {
+      border: 2px solid #000;
+    }
+
+    .shirt-img {
+      width: 100%;
+      background: #fafafa;
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .shirt-img img {
+      width: 100%;
+      height: auto;
+      display: block;
+      aspect-ratio: 2 / 3;
+      object-fit: cover;
+      object-position: center;
+      image-rendering: auto;
+      image-rendering: -webkit-optimize-contrast;
+      backface-visibility: hidden;
+      transform: translateZ(0);
+      transition: transform 0.4s ease;
+    }
+
+    .shirt-card:hover .shirt-img img {
+      transform: scale(1.05);
+    }
+
+    .shirt-info {
+      padding: 20px;
+      text-align: center;
+      border-top: 1px solid #f5f5f5;
+    }
+
+    .shirt-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .shirt-price {
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin: 40px 0 24px;
+    }
+
+    .tab {
+      padding: 12px 32px;
+      font-weight: 600;
+      background: #ffffff;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: 0.2s;
+      border: 1px solid #e5e5e5;
+      color: #666;
+    }
+
+    .tab.active {
+      background: #000;
+      color: white;
+      border-color: #000;
+    }
+
+    .form-container {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 40px;
+      border: 1px solid #f0f0f0;
+      margin-bottom: 40px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    input, select {
+      background: #fafafa;
+      border: 1px solid #e5e5e5;
+      padding: 14px 18px;
+      border-radius: 12px;
+      color: #111;
+      font-size: 1rem;
+      width: 100%;
+      outline: none;
+      transition: all 0.3s;
+    }
+
+    input:focus, select:focus {
+      border-color: #000;
+      background: #ffffff;
+    }
+
+    .payment-details {
+      background: #fafafa;
+      padding: 16px;
+      border-radius: 16px;
+      margin: 16px 0;
+      border-left: 3px solid #000;
+    }
+
+    .upload-area {
+      background: #fafafa;
+      border: 2px dashed #e5e5e5;
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      margin: 16px 0;
+      transition: 0.2s;
+    }
+
+    .upload-area:hover {
+      background: #f5f5f5;
+      border-color: #000;
+    }
+
+    button {
+      background: #000;
+      border: none;
+      padding: 16px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 1rem;
+      color: white;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 16px;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      background: #333;
+      transform: translateY(-2px);
+    }
+
+    .result-box {
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 16px;
+    }
+
+    .pending { background: #fef9e6; border-left: 4px solid #f5a623; }
+    .success { background: #e8f5e9; border-left: 4px solid #4caf50; }
+    .error { background: #ffebee; border-left: 4px solid #f44336; }
+
+    .referral-section {
+      background: #fafafa;
+      border-radius: 20px;
+      padding: 20px 24px;
+      margin: 20px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      border: 1px solid #f0f0f0;
+    }
+
+    .referral-section code {
+      background: #ffffff;
+      padding: 8px 16px;
+      border-radius: 40px;
+      font-family: monospace;
+      font-size: 1rem;
+      border: 1px solid #e5e5e5;
+    }
+
+    .copy-btn {
+      background: #000;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 40px;
+      cursor: pointer;
+      width: auto;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .hidden { display: none; }
+
+    footer {
+      text-align: center;
+      padding: 40px;
+      border-top: 1px solid #f0f0f0;
+      margin-top: 40px;
+      color: #888;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 20px;
+      }
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      .gallery {
+        gap: 30px;
+      }
+      .navbar {
+        flex-direction: column;
+        gap: 16px;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .reward-amount {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="navbar">
+    <div class="logo">
+      <img src="https://i.postimg.cc/Jz4HNBqc/image-1774485418192.jpg" alt="NRX Logo">
+      <span class="logo-text">NRX</span>
     </div>
-    <div class="shirt-info">
-      <div class="shirt-name">NRX Onyx Black</div>
-      <div class="shirt-price">K180</div>
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#collection">Collection</a>
+      <a href="#order">Order Now</a>
+      <a href="https://wa.me/260772566084?text=Hello%20NRX%20Support%2C%20I%20need%20help" target="_blank" class="support-link"><i class="fab fa-whatsapp"></i> Support</a>
     </div>
   </div>
 
-  <!-- WHITE -->
-  <div class="shirt-card" data-shirt="White">
-    <div class="shirt-img">
-      <picture>
-        <source 
-          type="image/webp"
-          srcset="
-          https://raw.githubusercontent.com/mtech740/nrx-app/main/images/white.webp 400w,
-          https://raw.githubusercontent.com/mtech740/nrx-app/main/images/white.webp 800w,
-          https://raw.githubusercontent.com/mtech740/nrx-app/main/images/white.webp 1200w"
-          sizes="(max-width:768px) 100vw, 400px">
+  <div class="hero">
+    <h1>NRX <span>Streetwear</span></h1>
+    <p>Premium quality limited edition tees • Free pickup in Lusaka</p>
+  </div>
 
-        <img 
-          src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/white.png"
-          alt="NRX Arctic White"
-          width="400"
-          height="600"
-          loading="lazy"
-          decoding="async">
-      </picture>
+  <div class="reward-banner">
+    <h2>Every Purchase Earns You</h2>
+    <div class="reward-amount">$10 REWARD</div>
+    <p>Plus additional earnings when you share and create content</p>
+  </div>
+
+  <div class="video-bonus">
+    <div class="video-bonus-content">
+      <h3><i class="fab fa-tiktok"></i> TikTok Creator Bonus</h3>
+      <p>Post a video wearing your NRX t-shirt and earn <strong>$1 per video</strong>!</p>
+      <p>When your followers buy using your referral code, you earn even more.</p>
+      <div class="bonus-detail">Your referral code = Your earning code</div>
     </div>
-    <div class="shirt-info">
-      <div class="shirt-name">NRX Arctic White</div>
-      <div class="shirt-price">K180</div>
+    <div class="video-bonus-icon">
+      <i class="fab fa-tiktok"></i>
     </div>
   </div>
 
-  <!-- GOLD -->
-  <div class="shirt-card" data-shirt="Gold">
-    <div class="shirt-img">
-      <picture>
-        <source 
-          type="image/webp"
-          srcset="
-          https://raw.githubusercontent.com/mtech740/nrx-app/main/images/gold.webp 400w,
-          https://raw.githubusercontent.com/mtech740/nrx-app/main/images/gold.webp 800w,
-          https://raw.githubusercontent.com/mtech740/nrx-app/main/images/gold.webp 1200w"
-          sizes="(max-width:768px) 100vw, 400px">
-
-        <img 
-          src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/gold.png"
-          alt="NRX Golden Era"
-          width="400"
-          height="600"
-          loading="lazy"
-          decoding="async">
-      </picture>
+  <div class="section-title" id="collection">Latest Collection</div>
+  <div class="gallery" id="shirtGallery">
+    <!-- Black -->
+    <div class="shirt-card" data-shirt="Black" data-name="NRX Onyx Black">
+      <div class="shirt-img">
+        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/black.png" alt="NRX Black" loading="lazy">
+      </div>
+      <div class="shirt-info">
+        <div class="shirt-name">NRX Onyx Black</div>
+        <div class="shirt-price">K180</div>
+      </div>
     </div>
-    <div class="shirt-info">
-      <div class="shirt-name">NRX Golden Era</div>
-      <div class="shirt-price">K180</div>
+    <!-- White -->
+    <div class="shirt-card" data-shirt="White" data-name="NRX Arctic White">
+      <div class="shirt-img">
+        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/white.png" alt="NRX White" loading="lazy">
+      </div>
+      <div class="shirt-info">
+        <div class="shirt-name">NRX Arctic White</div>
+        <div class="shirt-price">K180</div>
+      </div>
     </div>
-  </div>
-
-  <!-- RED -->
-  <div class="shirt-card" data-shirt="Red">
-    <div class="shirt-img">
-      <picture>
-        <source 
-          type="image/webp"
-          srcset="
-          https://raw.githubusercontent.com/mtech740/nrx-app/main/images/red.webp 400w,
-          https://raw.githubusercontent.com/mtech740/nrx-app/main/images/red.webp 800w,
-          https://raw.githubusercontent.com/mtech740/nrx-app/main/images/red.webp 1200w"
-          sizes="(max-width:768px) 100vw, 400px">
-
-        <img 
-          src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/red.png"
-          alt="NRX Crimson"
-          width="400"
-          height="600"
-          loading="lazy"
-          decoding="async">
-      </picture>
+    <!-- Gold -->
+    <div class="shirt-card" data-shirt="Gold" data-name="NRX Golden Era">
+      <div class="shirt-img">
+        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/gold.png" alt="NRX Gold" loading="lazy">
+      </div>
+      <div class="shirt-info">
+        <div class="shirt-name">NRX Golden Era</div>
+        <div class="shirt-price">K180</div>
+      </div>
     </div>
-    <div class="shirt-info">
-      <div class="shirt-name">NRX Crimson</div>
-      <div class="shirt-price">K180</div>
+    <!-- Red -->
+    <div class="shirt-card" data-shirt="Red" data-name="NRX Crimson">
+      <div class="shirt-img">
+        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/red.png" alt="NRX Red" loading="lazy">
+      </div>
+      <div class="shirt-info">
+        <div class="shirt-name">NRX Crimson</div>
+        <div class="shirt-price">K180</div>
+      </div>
     </div>
-  </div>
-
-  <!-- BLUE -->
-  <div class="shirt-card" data-shirt="Blue">
-    <div class="shirt-img">
-      <picture>
-        <source 
-          type="image/webp"
-          srcset="
-          https://raw.githubusercontent.com/mtech740/nrx-app/main/images/blue.webp 400w,
-          https://raw.githubusercontent.com/mtech740/nrx-app/main/images/blue.webp 800w,
-          https://raw.githubusercontent.com/mtech740/nrx-app/main/images/blue.webp 1200w"
-          sizes="(max-width:768px) 100vw, 400px">
-
-        <img 
-          src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/blue.png"
-          alt="NRX Cobalt Blue"
-          width="400"
-          height="600"
-          loading="lazy"
-          decoding="async">
-      </picture>
-    </div>
-    <div class="shirt-info">
-      <div class="shirt-name">NRX Cobalt Blue</div>
-      <div class="shirt-price">K180</div>
+    <!-- Blue -->
+    <div class="shirt-card" data-shirt="Blue" data-name="NRX Cobalt Blue">
+      <div class="shirt-img">
+        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/blue.png" alt="NRX Blue" loading="lazy">
+      </div>
+      <div class="shirt-info">
+        <div class="shirt-name">NRX Cobalt Blue</div>
+        <div class="shirt-price">K180</div>
+      </div>
     </div>
   </div>
 
+  <div class="tabs">
+    <div class="tab active" data-tab="buy">Order Now</div>
+    <div class="tab" data-tab="redeem">Claim Reward</div>
+  </div>
+
+  <div id="buy" class="form-container">
+    <h2 style="margin-bottom: 24px;">Place Your Order</h2>
+    <div class="form-row">
+      <input type="text" id="fullName" placeholder="Full Name *">
+      <input type="tel" id="phone" placeholder="Phone Number *">
+    </div>
+    <div class="form-row">
+      <input type="email" id="email" placeholder="Email">
+      <input type="text" id="referralInput" placeholder="Referral Code">
+    </div>
+    <div class="form-row">
+      <select id="shirtColorSelect">
+        <option value="">Select Shirt Color *</option>
+        <option value="Black">NRX Onyx Black</option>
+        <option value="White">NRX Arctic White</option>
+        <option value="Gold">NRX Golden Era</option>
+        <option value="Red">NRX Crimson</option>
+        <option value="Blue">NRX Cobalt Blue</option>
+      </select>
+      <select id="sizeSelect">
+        <option value="">Select Size *</option>
+        <option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <select id="deliverySelect">
+        <option value="">Delivery Method *</option>
+        <option value="Pickup">Pickup - Woodlands / Leopard Hill Road (Free)</option>
+        <option value="Delivery">Delivery - Lusaka only (+K40)</option>
+      </select>
+      <select id="paymentSelect">
+        <option value="">Payment Method *</option>
+        <option value="MTN">MTN Mobile Money</option>
+        <option value="Airtel">Airtel Money</option>
+      </select>
+    </div>
+    
+    <div class="payment-details" id="paymentDetails">
+      Select payment method above to see details
+    </div>
+    
+    <div class="upload-area" id="uploadArea">
+      <i class="fas fa-camera"></i> Click to upload payment screenshot<br>
+      <small>After sending payment, upload proof here</small>
+      <input type="file" id="screenshot" accept="image/*" style="display:none;">
+    </div>
+    <div id="fileName" style="font-size:0.7rem; color:#888; margin-top:6px;"></div>
+    
+    <button id="submitBtn">Submit Order & Payment Proof</button>
+    <div id="result" class="result-box"></div>
+  </div>
+
+  <div id="redeem" class="form-container hidden">
+    <h2>Claim Your Reward</h2>
+    <p>Enter the reward code you received after payment verification:</p>
+    <input type="text" id="rewardCode" placeholder="e.g., NRX-000001" style="width:100%; margin:16px 0;">
+    <button id="redeemBtn">Claim Reward</button>
+    <div id="redeemResult" class="result-box"></div>
+  </div>
+
+  <div class="referral-section">
+    <div>
+      <strong><i class="fas fa-link"></i> Your Referral Code:</strong><br>
+      <code id="userReferralCode">NRX-LOADING</code>
+      <span>Share to earn bonuses</span>
+    </div>
+    <button class="copy-btn" id="copyReferralBtn">Copy Code</button>
+  </div>
+
+  <footer>
+    <i class="far fa-copyright"></i> NRX Drops | $10 reward on every purchase | Post a video wearing NRX → $1 per video | Your referral code = your earning code
+  </footer>
 </div>
+
+<script>
+  const SHEETBEST_URL = "https://api.sheetbest.com/sheets/e440b21b-2b2b-466e-8849-1fa3dc3124e6";
+  let localOrders = JSON.parse(localStorage.getItem('nrx_orders') || '[]');
+  
+  function getUserReferralCode() {
+    let code = localStorage.getItem('nrx_user_code');
+    if (!code) {
+      code = 'NRX-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+      localStorage.setItem('nrx_user_code', code);
+    }
+    return code;
+  }
+  
+  document.getElementById('userReferralCode').textContent = getUserReferralCode();
+  document.getElementById('copyReferralBtn').onclick = () => {
+    navigator.clipboard.writeText(getUserReferralCode());
+    alert('Referral code copied! Share with friends to earn bonuses.');
+  };
+  
+  let selectedShirt = "Black";
+  let selectedShirtName = "NRX Onyx Black";
+  
+  document.querySelectorAll('.shirt-card').forEach(card => {
+    card.addEventListener('click', () => {
+      document.querySelectorAll('.shirt-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      selectedShirt = card.dataset.shirt;
+      selectedShirtName = card.querySelector('.shirt-name').textContent;
+      document.getElementById('shirtColorSelect').value = selectedShirt;
+    });
+  });
+  
+  document.getElementById('shirtColorSelect').onchange = (e) => {
+    selectedShirt = e.target.value;
+    const shirtMap = {
+      'Black': 'NRX Onyx Black', 'White': 'NRX Arctic White', 'Gold': 'NRX Golden Era',
+      'Red': 'NRX Crimson', 'Blue': 'NRX Cobalt Blue'
+    };
+    selectedShirtName = shirtMap[selectedShirt] || selectedShirt;
+  };
+  
+  const paymentDetailsMap = {
+    MTN: { number: "076 9939546", name: "Mumba Sampa" },
+    Airtel: { number: "0772566084", name: "Mumba Sampa" }
+  };
+  
+  document.getElementById('paymentSelect').onchange = () => {
+    const method = document.getElementById('paymentSelect').value;
+    const details = document.getElementById('paymentDetails');
+    if (method && paymentDetailsMap[method]) {
+      details.innerHTML = `<strong>Send payment to:</strong><br>
+      ${method}: ${paymentDetailsMap[method].number}<br>
+      Name: ${paymentDetailsMap[method].name}<br>
+      Amount: K180 (add K40 if delivery selected)<br>
+      After transfer, upload screenshot below`;
+    } else {
+      details.innerHTML = 'Select payment method above to see details';
+    }
+  };
+  
+  let uploadedScreenshot = null;
+  const uploadArea = document.getElementById('uploadArea');
+  const fileInput = document.getElementById('screenshot');
+  
+  uploadArea.onclick = () => fileInput.click();
+  fileInput.onchange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        uploadedScreenshot = ev.target.result;
+        document.getElementById('fileName').innerHTML = `Screenshot loaded: ${file.name}`;
+      };
+      reader.readAsDataURL(file);
+    } else {
+      alert('Please select a valid image file (JPG, PNG)');
+    }
+  };
+  
+  async function submitOrder() {
+    const name = document.getElementById('fullName').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const size = document.getElementById('sizeSelect').value;
+    const delivery = document.getElementById('deliverySelect').value;
+    const paymentMethod = document.getElementById('paymentSelect').value;
+    const referralInput = document.getElementById('referralInput').value.trim().toUpperCase();
+    const resultDiv = document.getElementById('result');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    if (!name || !phone || !selectedShirt || !size || !delivery || !paymentMethod || !uploadedScreenshot) {
+      resultDiv.innerHTML = 'Please fill all required fields and upload payment screenshot';
+      resultDiv.className = 'result-box error';
+      return;
+    }
+    
+    const deliveryFee = delivery === 'Delivery' ? 40 : 0;
+    const total = 180 + deliveryFee;
+    const orderId = 'NRX-' + Date.now();
+    const userReferralCode = getUserReferralCode();
+    
+    const orderData = {
+      "Order ID": orderId, "Date": new Date().toISOString(), "Status": "Pending",
+      "Name": name, "Phone": phone, "Email": email, "Shirt": selectedShirtName,
+      "Size": size, "Delivery": delivery, "Payment": paymentMethod, "Amount": total,
+      "Code Reward": "", "Reward Value": "", "Referral Used": referralInput,
+      "User Referral Code": userReferralCode, "Screenshot": uploadedScreenshot.substring(0, 200)
+    };
+    
+    resultDiv.innerHTML = 'Submitting order...';
+    resultDiv.className = 'result-box pending';
+    submitBtn.disabled = true;
+    
+    try {
+      await fetch(SHEETBEST_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(orderData) });
+      localOrders.push(orderData);
+      localStorage.setItem('nrx_orders', JSON.stringify(localOrders));
+      resultDiv.innerHTML = `
+        ORDER RECEIVED!<br><br>
+        Order ID: ${orderId}<br>
+        Status: PENDING VERIFICATION<br>
+        Amount: K${total}<br><br>
+        Your $10 reward code will be sent AFTER payment is verified.<br>
+        Post a video wearing your NRX shirt on TikTok and earn $1 per video!<br>
+        Your Referral Code: ${userReferralCode}<br>
+        Share this code with friends to earn bonuses!<br><br>
+        Need help? Contact us on WhatsApp: 0772566084
+      `;
+      resultDiv.className = 'result-box pending';
+      document.getElementById('fullName').value = ''; document.getElementById('phone').value = ''; document.getElementById('email').value = '';
+      document.getElementById('referralInput').value = ''; document.getElementById('sizeSelect').value = ''; document.getElementById('deliverySelect').value = '';
+      document.getElementById('paymentSelect').value = ''; uploadedScreenshot = null; document.getElementById('fileName').innerHTML = ''; fileInput.value = '';
+    } catch (error) {
+      localOrders.push(orderData); localStorage.setItem('nrx_orders', JSON.stringify(localOrders));
+      resultDiv.innerHTML = `
+        ORDER RECEIVED!<br><br>
+        Order ID: ${orderId}<br>
+        Status: PENDING VERIFICATION<br>
+        Amount: K${total}<br><br>
+        Post a video wearing your NRX shirt on TikTok and earn $1 per video!<br>
+        Your Referral Code: ${userReferralCode}<br>
+        Need help? Contact us on WhatsApp: 0772566084
+      `;
+      resultDiv.className = 'result-box pending';
+    } finally { submitBtn.disabled = false; }
+  }
+  
+  document.getElementById('submitBtn').onclick = submitOrder;
+  
+  function redeemReward() {
+    const code = document.getElementById('rewardCode').value.trim().toUpperCase();
+    const resultDiv = document.getElementById('redeemResult');
+    if (!code) { resultDiv.innerHTML = 'Please enter a reward code'; resultDiv.className = 'result-box error'; return; }
+    let found = localOrders.find(o => o["Code Reward"] === code);
+    if (found && found.Status === "Approved") {
+      resultDiv.innerHTML = `REWARD CLAIMED!<br><br>Your reward: ${found["Reward Value"]}<br>Thank you for shopping with NRX!<br><br>Post a video wearing NRX and earn $1 per video!`;
+      resultDiv.className = 'result-box success';
+    } else if (found && found.Status === "Pending") {
+      resultDiv.innerHTML = 'This order is pending verification. Please wait for admin approval.';
+      resultDiv.className = 'result-box pending';
+    } else {
+      resultDiv.innerHTML = 'Invalid code. Rewards are sent via WhatsApp after payment verification.';
+      resultDiv.className = 'result-box error';
+    }
+  }
+  
+  document.getElementById('redeemBtn').onclick = redeemReward;
+  
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.onclick = () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('buy').classList.add('hidden');
+      document.getElementById('redeem').classList.add('hidden');
+      document.getElementById(tab.dataset.tab).classList.remove('hidden');
+    };
+  });
+</script>
+</body>
+</html>
