@@ -101,29 +101,37 @@
   
   let allOrders = [];
   
-  // ======================= REWARD CALCULATOR =======================
+  // ======================= REWARD CALCULATOR (FIXED) =======================
   function calculateReward(orderNumber) {
     if (orderNumber <= 4) return "$0.20";
     if (orderNumber === 5) return "$5.00";
     if (orderNumber >= 6 && orderNumber <= 999) return "$0.20";
-    if (orderNumber === 1000) return "$5.00";
-    if (orderNumber === 1001) return "$5.00";
-    if (orderNumber === 1002) return "$10.00";
-    if (orderNumber === 1003) return "$10.00";
-    if (orderNumber === 1004) return "$5.00";
-    if (orderNumber >= 1005) return "$1.00";
+    if (orderNumber === 1001) return "$10.00";
+    if (orderNumber === 1002) return "$5.00";
+    if (orderNumber === 1003) return "$5.00";
+    if (orderNumber === 1004) return "$10.00";
+    if (orderNumber >= 1005 && orderNumber <= 138222) return "$1.00";
     return "$0.20";
   }
   
-  function isFridayJackpotWinner(orderNumber) {
+  // ======================= TRUE RANDOM FRIDAY JACKPOT =======================
+  function isFridayJackpotWinner() {
     const isFriday = new Date().getDay() === 5;
-    if (!isFriday) return false;
-    const chance = (orderNumber * 7) % 100;
-    return chance < 2;
+    return isFriday && Math.random() < 0.02; // 2% chance
   }
   
-  function generateRewardCode(orderNumber) {
-    return `NRX-${String(orderNumber).padStart(6, '0')}`;
+  // ======================= GENERATE UNIQUE RANDOM REWARD CODE =======================
+  function generateUniqueRewardCode(existingCodes) {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
+    let code;
+    do {
+      let segment = '';
+      for (let i = 0; i < 8; i++) {
+        segment += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      code = `NRX-${segment}`;
+    } while (existingCodes.includes(code));
+    return code;
   }
   
   // ======================= LOGIN =======================
@@ -223,7 +231,7 @@
       }
       
       const isJackpot = order.Jackpot === true;
-      const willBeJackpot = status === "Pending" && isFridayJackpotWinner(orderNumber);
+      const willBeJackpot = status === "Pending" && isFridayJackpotWinner(); // true random check
       const orderReward = calculateReward(orderNumber);
       
       const statusClass = status === "Pending" ? "status-pending" : "status-approved";
@@ -268,12 +276,15 @@
     }).join('');
   }
   
-  // ======================= APPROVE ORDER =======================
+  // ======================= APPROVE ORDER (WITH UNIQUE RANDOM CODE) =======================
   async function approveOrder(orderId, orderNum) {
     const rewardValue = calculateReward(orderNum);
-    const isJackpotWinner = isFridayJackpotWinner(orderNum);
+    const isJackpotWinner = isFridayJackpotWinner();
     const finalReward = isJackpotWinner ? "$30.00" : rewardValue;
-    const rewardCode = generateRewardCode(orderNum);
+    
+    // Collect existing reward codes from all orders to ensure uniqueness
+    const existingCodes = allOrders.map(o => o["Code Reward"] || o["Reward Code"] || o.rewardCode).filter(c => c);
+    const rewardCode = generateUniqueRewardCode(existingCodes);
     
     if (!confirm(`Approve order #${orderNum} with reward: ${finalReward}?${isJackpotWinner ? ' 🏆 JACKPOT WINNER! 🏆' : ''}`)) return;
     
