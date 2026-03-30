@@ -7,7 +7,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
-    /* ========== YOUR EXISTING CSS – UNCHANGED ========== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Inter', sans-serif; background: #ffffff; color: #111111; scroll-behavior: smooth; }
     .container { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
@@ -27,15 +26,13 @@
     .reward-banner { background: linear-gradient(135deg, #f8f9fa, #ffffff); border: 1px solid #f0f0f0; border-radius: 24px; padding: 32px; margin: 40px 0; text-align: center; }
     .reward-banner h2 { font-size: 2rem; font-weight: 800; margin-bottom: 12px; }
     .reward-amount { font-size: 3rem; font-weight: 800; color: #000; margin: 16px 0; }
-    .reward-banner p { color: #666; }
+    .reward-banner p { color: #666; margin: 8px 0; }
     .video-bonus { background: #f8f9fa; border-radius: 24px; padding: 40px; margin: 40px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 30px; border: 1px solid #f0f0f0; }
     .video-bonus-content { flex: 1; }
     .video-bonus-content h3 { font-size: 1.8rem; font-weight: 700; margin-bottom: 12px; }
     .video-bonus-content p { color: #666; font-size: 1rem; margin-bottom: 16px; }
     .bonus-detail { font-size: 1.2rem; font-weight: 600; color: #000; margin-top: 12px; }
     .video-bonus-icon { font-size: 4rem; background: #ffffff; width: 100px; height: 100px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
-
-    /* Impact Section */
     .impact-section {
       background: linear-gradient(135deg, #fef5e7, #fff6e8);
       border-radius: 24px;
@@ -44,37 +41,11 @@
       text-align: center;
       border: 1px solid #ffd7a5;
     }
-    .impact-section h2 {
-      font-size: 2rem;
-      font-weight: 800;
-      margin-bottom: 20px;
-      color: #111;
-    }
-    .impact-grid {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      flex-wrap: wrap;
-      margin: 20px 0;
-    }
-    .impact-item {
-      background: white;
-      padding: 16px 24px;
-      border-radius: 40px;
-      font-weight: 500;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-    .impact-item i {
-      margin-right: 8px;
-    }
-    .impact-note {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-top: 16px;
-      color: #d4a373;
-    }
-
-    /* Rest of your existing CSS (gallery, tabs, forms, etc.) – unchanged */
+    .impact-section h2 { font-size: 2rem; font-weight: 800; margin-bottom: 20px; color: #111; }
+    .impact-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin: 20px 0; }
+    .impact-item { background: white; padding: 16px 24px; border-radius: 40px; font-weight: 500; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    .impact-item i { margin-right: 8px; }
+    .impact-note { font-size: 1.1rem; font-weight: 600; margin-top: 16px; color: #d4a373; }
     .section-title { font-size: 2rem; font-weight: 700; margin: 60px 0 32px; text-align: center; }
     .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; margin: 40px 0 60px; }
     .shirt-card { background: #ffffff; border-radius: 24px; overflow: hidden; transition: all 0.4s ease; cursor: pointer; border: 1px solid #f0f0f0; }
@@ -143,14 +114,13 @@
     <p>Premium quality limited edition tees • Free pickup in Lusaka</p>
   </div>
 
-  <!-- Reward Banner -->
+  <!-- Reward Banner – No $1 mention -->
   <div class="reward-banner">
-    <h2>Earn up to $15 per purchase! 💵</h2>
-    <div class="reward-amount">$10 Base Reward</div>
-    <p>First 5 buyers get $10 | After that, $1 per order</p>
-    <p>🎥 <strong>+$5</strong> when you post a TikTok/Instagram wearing NRX</p>
+    <h2>🎁 Earn Rewards with Every Purchase</h2>
+    <div class="reward-amount">First 5 buyers: $10</div>
+    <p>🎥 <strong>+$5</strong> for a TikTok/Instagram video wearing NRX</p>
     <p>🔗 <strong>+$5</strong> for every friend who buys using your code</p>
-    <p>🎁 <strong>Every Friday: $30 Jackpot!</strong> (random buyer wins)</p>
+    <p>🏆 <strong>Every Friday: $30 Jackpot!</strong> (random buyer wins)</p>
   </div>
 
   <!-- TikTok Bonus Banner -->
@@ -166,7 +136,7 @@
     </div>
   </div>
 
-  <!-- NRX Impact Section with Foundation Logo -->
+  <!-- Impact Section -->
   <div class="impact-section">
     <h2>NRX Impact 🖤</h2>
     <p>Every purchase helps us give back. Our first mission:</p>
@@ -174,7 +144,6 @@
       <div class="impact-item"><i class="fas fa-female"></i> Sanitary pads for girls</div>
     </div>
     <p class="impact-note">While you earn, someone else wins too.<br>Together we’re building a movement.</p>
-    <!-- FOUNDATION LOGO – LARGE AND VISIBLE -->
     <div style="margin: 30px 0 10px;">
       <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/file_0000000036e871fda6c11fe09caeadf6.png" 
            alt="Hope to Life Foundation" 
@@ -182,28 +151,58 @@
     </div>
   </div>
 
-  <!-- Gallery (unchanged) -->
+  <!-- Gallery with GitHub images (black-shirt.png etc.) -->
   <div class="section-title" id="collection">Latest Collection</div>
   <div class="gallery" id="shirtGallery">
+    <!-- Black Shirt -->
     <div class="shirt-card" data-shirt="Black" data-name="NRX Onyx Black">
-      <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/black-shirt.png" alt="NRX Black" loading="lazy"></div>
-      <div class="shirt-info"><div class="shirt-name">NRX Onyx Black</div><div class="shirt-price">K180</div></div>
+      <div class="shirt-img">
+        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/black-shirt.png" alt="NRX Black" loading="lazy">
+      </div>
+      <div class="shirt-info">
+        <div class="shirt-name">NRX Onyx Black</div>
+        <div class="shirt-price">K180</div>
+      </div>
     </div>
+    <!-- White Shirt -->
     <div class="shirt-card" data-shirt="White" data-name="NRX Arctic White">
-      <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/white-shirt.png" alt="NRX White" loading="lazy"></div>
-      <div class="shirt-info"><div class="shirt-name">NRX Arctic White</div><div class="shirt-price">K180</div></div>
+      <div class="shirt-img">
+        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/white-shirt.png" alt="NRX White" loading="lazy">
+      </div>
+      <div class="shirt-info">
+        <div class="shirt-name">NRX Arctic White</div>
+        <div class="shirt-price">K180</div>
+      </div>
     </div>
+    <!-- Gold Shirt -->
     <div class="shirt-card" data-shirt="Gold" data-name="NRX Golden Era">
-      <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/gold-shirt.png" alt="NRX Gold" loading="lazy"></div>
-      <div class="shirt-info"><div class="shirt-name">NRX Golden Era</div><div class="shirt-price">K180</div></div>
+      <div class="shirt-img">
+        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/gold-shirt.png" alt="NRX Gold" loading="lazy">
+      </div>
+      <div class="shirt-info">
+        <div class="shirt-name">NRX Golden Era</div>
+        <div class="shirt-price">K180</div>
+      </div>
     </div>
+    <!-- Red Shirt -->
     <div class="shirt-card" data-shirt="Red" data-name="NRX Crimson">
-      <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/red-shirt.png" alt="NRX Red" loading="lazy"></div>
-      <div class="shirt-info"><div class="shirt-name">NRX Crimson</div><div class="shirt-price">K180</div></div>
+      <div class="shirt-img">
+        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/red-shirt.png" alt="NRX Red" loading="lazy">
+      </div>
+      <div class="shirt-info">
+        <div class="shirt-name">NRX Crimson</div>
+        <div class="shirt-price">K180</div>
+      </div>
     </div>
+    <!-- Blue Shirt -->
     <div class="shirt-card" data-shirt="Blue" data-name="NRX Cobalt Blue">
-      <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/blue-shirt.png" alt="NRX Blue" loading="lazy"></div>
-      <div class="shirt-info"><div class="shirt-name">NRX Cobalt Blue</div><div class="shirt-price">K180</div></div>
+      <div class="shirt-img">
+        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/blue-shirt.png" alt="NRX Blue" loading="lazy">
+      </div>
+      <div class="shirt-info">
+        <div class="shirt-name">NRX Cobalt Blue</div>
+        <div class="shirt-price">K180</div>
+      </div>
     </div>
   </div>
 
@@ -269,19 +268,17 @@
   </div>
 
   <footer>
-    <!-- FOUNDATION LOGO IN FOOTER (also large) -->
     <div style="margin-bottom: 20px;">
       <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/file_0000000036e871fda6c11fe09caeadf6.png" 
            alt="Hope to Life Foundation" 
            style="width: 180px; max-width: 80%; height: auto;">
     </div>
-    <p>© NRX Drops | $10–$15 reward per purchase | Post a video → $5 | Refer a friend → $5 | Friday $30 Jackpot</p>
+    <p>© NRX Drops | First 5 buyers: $10 | Post a video → $5 | Refer a friend → $5 | Friday $30 Jackpot</p>
     <p style="margin-top: 12px;">🩸 Every purchase helps provide sanitary pads for girls. Together we create change.</p>
   </footer>
 </div>
 
 <script>
-  // All JavaScript remains exactly as before – unchanged
   const SHEETBEST_URL = "https://api.sheetbest.com/sheets/e440b21b-2b2b-466e-8849-1fa3dc3124e6";
   let localOrders = JSON.parse(localStorage.getItem('nrx_orders') || '[]');
   
