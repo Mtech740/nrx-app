@@ -64,7 +64,7 @@
   
   <div style="margin-bottom: 20px; display: flex; gap: 12px; flex-wrap: wrap;">
     <button class="refresh-btn" onclick="loadOrders()">🔄 Refresh Orders</button>
-    <button class="refresh-btn" onclick="openVideoBonus()" style="background: #3b82f6;">🎥 Approve Video Bonus</button>
+    <button class="refresh-btn" onclick="openVideoBonus()" style="background: #3b82f6;">🎥 Approve Video Bonus ($5)</button>
     <button class="refresh-btn" onclick="showJackpotHistory()" style="background: #f59e0b;">🏆 Jackpot History</button>
   </div>
   
@@ -86,11 +86,11 @@
 
 <div id="videoModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:1001; justify-content:center; align-items:center;">
   <div style="background:#0c0c0e; padding:32px; border-radius:24px; max-width:400px; margin:auto;">
-    <h3>🎥 Video Bonus Approval</h3>
+    <h3>🎥 Video Bonus Approval ($5)</h3>
     <p>Customer posted a video wearing NRX shirt</p>
     <input type="text" id="videoPhone" placeholder="Customer Phone Number" style="width:100%; margin:16px 0; padding:12px; border-radius:12px;">
     <input type="text" id="videoLink" placeholder="TikTok/Instagram Link" style="width:100%; margin:16px 0; padding:12px; border-radius:12px;">
-    <button onclick="approveVideoBonus()" style="background:#22c55e; margin-top:12px;">✅ Approve $1 Bonus</button>
+    <button onclick="approveVideoBonus()" style="background:#22c55e; margin-top:12px;">✅ Approve $5 Bonus</button>
     <button onclick="closeVideoModal()" style="background:#666; margin-top:8px;">Cancel</button>
   </div>
 </div>
@@ -101,17 +101,10 @@
   
   let allOrders = [];
   
-  // ======================= REWARD CALCULATOR (FIXED) =======================
+  // ======================= REWARD CALCULATOR (First 5 = $10, then $1) =======================
   function calculateReward(orderNumber) {
-    if (orderNumber <= 4) return "$0.20";
-    if (orderNumber === 5) return "$5.00";
-    if (orderNumber >= 6 && orderNumber <= 999) return "$0.20";
-    if (orderNumber === 1001) return "$10.00";
-    if (orderNumber === 1002) return "$5.00";
-    if (orderNumber === 1003) return "$5.00";
-    if (orderNumber === 1004) return "$10.00";
-    if (orderNumber >= 1005 && orderNumber <= 138222) return "$1.00";
-    return "$0.20";
+    if (orderNumber <= 5) return "$10.00";
+    return "$1.00";
   }
   
   // ======================= TRUE RANDOM FRIDAY JACKPOT =======================
@@ -177,13 +170,14 @@
       allOrders = JSON.parse(localStorage.getItem('nrx_orders') || '[]');
     }
     
-    const nextOrderNum = allOrders.filter(o => o.Status === "Approved").length + 1;
+    const approvedOrders = allOrders.filter(o => o.Status === "Approved");
+    const nextOrderNum = approvedOrders.length + 1;
     const nextReward = calculateReward(nextOrderNum);
     const isFriday = new Date().getDay() === 5;
     
     document.getElementById('nextOrderNum').innerHTML = nextOrderNum;
     document.getElementById('nextReward').innerHTML = nextReward + (isFriday ? ' 🎲 (Friday Jackpot chance 2%)' : '');
-    document.getElementById('totalRewards').innerHTML = allOrders.filter(o => o.Status === "Approved").length;
+    document.getElementById('totalRewards').innerHTML = approvedOrders.length;
     
     if (allOrders.length === 0) {
       ordersDiv.innerHTML = '<div class="empty">📭 No orders yet.</div>';
@@ -197,7 +191,7 @@
     
     const total = allOrders.length;
     const pending = allOrders.filter(o => o.Status === "Pending").length;
-    const approved = allOrders.filter(o => o.Status === "Approved").length;
+    const approved = approvedOrders.length;
     
     document.getElementById('stats').innerHTML = `
       <div class="stat-card"><div class="stat-number">${total}</div><div class="stat-label">Total Orders</div></div>
@@ -221,6 +215,10 @@
       const rewardCode = order["Code Reward"] || order["Reward Code"] || order.rewardCode || "";
       const rewardValue = order["Reward Value"] || order.rewardValue || "";
       const screenshot = order.Screenshot || order.screenshot || "";
+      const referralUsed = order["Referral Used"] || order.referralUsed || "";
+      const userReferralCode = order["User Referral Code"] || order.userReferralCode || "";
+      const videoBonusApproved = order["Video Bonus Approved"] || order.videoBonusApproved || "No";
+      const referralBonusApproved = order["Referral Bonus Approved"] || order.referralBonusApproved || "No";
       
       let orderNumber = 0;
       if (status === "Approved") {
@@ -231,11 +229,13 @@
       }
       
       const isJackpot = order.Jackpot === true;
-      const willBeJackpot = status === "Pending" && isFridayJackpotWinner(); // true random check
+      const willBeJackpot = status === "Pending" && isFridayJackpotWinner();
       const orderReward = calculateReward(orderNumber);
       
       const statusClass = status === "Pending" ? "status-pending" : "status-approved";
       const cardClass = isJackpot ? "jackpot" : (status === "Pending" ? "pending" : "approved");
+      
+      const hasReferral = referralUsed && referralUsed !== "";
       
       return `
         <div class="order-card ${cardClass}">
@@ -251,6 +251,10 @@
             <div class="info-item"><span class="info-label">📏 Size:</span> ${escapeHtml(size)}</div>
             <div class="info-item"><span class="info-label">📍 Delivery:</span> ${escapeHtml(delivery)}</div>
             <div class="info-item"><span class="info-label">💵 Payment:</span> ${escapeHtml(payment)} | K${amount}</div>
+            <div class="info-item"><span class="info-label">🔗 Referral Used:</span> ${escapeHtml(referralUsed) || 'None'}</div>
+            <div class="info-item"><span class="info-label">🔑 User Referral Code:</span> ${escapeHtml(userReferralCode)}</div>
+            <div class="info-item"><span class="info-label">🎥 Video Bonus:</span> ${videoBonusApproved === "Yes" ? "✅ Approved" : "Pending"}</div>
+            <div class="info-item"><span class="info-label">👥 Referral Bonus:</span> ${referralBonusApproved === "Yes" ? "✅ Approved" : "Pending"}</div>
           </div>
           ${screenshot ? `<div class="screenshot-preview"><img src="${screenshot.substring(0, 200)}" onclick="event.stopPropagation(); openModal('${screenshot}')"><div style="font-size:0.7rem;">Click to enlarge</div></div>` : '<div style="color:#888; font-size:0.7rem;">📸 No screenshot uploaded</div>'}
           
@@ -261,14 +265,15 @@
                 ${willBeJackpot ? '<span class="jackpot-badge">🏆 JACKPOT ELIGIBLE! 🏆</span>' : ''}
                 ${new Date().getDay() === 5 && !willBeJackpot ? '<span style="font-size:0.7rem;">🎲 Friday Jackpot chance: 2%</span>' : ''}
               </div>
-              <button class="approve-btn" onclick="approveOrder('${orderId}', ${orderNumber})">✅ Approve & Send Reward</button>
+              <button class="approve-btn" onclick="approveOrder('${orderId}', ${orderNumber}, '${referralUsed}')">✅ Approve & Send Reward</button>
             </div>
           ` : `
             <div class="reward-badge">
               🎁 <strong>Reward Code:</strong> ${rewardCode || 'N/A'} | <strong>Value:</strong> ${rewardValue || 'N/A'}
               ${isJackpot ? ' 🏆 JACKPOT WINNER! 🏆' : ''}
               ${phone ? `<button class="whatsapp-btn" onclick="sendWhatsApp('${phone}', '${orderId}', '${rewardCode}', '${rewardValue}')">📱 Send via WhatsApp</button>` : ''}
-              <button class="video-btn" onclick="openVideoBonusForCustomer('${phone}')">🎥 Video Bonus</button>
+              <button class="video-btn" onclick="openVideoBonusForCustomer('${phone}')">🎥 Approve Video Bonus ($5)</button>
+              ${hasReferral ? `<button class="video-btn" onclick="approveReferralBonus('${referralUsed}', '${orderId}')" style="background:#8b5cf6;">👥 Approve Referral Bonus ($5)</button>` : ''}
             </div>
           `}
         </div>
@@ -276,13 +281,12 @@
     }).join('');
   }
   
-  // ======================= APPROVE ORDER (WITH UNIQUE RANDOM CODE) =======================
-  async function approveOrder(orderId, orderNum) {
+  // ======================= APPROVE ORDER =======================
+  async function approveOrder(orderId, orderNum, referralUsed) {
     const rewardValue = calculateReward(orderNum);
     const isJackpotWinner = isFridayJackpotWinner();
     const finalReward = isJackpotWinner ? "$30.00" : rewardValue;
     
-    // Collect existing reward codes from all orders to ensure uniqueness
     const existingCodes = allOrders.map(o => o["Code Reward"] || o["Reward Code"] || o.rewardCode).filter(c => c);
     const rewardCode = generateUniqueRewardCode(existingCodes);
     
@@ -330,7 +334,7 @@
     loadOrders();
   }
   
-  // ======================= VIDEO BONUS =======================
+  // ======================= VIDEO BONUS ($5) =======================
   function openVideoBonus() {
     document.getElementById('videoModal').style.display = 'flex';
     document.getElementById('videoPhone').value = '';
@@ -358,13 +362,65 @@
     
     const videoRewardCode = `VIDEO-${Date.now()}`;
     
-    alert(`✅ Video Bonus Approved!\n\n🎁 Reward: $1.00\n📱 Send to: ${phone}\n🔗 Link: ${videoLink || 'Not provided'}`);
+    alert(`✅ Video Bonus Approved!\n\n🎁 Reward: $5.00\n📱 Send to: ${phone}\n🔗 Link: ${videoLink || 'Not provided'}`);
     
-    const msg = `🎥 NRX VIDEO BONUS 🎥\n\nThank you for posting a video wearing your NRX shirt!\n\n🎁 BONUS: $1.00\n🔑 Code: ${videoRewardCode}\n\nKeep sharing and earning more! 🔥`;
+    const msg = `🎥 NRX VIDEO BONUS 🎥\n\nThank you for posting a video wearing your NRX shirt!\n\n🎁 BONUS: $5.00\n🔑 Code: ${videoRewardCode}\n\nKeep sharing and earning more! 🔥`;
     const whatsappUrl = `https://wa.me/${phone.replace(/\s/g, '').replace(/^0/, '260')}?text=${encodeURIComponent(msg)}`;
     window.open(whatsappUrl, "_blank");
     
     closeVideoModal();
+  }
+  
+  // ======================= REFERRAL BONUS ($5) =======================
+  async function approveReferralBonus(referralCodeUsed, orderId) {
+    if (!referralCodeUsed) {
+      alert("❌ No referral code used in this order.");
+      return;
+    }
+    
+    let referrerOrder = allOrders.find(o => o["User Referral Code"] === referralCodeUsed);
+    if (!referrerOrder) {
+      alert("❌ Could not find the referrer's order.");
+      return;
+    }
+    
+    const referrerPhone = referrerOrder.Phone || referrerOrder.phone;
+    const referrerName = referrerOrder.Name || referrerOrder.name;
+    
+    if (!referrerPhone) {
+      alert("❌ Referrer phone number not found.");
+      return;
+    }
+    
+    const existingCodes = allOrders.map(o => o["Code Reward"] || o["Reward Code"] || o.rewardCode).filter(c => c);
+    const rewardCode = generateUniqueRewardCode(existingCodes);
+    
+    let orders = JSON.parse(localStorage.getItem('nrx_orders') || '[]');
+    orders = orders.map(o => {
+      if (o["User Referral Code"] === referralCodeUsed) {
+        o["Referral Bonus Approved"] = "Yes";
+      }
+      return o;
+    });
+    localStorage.setItem('nrx_orders', JSON.stringify(orders));
+    
+    try {
+      await fetch(`${SHEETBEST_URL}/User Referral Code/${referralCodeUsed}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          "Referral Bonus Approved": "Yes"
+        })
+      });
+    } catch(e) {}
+    
+    alert(`✅ Referral Bonus Approved!\n\n🎁 Reward: $5.00\n📱 Send to: ${referrerPhone}\n👤 Referrer: ${referrerName}\n🔑 Code: ${rewardCode}`);
+    
+    const msg = `👥 NRX REFERRAL BONUS 👥\n\nCongratulations! Your friend used your referral code and placed an order.\n\n🎁 BONUS: $5.00\n🔑 Code: ${rewardCode}\n\nKeep sharing your code to earn more! 🔥`;
+    const whatsappUrl = `https://wa.me/${referrerPhone.replace(/\s/g, '').replace(/^0/, '260')}?text=${encodeURIComponent(msg)}`;
+    window.open(whatsappUrl, "_blank");
+    
+    loadOrders();
   }
   
   // ======================= JACKPOT HISTORY =======================
@@ -431,6 +487,7 @@
   window.openVideoBonusForCustomer = openVideoBonusForCustomer;
   window.closeVideoModal = closeVideoModal;
   window.approveVideoBonus = approveVideoBonus;
+  window.approveReferralBonus = approveReferralBonus;
   window.showJackpotHistory = showJackpotHistory;
 </script>
 </body>
