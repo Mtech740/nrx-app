@@ -66,6 +66,7 @@
     <button class="refresh-btn" onclick="loadOrders()">🔄 Refresh Orders</button>
     <button class="refresh-btn" onclick="openVideoBonus()" style="background: #3b82f6;">🎥 Approve Video Bonus ($5)</button>
     <button class="refresh-btn" onclick="showJackpotHistory()" style="background: #f59e0b;">🏆 Jackpot History</button>
+    <button class="refresh-btn" onclick="resetLocalData()" style="background: #ef4444;">🗑️ Reset Local Data</button>
   </div>
   
   <div id="orders"></div>
@@ -125,6 +126,19 @@
       code = `NRX-${segment}`;
     } while (existingCodes.includes(code));
     return code;
+  }
+  
+  // ======================= RESET LOCAL DATA =======================
+  function resetLocalData() {
+    if (confirm("⚠️ This will delete all local order data and reload the page. Orders in Google Sheets remain unchanged. Proceed?")) {
+      localStorage.removeItem('nrx_orders');
+      localStorage.removeItem('nrx_admin_logged_in');
+      localStorage.removeItem('nrx_user_code');
+      localStorage.removeItem('nrx_rewards_list');
+      localStorage.removeItem('nrx_referral_stats');
+      alert("Local data cleared. Page will reload.");
+      location.reload();
+    }
   }
   
   // ======================= LOGIN =======================
@@ -489,6 +503,7 @@
   window.approveVideoBonus = approveVideoBonus;
   window.approveReferralBonus = approveReferralBonus;
   window.showJackpotHistory = showJackpotHistory;
+  window.resetLocalData = resetLocalData;
 </script>
 </body>
 </html>
