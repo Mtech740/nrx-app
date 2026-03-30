@@ -52,7 +52,13 @@
     .shirt-card:hover { transform: translateY(-6px); box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1); }
     .shirt-card.selected { border: 2px solid #000; }
     .shirt-img { width: 100%; background: #fafafa; overflow: hidden; padding: 0; }
-    .shirt-img img { width: 100%; height: auto; display: block; aspect-ratio: 2 / 3; object-fit: cover; object-position: center; image-rendering: auto; image-rendering: -webkit-optimize-contrast; backface-visibility: hidden; transform: translateZ(0); transition: transform 0.4s ease; }
+    /* ✅ Full image – no cropping */
+    .shirt-img img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.4s ease;
+    }
     .shirt-card:hover .shirt-img img { transform: scale(1.05); }
     .shirt-info { padding: 20px; text-align: center; border-top: 1px solid #f5f5f5; }
     .shirt-name { font-size: 1.1rem; font-weight: 600; margin-bottom: 6px; }
@@ -151,53 +157,48 @@
     </div>
   </div>
 
-  <!-- Gallery with GitHub images (black-shirt.png etc.) -->
+  <!-- Gallery with PostImage URLs (actual shirt photos) -->
   <div class="section-title" id="collection">Latest Collection</div>
   <div class="gallery" id="shirtGallery">
-    <!-- Black Shirt -->
     <div class="shirt-card" data-shirt="Black" data-name="NRX Onyx Black">
       <div class="shirt-img">
-        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/black-shirt.png" alt="NRX Black" loading="lazy">
+        <img src="https://i.postimg.cc/QF1NfQ52/file-000000000bb071f587d3192da8b5aff2.png" alt="NRX Black" loading="lazy">
       </div>
       <div class="shirt-info">
         <div class="shirt-name">NRX Onyx Black</div>
         <div class="shirt-price">K180</div>
       </div>
     </div>
-    <!-- White Shirt -->
     <div class="shirt-card" data-shirt="White" data-name="NRX Arctic White">
       <div class="shirt-img">
-        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/white-shirt.png" alt="NRX White" loading="lazy">
+        <img src="https://i.postimg.cc/2b9DwXD3/file-000000000ecc722fa0aa9ba18400aa71.png" alt="NRX White" loading="lazy">
       </div>
       <div class="shirt-info">
         <div class="shirt-name">NRX Arctic White</div>
         <div class="shirt-price">K180</div>
       </div>
     </div>
-    <!-- Gold Shirt -->
     <div class="shirt-card" data-shirt="Gold" data-name="NRX Golden Era">
       <div class="shirt-img">
-        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/gold-shirt.png" alt="NRX Gold" loading="lazy">
+        <img src="https://i.postimg.cc/XG1b8Dbq/file-000000006e8c71fd8e3efd99a47710e9.png" alt="NRX Gold" loading="lazy">
       </div>
       <div class="shirt-info">
         <div class="shirt-name">NRX Golden Era</div>
         <div class="shirt-price">K180</div>
       </div>
     </div>
-    <!-- Red Shirt -->
     <div class="shirt-card" data-shirt="Red" data-name="NRX Crimson">
       <div class="shirt-img">
-        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/red-shirt.png" alt="NRX Red" loading="lazy">
+        <img src="https://i.postimg.cc/9RghpNhf/file-0000000086d0722f9c1bac970b3af52f.png" alt="NRX Red" loading="lazy">
       </div>
       <div class="shirt-info">
         <div class="shirt-name">NRX Crimson</div>
         <div class="shirt-price">K180</div>
       </div>
     </div>
-    <!-- Blue Shirt -->
     <div class="shirt-card" data-shirt="Blue" data-name="NRX Cobalt Blue">
       <div class="shirt-img">
-        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/blue-shirt.png" alt="NRX Blue" loading="lazy">
+        <img src="https://i.postimg.cc/2bSYnNP6/file-00000000386871fda7f237fb9db6dd8c.png" alt="NRX Blue" loading="lazy">
       </div>
       <div class="shirt-info">
         <div class="shirt-name">NRX Cobalt Blue</div>
