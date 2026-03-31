@@ -47,20 +47,13 @@
     .impact-item i { margin-right: 8px; }
     .impact-note { font-size: 1.1rem; font-weight: 600; margin-top: 16px; color: #d4a373; }
     .section-title { font-size: 2rem; font-weight: 700; margin: 60px 0 32px; text-align: center; }
-    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; margin: 40px 0 60px; }
+    .collection-subtitle { font-size: 1.5rem; font-weight: 600; margin: 40px 0 20px; text-align: center; color: #333; border-bottom: 1px solid #eaeaea; display: inline-block; padding-bottom: 8px; }
+    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; margin: 40px 0; }
     .shirt-card { background: #ffffff; border-radius: 24px; overflow: hidden; transition: all 0.4s ease; cursor: pointer; border: 1px solid #f0f0f0; }
     .shirt-card:hover { transform: translateY(-6px); box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1); }
     .shirt-card.selected { border: 2px solid #000; }
     .shirt-img { width: 100%; background: #fafafa; overflow: hidden; padding: 0; text-align: center; }
-    /* BEST QUALITY – no scaling, no cropping */
-    .shirt-img img {
-      width: 100%;
-      height: auto;
-      display: block;
-      transition: transform 0.4s ease;
-      image-rendering: crisp-edges;
-      image-rendering: -webkit-optimize-contrast;
-    }
+    .shirt-img img { width: 100%; height: auto; display: block; transition: transform 0.4s ease; }
     .shirt-card:hover .shirt-img img { transform: scale(1.02); }
     .shirt-info { padding: 20px; text-align: center; border-top: 1px solid #f5f5f5; }
     .shirt-name { font-size: 1.1rem; font-weight: 600; margin-bottom: 6px; }
@@ -154,53 +147,62 @@
     </div>
   </div>
 
-  <!-- Gallery using GitHub raw URLs – after you upload the correct high-res photos -->
-  <div class="section-title" id="collection">Latest Collection</div>
-  <div class="gallery" id="shirtGallery">
-    <div class="shirt-card" data-shirt="Black" data-name="NRX Onyx Black">
-      <div class="shirt-img">
-        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/black-shirt.png" alt="NRX Black" loading="lazy">
-      </div>
-      <div class="shirt-info">
-        <div class="shirt-name">NRX Onyx Black</div>
-        <div class="shirt-price">K180</div>
-      </div>
+  <!-- Men's Collection -->
+  <div class="section-title" id="collection">🔥 Men's Collection 🔥</div>
+  <div class="gallery" id="mensGallery">
+    <!-- Use placeholder images; replace src with actual shirt photos later -->
+    <div class="shirt-card" data-shirt="Deep Burgundy" data-name="NRX Deep Burgundy">
+      <div class="shirt-img"><img src="https://i.postimg.cc/QF1NfQ52/file-000000000bb071f587d3192da8b5aff2.png" alt="Deep Burgundy" loading="lazy"></div>
+      <div class="shirt-info"><div class="shirt-name">NRX Deep Burgundy</div><div class="shirt-price">K180</div></div>
     </div>
-    <div class="shirt-card" data-shirt="White" data-name="NRX Arctic White">
-      <div class="shirt-img">
-        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/white-shirt.png" alt="NRX White" loading="lazy">
-      </div>
-      <div class="shirt-info">
-        <div class="shirt-name">NRX Arctic White</div>
-        <div class="shirt-price">K180</div>
-      </div>
+    <div class="shirt-card" data-shirt="Charcoal Grey" data-name="NRX Charcoal Grey">
+      <div class="shirt-img"><img src="https://i.postimg.cc/2b9DwXD3/file-000000000ecc722fa0aa9ba18400aa71.png" alt="Charcoal Grey" loading="lazy"></div>
+      <div class="shirt-info"><div class="shirt-name">NRX Charcoal Grey</div><div class="shirt-price">K180</div></div>
     </div>
-    <div class="shirt-card" data-shirt="Gold" data-name="NRX Golden Era">
-      <div class="shirt-img">
-        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/gold-shirt.png" alt="NRX Gold" loading="lazy">
-      </div>
-      <div class="shirt-info">
-        <div class="shirt-name">NRX Golden Era</div>
-        <div class="shirt-price">K180</div>
-      </div>
+    <div class="shirt-card" data-shirt="Royal Blue" data-name="NRX Royal Blue">
+      <div class="shirt-img"><img src="https://i.postimg.cc/XG1b8Dbq/file-000000006e8c71fd8e3efd99a47710e9.png" alt="Royal Blue" loading="lazy"></div>
+      <div class="shirt-info"><div class="shirt-name">NRX Royal Blue</div><div class="shirt-price">K180</div></div>
     </div>
-    <div class="shirt-card" data-shirt="Red" data-name="NRX Crimson">
-      <div class="shirt-img">
-        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/red-shirt.png" alt="NRX Red" loading="lazy">
-      </div>
-      <div class="shirt-info">
-        <div class="shirt-name">NRX Crimson</div>
-        <div class="shirt-price">K180</div>
-      </div>
+    <div class="shirt-card" data-shirt="Olive Green" data-name="NRX Olive Green">
+      <div class="shirt-img"><img src="https://i.postimg.cc/9RghpNhf/file-0000000086d0722f9c1bac970b3af52f.png" alt="Olive Green" loading="lazy"></div>
+      <div class="shirt-info"><div class="shirt-name">NRX Olive Green</div><div class="shirt-price">K180</div></div>
     </div>
-    <div class="shirt-card" data-shirt="Blue" data-name="NRX Cobalt Blue">
-      <div class="shirt-img">
-        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/blue-shirt.png" alt="NRX Blue" loading="lazy">
-      </div>
-      <div class="shirt-info">
-        <div class="shirt-name">NRX Cobalt Blue</div>
-        <div class="shirt-price">K180</div>
-      </div>
+  </div>
+
+  <!-- Ladies' Collection -->
+  <div class="section-title">👗 Ladies' Collection 👗</div>
+  <div class="gallery" id="ladiesGallery">
+    <div class="shirt-card" data-shirt="Matte Black" data-name="NRX Matte Black">
+      <div class="shirt-img"><img src="https://i.postimg.cc/QF1NfQ52/file-000000000bb071f587d3192da8b5aff2.png" alt="Matte Black" loading="lazy"></div>
+      <div class="shirt-info"><div class="shirt-name">NRX Matte Black</div><div class="shirt-price">K180</div></div>
+    </div>
+    <div class="shirt-card" data-shirt="Military Olive" data-name="NRX Military Olive">
+      <div class="shirt-img"><img src="https://i.postimg.cc/2b9DwXD3/file-000000000ecc722fa0aa9ba18400aa71.png" alt="Military Olive" loading="lazy"></div>
+      <div class="shirt-info"><div class="shirt-name">NRX Military Olive</div><div class="shirt-price">K180</div></div>
+    </div>
+    <div class="shirt-card" data-shirt="Desert Beige" data-name="NRX Desert Beige">
+      <div class="shirt-img"><img src="https://i.postimg.cc/XG1b8Dbq/file-000000006e8c71fd8e3efd99a47710e9.png" alt="Desert Beige" loading="lazy"></div>
+      <div class="shirt-info"><div class="shirt-name">NRX Desert Beige</div><div class="shirt-price">K180</div></div>
+    </div>
+    <div class="shirt-card" data-shirt="Dark Navy" data-name="NRX Dark Navy">
+      <div class="shirt-img"><img src="https://i.postimg.cc/9RghpNhf/file-0000000086d0722f9c1bac970b3af52f.png" alt="Dark Navy" loading="lazy"></div>
+      <div class="shirt-info"><div class="shirt-name">NRX Dark Navy</div><div class="shirt-price">K180</div></div>
+    </div>
+    <div class="shirt-card" data-shirt="Charcoal Grey" data-name="NRX Charcoal Grey">
+      <div class="shirt-img"><img src="https://i.postimg.cc/2bSYnNP6/file-00000000386871fda7f237fb9db6dd8c.png" alt="Charcoal Grey" loading="lazy"></div>
+      <div class="shirt-info"><div class="shirt-name">NRX Charcoal Grey</div><div class="shirt-price">K180</div></div>
+    </div>
+    <div class="shirt-card" data-shirt="Urban White" data-name="NRX Urban White">
+      <div class="shirt-img"><img src="https://i.postimg.cc/QF1NfQ52/file-000000000bb071f587d3192da8b5aff2.png" alt="Urban White" loading="lazy"></div>
+      <div class="shirt-info"><div class="shirt-name">NRX Urban White</div><div class="shirt-price">K180</div></div>
+    </div>
+    <div class="shirt-card" data-shirt="Coyote Brown" data-name="NRX Coyote Brown">
+      <div class="shirt-img"><img src="https://i.postimg.cc/2b9DwXD3/file-000000000ecc722fa0aa9ba18400aa71.png" alt="Coyote Brown" loading="lazy"></div>
+      <div class="shirt-info"><div class="shirt-name">NRX Coyote Brown</div><div class="shirt-price">K180</div></div>
+    </div>
+    <div class="shirt-card" data-shirt="Steel Blue" data-name="NRX Steel Blue">
+      <div class="shirt-img"><img src="https://i.postimg.cc/XG1b8Dbq/file-000000006e8c71fd8e3efd99a47710e9.png" alt="Steel Blue" loading="lazy"></div>
+      <div class="shirt-info"><div class="shirt-name">NRX Steel Blue</div><div class="shirt-price">K180</div></div>
     </div>
   </div>
 
@@ -222,11 +224,24 @@
     <div class="form-row">
       <select id="shirtColorSelect">
         <option value="">Select Shirt Color *</option>
-        <option value="Black">NRX Onyx Black</option>
-        <option value="White">NRX Arctic White</option>
-        <option value="Gold">NRX Golden Era</option>
-        <option value="Red">NRX Crimson</option>
-        <option value="Blue">NRX Cobalt Blue</option>
+        <!-- Men's -->
+        <optgroup label="Men's">
+          <option value="Deep Burgundy">Deep Burgundy</option>
+          <option value="Charcoal Grey">Charcoal Grey</option>
+          <option value="Royal Blue">Royal Blue</option>
+          <option value="Olive Green">Olive Green</option>
+        </optgroup>
+        <!-- Ladies' -->
+        <optgroup label="Ladies'">
+          <option value="Matte Black">Matte Black</option>
+          <option value="Military Olive">Military Olive</option>
+          <option value="Desert Beige">Desert Beige</option>
+          <option value="Dark Navy">Dark Navy</option>
+          <option value="Charcoal Grey">Charcoal Grey (Ladies')</option>
+          <option value="Urban White">Urban White</option>
+          <option value="Coyote Brown">Coyote Brown</option>
+          <option value="Steel Blue">Steel Blue</option>
+        </optgroup>
       </select>
       <select id="sizeSelect">
         <option value="">Select Size *</option>
@@ -277,7 +292,6 @@
 </div>
 
 <script>
-  // All JavaScript remains exactly as before – unchanged
   const SHEETBEST_URL = "https://api.sheetbest.com/sheets/e440b21b-2b2b-466e-8849-1fa3dc3124e6";
   let localOrders = JSON.parse(localStorage.getItem('nrx_orders') || '[]');
   
@@ -295,21 +309,46 @@
     alert('Referral code copied! Share with friends to earn bonuses.');
   };
   
-  let selectedShirt = "Black";
-  let selectedShirtName = "NRX Onyx Black";
+  let selectedShirt = "";
+  let selectedShirtName = "";
+  
+  // Update selection when clicking a shirt card
   document.querySelectorAll('.shirt-card').forEach(card => {
     card.addEventListener('click', () => {
       document.querySelectorAll('.shirt-card').forEach(c => c.classList.remove('selected'));
       card.classList.add('selected');
       selectedShirt = card.dataset.shirt;
       selectedShirtName = card.querySelector('.shirt-name').textContent;
-      document.getElementById('shirtColorSelect').value = selectedShirt;
+      const select = document.getElementById('shirtColorSelect');
+      // Find matching option
+      for (let i = 0; i < select.options.length; i++) {
+        if (select.options[i].value === selectedShirt) {
+          select.value = selectedShirt;
+          break;
+        }
+      }
     });
   });
+  
+  // Also handle manual dropdown change
   document.getElementById('shirtColorSelect').onchange = (e) => {
     selectedShirt = e.target.value;
-    const shirtMap = { 'Black':'NRX Onyx Black','White':'NRX Arctic White','Gold':'NRX Golden Era','Red':'NRX Crimson','Blue':'NRX Cobalt Blue' };
-    selectedShirtName = shirtMap[selectedShirt] || selectedShirt;
+    // Find matching card and highlight
+    const cards = document.querySelectorAll('.shirt-card');
+    let found = false;
+    cards.forEach(card => {
+      if (card.dataset.shirt === selectedShirt) {
+        card.classList.add('selected');
+        selectedShirtName = card.querySelector('.shirt-name').textContent;
+        found = true;
+      } else {
+        card.classList.remove('selected');
+      }
+    });
+    if (!found) {
+      // If no matching card (e.g., a color without a card), just set name from dropdown
+      selectedShirtName = e.target.options[e.target.selectedIndex].text;
+    }
   };
   
   const paymentDetailsMap = { MTN: { number:"076 9939546", name:"Mumba Sampa" }, Airtel: { number:"0772566084", name:"Mumba Sampa" } };
