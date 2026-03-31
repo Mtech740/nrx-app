@@ -51,15 +51,17 @@
     .shirt-card { background: #ffffff; border-radius: 24px; overflow: hidden; transition: all 0.4s ease; cursor: pointer; border: 1px solid #f0f0f0; }
     .shirt-card:hover { transform: translateY(-6px); box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1); }
     .shirt-card.selected { border: 2px solid #000; }
-    .shirt-img { width: 100%; background: #fafafa; overflow: hidden; padding: 0; }
-    /* ✅ Full image – no cropping */
+    .shirt-img { width: 100%; background: #fafafa; overflow: hidden; padding: 0; text-align: center; }
+    /* BEST QUALITY – no scaling, no cropping */
     .shirt-img img {
       width: 100%;
       height: auto;
       display: block;
       transition: transform 0.4s ease;
+      image-rendering: crisp-edges;
+      image-rendering: -webkit-optimize-contrast;
     }
-    .shirt-card:hover .shirt-img img { transform: scale(1.05); }
+    .shirt-card:hover .shirt-img img { transform: scale(1.02); }
     .shirt-info { padding: 20px; text-align: center; border-top: 1px solid #f5f5f5; }
     .shirt-name { font-size: 1.1rem; font-weight: 600; margin-bottom: 6px; }
     .shirt-price { font-size: 1.4rem; font-weight: 700; }
@@ -100,7 +102,6 @@
 </head>
 <body>
 <div class="container">
-  <!-- Navigation -->
   <div class="navbar">
     <div class="logo">
       <img src="https://i.postimg.cc/Jz4HNBqc/image-1774485418192.jpg" alt="NRX Logo">
@@ -114,13 +115,11 @@
     </div>
   </div>
 
-  <!-- Hero Section -->
   <div class="hero">
     <h1>NRX <span>Streetwear</span></h1>
     <p>Premium quality limited edition tees • Free pickup in Lusaka</p>
   </div>
 
-  <!-- Reward Banner – No $1 mention -->
   <div class="reward-banner">
     <h2>🎁 Earn Rewards with Every Purchase</h2>
     <div class="reward-amount">First 5 buyers: $10</div>
@@ -129,7 +128,6 @@
     <p>🏆 <strong>Every Friday: $30 Jackpot!</strong> (random buyer wins)</p>
   </div>
 
-  <!-- TikTok Bonus Banner -->
   <div class="video-bonus">
     <div class="video-bonus-content">
       <h3><i class="fab fa-tiktok"></i> TikTok Creator Bonus</h3>
@@ -142,7 +140,6 @@
     </div>
   </div>
 
-  <!-- Impact Section -->
   <div class="impact-section">
     <h2>NRX Impact 🖤</h2>
     <p>Every purchase helps us give back. Our first mission:</p>
@@ -157,12 +154,12 @@
     </div>
   </div>
 
-  <!-- Gallery with PostImage URLs (actual shirt photos) -->
+  <!-- Gallery using GitHub raw URLs – after you upload the correct high-res photos -->
   <div class="section-title" id="collection">Latest Collection</div>
   <div class="gallery" id="shirtGallery">
     <div class="shirt-card" data-shirt="Black" data-name="NRX Onyx Black">
       <div class="shirt-img">
-        <img src="https://i.postimg.cc/QF1NfQ52/file-000000000bb071f587d3192da8b5aff2.png" alt="NRX Black" loading="lazy">
+        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/black-shirt.png" alt="NRX Black" loading="lazy">
       </div>
       <div class="shirt-info">
         <div class="shirt-name">NRX Onyx Black</div>
@@ -171,7 +168,7 @@
     </div>
     <div class="shirt-card" data-shirt="White" data-name="NRX Arctic White">
       <div class="shirt-img">
-        <img src="https://i.postimg.cc/2b9DwXD3/file-000000000ecc722fa0aa9ba18400aa71.png" alt="NRX White" loading="lazy">
+        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/white-shirt.png" alt="NRX White" loading="lazy">
       </div>
       <div class="shirt-info">
         <div class="shirt-name">NRX Arctic White</div>
@@ -180,7 +177,7 @@
     </div>
     <div class="shirt-card" data-shirt="Gold" data-name="NRX Golden Era">
       <div class="shirt-img">
-        <img src="https://i.postimg.cc/XG1b8Dbq/file-000000006e8c71fd8e3efd99a47710e9.png" alt="NRX Gold" loading="lazy">
+        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/gold-shirt.png" alt="NRX Gold" loading="lazy">
       </div>
       <div class="shirt-info">
         <div class="shirt-name">NRX Golden Era</div>
@@ -189,7 +186,7 @@
     </div>
     <div class="shirt-card" data-shirt="Red" data-name="NRX Crimson">
       <div class="shirt-img">
-        <img src="https://i.postimg.cc/9RghpNhf/file-0000000086d0722f9c1bac970b3af52f.png" alt="NRX Red" loading="lazy">
+        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/red-shirt.png" alt="NRX Red" loading="lazy">
       </div>
       <div class="shirt-info">
         <div class="shirt-name">NRX Crimson</div>
@@ -198,7 +195,7 @@
     </div>
     <div class="shirt-card" data-shirt="Blue" data-name="NRX Cobalt Blue">
       <div class="shirt-img">
-        <img src="https://i.postimg.cc/2bSYnNP6/file-00000000386871fda7f237fb9db6dd8c.png" alt="NRX Blue" loading="lazy">
+        <img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/blue-shirt.png" alt="NRX Blue" loading="lazy">
       </div>
       <div class="shirt-info">
         <div class="shirt-name">NRX Cobalt Blue</div>
@@ -280,6 +277,7 @@
 </div>
 
 <script>
+  // All JavaScript remains exactly as before – unchanged
   const SHEETBEST_URL = "https://api.sheetbest.com/sheets/e440b21b-2b2b-466e-8849-1fa3dc3124e6";
   let localOrders = JSON.parse(localStorage.getItem('nrx_orders') || '[]');
   
