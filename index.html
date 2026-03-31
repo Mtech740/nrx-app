@@ -146,10 +146,10 @@
     </div>
   </div>
 
-  <!-- Unified Gallery – No Gender Labels, High‑Quality Images -->
-  <div class="section-title" id="collection">🔥 Latest Collection 🔥</div>
+  <!-- Unified Gallery – 12 Colors, High‑Quality PostImage URLs -->
+  <div class="section-title" id="collection">Latest Collection</div>
   <div class="gallery" id="shirtGallery">
-    <!-- Men's colors -->
+    <!-- Men's colors (4) -->
     <div class="shirt-card" data-shirt="Deep Burgundy" data-name="NRX Deep Burgundy">
       <div class="shirt-img"><img src="https://i.postimg.cc/QF1NfQ52/file-000000000bb071f587d3192da8b5aff2.png" alt="Deep Burgundy" loading="lazy"></div>
       <div class="shirt-info"><div class="shirt-name">NRX Deep Burgundy</div><div class="shirt-price">K180</div></div>
@@ -166,6 +166,7 @@
       <div class="shirt-img"><img src="https://i.postimg.cc/9RghpNhf/file-0000000086d0722f9c1bac970b3af52f.png" alt="Olive Green" loading="lazy"></div>
       <div class="shirt-info"><div class="shirt-name">NRX Olive Green</div><div class="shirt-price">K180</div></div>
     </div>
+
     <!-- Ladies' colors (8) -->
     <div class="shirt-card" data-shirt="Matte Black" data-name="NRX Matte Black">
       <div class="shirt-img"><img src="https://i.postimg.cc/2bSYnNP6/file-00000000386871fda7f237fb9db6dd8c.png" alt="Matte Black" loading="lazy"></div>
@@ -322,7 +323,7 @@
     });
   });
   
-  // Also handle manual dropdown change
+  // Handle manual dropdown change
   document.getElementById('shirtColorSelect').onchange = (e) => {
     selectedShirt = e.target.value;
     const cards = document.querySelectorAll('.shirt-card');
