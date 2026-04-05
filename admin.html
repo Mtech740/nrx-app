@@ -4,6 +4,7 @@
   <title>NRX Admin Panel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    /* (same styles as before – unchanged) */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #0a0a0a; color: #ffffff; font-family: 'Inter', monospace; padding: 24px; }
     .container { max-width: 1200px; margin: 0 auto; }
@@ -53,22 +54,18 @@
     <h1>🔥 NRX Admin Dashboard</h1>
     <button class="logout-btn" onclick="logout()">🚪 Logout</button>
   </div>
-  
   <div class="reward-info" id="rewardInfo">
     <span>📊 Next Order #: <strong id="nextOrderNum">-</strong></span>
     <span>🎁 Next Reward: <strong id="nextReward">-</strong></span>
     <span>💰 Total Rewards Given: <strong id="totalRewards">0</strong></span>
   </div>
-  
   <div class="stats" id="stats"></div>
-  
   <div style="margin-bottom: 20px; display: flex; gap: 12px; flex-wrap: wrap;">
     <button class="refresh-btn" onclick="loadOrders()">🔄 Refresh Orders</button>
-    <button class="refresh-btn" onclick="openVideoBonus()" style="background: #3b82f6;">🎥 Approve Video Bonus ($5)</button>
+    <button class="refresh-btn" onclick="openVideoBonus()" style="background: #3b82f6;">🎥 Approve Video Bonus ($2)</button>
     <button class="refresh-btn" onclick="showJackpotHistory()" style="background: #f59e0b;">🏆 Jackpot History</button>
     <button class="refresh-btn" onclick="resetLocalData()" style="background: #ef4444;">🗑️ Reset Local Data</button>
   </div>
-  
   <div id="orders"></div>
 </div>
 
@@ -87,11 +84,11 @@
 
 <div id="videoModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:1001; justify-content:center; align-items:center;">
   <div style="background:#0c0c0e; padding:32px; border-radius:24px; max-width:400px; margin:auto;">
-    <h3>🎥 Video Bonus Approval ($5)</h3>
+    <h3>🎥 Video Bonus Approval ($2)</h3>
     <p>Customer posted a video wearing NRX shirt</p>
     <input type="text" id="videoPhone" placeholder="Customer Phone Number" style="width:100%; margin:16px 0; padding:12px; border-radius:12px;">
     <input type="text" id="videoLink" placeholder="TikTok/Instagram Link" style="width:100%; margin:16px 0; padding:12px; border-radius:12px;">
-    <button onclick="approveVideoBonus()" style="background:#22c55e; margin-top:12px;">✅ Approve $5 Bonus</button>
+    <button onclick="approveVideoBonus()" style="background:#22c55e; margin-top:12px;">✅ Approve $2 Bonus</button>
     <button onclick="closeVideoModal()" style="background:#666; margin-top:8px;">Cancel</button>
   </div>
 </div>
@@ -102,19 +99,17 @@
   
   let allOrders = [];
   
-  // ======================= REWARD CALCULATOR (First 5 = $10, then $1) =======================
+  // ======================= REWARD CALCULATOR (First 5 = $15, then $1) =======================
   function calculateReward(orderNumber) {
-    if (orderNumber <= 5) return "$10.00";
+    if (orderNumber <= 5) return "$15.00";
     return "$1.00";
   }
   
-  // ======================= TRUE RANDOM FRIDAY JACKPOT =======================
   function isFridayJackpotWinner() {
     const isFriday = new Date().getDay() === 5;
-    return isFriday && Math.random() < 0.02; // 2% chance
+    return isFriday && Math.random() < 0.02;
   }
   
-  // ======================= GENERATE UNIQUE RANDOM REWARD CODE =======================
   function generateUniqueRewardCode(existingCodes) {
     const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
     let code;
@@ -128,7 +123,6 @@
     return code;
   }
   
-  // ======================= RESET LOCAL DATA =======================
   function resetLocalData() {
     if (confirm("⚠️ This will delete all local order data and reload the page. Orders in Google Sheets remain unchanged. Proceed?")) {
       localStorage.removeItem('nrx_orders');
@@ -141,7 +135,6 @@
     }
   }
   
-  // ======================= LOGIN =======================
   function checkLogin() {
     if (document.getElementById('adminPin').value === ADMIN_PIN) {
       localStorage.setItem('nrx_admin_logged_in', 'true');
@@ -166,7 +159,6 @@
     loadOrders();
   }
   
-  // ======================= LOAD ORDERS =======================
   async function loadOrders() {
     const ordersDiv = document.getElementById('orders');
     ordersDiv.innerHTML = '<div class="empty">⏳ Loading orders...</div>';
@@ -208,7 +200,7 @@
     const approved = approvedOrders.length;
     
     document.getElementById('stats').innerHTML = `
-      <div class="stat-card"><div class="stat-number">${total}</div><div class="stat-label">Total Orders</div></div>
+      <div class>...</div><div class="stat-card"><div class="stat-number">${total}</div><div class="stat-label">Total Orders</div></div>
       <div class="stat-card"><div class="stat-number">${pending}</div><div class="stat-label">Pending</div></div>
       <div class="stat-card"><div class="stat-number">${approved}</div><div class="stat-label">Approved</div></div>
     `;
@@ -286,7 +278,7 @@
               🎁 <strong>Reward Code:</strong> ${rewardCode || 'N/A'} | <strong>Value:</strong> ${rewardValue || 'N/A'}
               ${isJackpot ? ' 🏆 JACKPOT WINNER! 🏆' : ''}
               ${phone ? `<button class="whatsapp-btn" onclick="sendWhatsApp('${phone}', '${orderId}', '${rewardCode}', '${rewardValue}')">📱 Send via WhatsApp</button>` : ''}
-              <button class="video-btn" onclick="openVideoBonusForCustomer('${phone}')">🎥 Approve Video Bonus ($5)</button>
+              <button class="video-btn" onclick="openVideoBonusForCustomer('${phone}')">🎥 Approve Video Bonus ($2)</button>
               ${hasReferral ? `<button class="video-btn" onclick="approveReferralBonus('${referralUsed}', '${orderId}')" style="background:#8b5cf6;">👥 Approve Referral Bonus ($5)</button>` : ''}
             </div>
           `}
@@ -295,7 +287,6 @@
     }).join('');
   }
   
-  // ======================= APPROVE ORDER =======================
   async function approveOrder(orderId, orderNum, referralUsed) {
     const rewardValue = calculateReward(orderNum);
     const isJackpotWinner = isFridayJackpotWinner();
@@ -348,7 +339,6 @@
     loadOrders();
   }
   
-  // ======================= VIDEO BONUS ($5) =======================
   function openVideoBonus() {
     document.getElementById('videoModal').style.display = 'flex';
     document.getElementById('videoPhone').value = '';
@@ -376,16 +366,15 @@
     
     const videoRewardCode = `VIDEO-${Date.now()}`;
     
-    alert(`✅ Video Bonus Approved!\n\n🎁 Reward: $5.00\n📱 Send to: ${phone}\n🔗 Link: ${videoLink || 'Not provided'}`);
+    alert(`✅ Video Bonus Approved!\n\n🎁 Reward: $2.00\n📱 Send to: ${phone}\n🔗 Link: ${videoLink || 'Not provided'}`);
     
-    const msg = `🎥 NRX VIDEO BONUS 🎥\n\nThank you for posting a video wearing your NRX shirt!\n\n🎁 BONUS: $5.00\n🔑 Code: ${videoRewardCode}\n\nKeep sharing and earning more! 🔥`;
+    const msg = `🎥 NRX VIDEO BONUS 🎥\n\nThank you for posting a video wearing your NRX shirt!\n\n🎁 BONUS: $2.00\n🔑 Code: ${videoRewardCode}\n\nKeep sharing and earning more! 🔥`;
     const whatsappUrl = `https://wa.me/${phone.replace(/\s/g, '').replace(/^0/, '260')}?text=${encodeURIComponent(msg)}`;
     window.open(whatsappUrl, "_blank");
     
     closeVideoModal();
   }
   
-  // ======================= REFERRAL BONUS ($5) =======================
   async function approveReferralBonus(referralCodeUsed, orderId) {
     if (!referralCodeUsed) {
       alert("❌ No referral code used in this order.");
@@ -437,7 +426,6 @@
     loadOrders();
   }
   
-  // ======================= JACKPOT HISTORY =======================
   function showJackpotHistory() {
     const jackpotWinners = allOrders.filter(o => o.Jackpot === true);
     if (jackpotWinners.length === 0) {
@@ -451,7 +439,6 @@
     }
   }
   
-  // ======================= WHATSAPP =======================
   function sendWhatsApp(phone, orderId, rewardCode, rewardValue, isJackpot = false) {
     if (!phone) {
       alert("❌ No phone number available.");
@@ -467,7 +454,6 @@
     window.open(whatsappUrl, "_blank");
   }
   
-  // ======================= MODAL =======================
   function openModal(imgSrc) {
     const modal = document.getElementById("imageModal");
     const modalImg = document.getElementById("modalImage");
