@@ -112,10 +112,12 @@
     <p>Premium quality limited edition tees • Free pickup in Lusaka</p>
   </div>
 
+  <!-- REWARD BANNER – Launch offer -->
   <div class="reward-banner">
-    <h2>🎁 Earn Rewards with Every Purchase</h2>
-    <div class="reward-amount">First 5 buyers: $10</div>
-    <p>🎥 <strong>+$5</strong> for a TikTok/Instagram video wearing NRX</p>
+    <h2>🔥 LAUNCH OFFER – FIRST 5 BUYERS ONLY 🔥</h2>
+    <div class="reward-amount">Get $15 reward</div>
+    <p>After that, every purchase earns $1.</p>
+    <p>🎥 <strong>+$2</strong> for a TikTok/Instagram video wearing NRX</p>
     <p>🔗 <strong>+$5</strong> for every friend who buys using your code</p>
     <p>🏆 <strong>Every Friday: $30 Jackpot!</strong> (random buyer wins)</p>
   </div>
@@ -123,7 +125,7 @@
   <div class="video-bonus">
     <div class="video-bonus-content">
       <h3><i class="fab fa-tiktok"></i> TikTok Creator Bonus</h3>
-      <p>Post a video wearing your NRX t-shirt and earn <strong>$5 per video</strong>!</p>
+      <p>Post a video wearing your NRX t-shirt and earn <strong>$2 per video</strong>!</p>
       <p>When your followers buy using your referral code, you earn another <strong>$5 each</strong>.</p>
       <div class="bonus-detail">Your referral code = Your earning code</div>
     </div>
@@ -146,7 +148,7 @@
     </div>
   </div>
 
-  <!-- Gallery – uses your 5 GitHub images; replace the files in /images with high‑quality shirt photos -->
+  <!-- Gallery – uses your GitHub images; replace with actual high‑res photos -->
   <div class="section-title" id="collection">Latest Collection</div>
   <div class="gallery" id="shirtGallery">
     <!-- Men's Colors (4) -->
@@ -166,7 +168,7 @@
       <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/red-shirt.png" alt="Olive Green" loading="lazy"></div>
       <div class="shirt-info"><div class="shirt-name">NRX Olive Green</div><div class="shirt-price">K180</div></div>
     </div>
-    <!-- Ladies' Colors (8) – using the remaining images as placeholders -->
+    <!-- Ladies' Colors (8) – placeholders -->
     <div class="shirt-card" data-shirt="Matte Black" data-name="NRX Matte Black">
       <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/blue-shirt.png" alt="Matte Black" loading="lazy"></div>
       <div class="shirt-info"><div class="shirt-name">NRX Matte Black</div><div class="shirt-price">K180</div></div>
@@ -180,7 +182,7 @@
       <div class="shirt-info"><div class="shirt-name">NRX Desert Beige</div><div class="shirt-price">K180</div></div>
     </div>
     <div class="shirt-card" data-shirt="Dark Navy" data-name="NRX Dark Navy">
-      <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/gold-shirt.png" alt="Dark Navy" loading="lazy"></div>
+      <div class-></div><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/gold-shirt.png" alt="Dark Navy" loading="lazy"></div>
       <div class="shirt-info"><div class="shirt-name">NRX Dark Navy</div><div class="shirt-price">K180</div></div>
     </div>
     <div class="shirt-card" data-shirt="Charcoal Grey (Ladies')" data-name="NRX Charcoal Grey">
@@ -279,7 +281,7 @@
            alt="Hope to Life Foundation" 
            style="width: 180px; max-width: 80%; height: auto;">
     </div>
-    <p>© NRX Drops | First 5 buyers: $10 | Post a video → $5 | Refer a friend → $5 | Friday $30 Jackpot</p>
+    <p>© NRX Drops | First 5 buyers: $15 | After that: $1 | Video → $2 | Referral → $5 | Friday $30 Jackpot</p>
     <p style="margin-top: 12px;">🩸 Every purchase helps provide sanitary pads for girls. Together we create change.</p>
   </footer>
 </div>
@@ -406,14 +408,14 @@
       await fetch(SHEETBEST_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(orderData) });
       localOrders.push(orderData);
       localStorage.setItem('nrx_orders', JSON.stringify(localOrders));
-      resultDiv.innerHTML = `ORDER RECEIVED!<br><br>Order ID: ${orderId}<br>Status: PENDING VERIFICATION<br>Amount: K${total}<br><br>Your reward code will be sent AFTER payment is verified.<br>🎥 Post a video wearing NRX → $5<br>🔗 Share your referral code → $5 per friend who buys<br>🎁 Friday Jackpot: $30!<br>🩸 Every purchase helps provide sanitary pads for girls.<br><br>Your Referral Code: ${userReferralCode}<br>Need help? Contact us on WhatsApp: 0772566084`;
+      resultDiv.innerHTML = `ORDER RECEIVED!<br><br>Order ID: ${orderId}<br>Status: PENDING VERIFICATION<br>Amount: K${total}<br><br>Your reward code will be sent AFTER payment is verified.<br>🎥 Post a video wearing NRX → $2<br>🔗 Share your referral code → $5 per friend who buys<br>🎁 Friday Jackpot: $30!<br>🩸 Every purchase helps provide sanitary pads for girls.<br><br>Your Referral Code: ${userReferralCode}<br>Need help? Contact us on WhatsApp: 0772566084`;
       resultDiv.className = 'result-box pending';
       document.getElementById('fullName').value = ''; document.getElementById('phone').value = ''; document.getElementById('email').value = '';
       document.getElementById('referralInput').value = ''; document.getElementById('sizeSelect').value = ''; document.getElementById('deliverySelect').value = '';
       document.getElementById('paymentSelect').value = ''; uploadedScreenshot = null; document.getElementById('fileName').innerHTML = ''; fileInput.value = '';
     } catch (error) {
       localOrders.push(orderData); localStorage.setItem('nrx_orders', JSON.stringify(localOrders));
-      resultDiv.innerHTML = `ORDER RECEIVED! (Saved Locally)<br><br>Order ID: ${orderId}<br>Status: PENDING VERIFICATION<br>Amount: K${total}<br><br>Post a video wearing your NRX shirt on TikTok → $5!<br>Share your referral code → $5 per friend!<br>🩸 Your purchase helps provide sanitary pads for girls.<br>Your Referral Code: ${userReferralCode}<br>Need help? Contact us on WhatsApp: 0772566084`;
+      resultDiv.innerHTML = `ORDER RECEIVED! (Saved Locally)<br><br>Order ID: ${orderId}<br>Status: PENDING VERIFICATION<br>Amount: K${total}<br><br>Post a video wearing your NRX shirt on TikTok → $2!<br>Share your referral code → $5 per friend!<br>🩸 Your purchase helps provide sanitary pads for girls.<br>Your Referral Code: ${userReferralCode}<br>Need help? Contact us on WhatsApp: 0772566084`;
       resultDiv.className = 'result-box pending';
     } finally { submitBtn.disabled = false; }
   }
@@ -437,7 +439,7 @@
     
     if (found && found.Status === "Approved") {
       const rewardValue = found["Reward Value"] || found.rewardValue || "N/A";
-      resultDiv.innerHTML = `REWARD CLAIMED!<br><br>Your reward: ${rewardValue}<br>Thank you for shopping with NRX!<br><br>🎥 Post a video wearing NRX → $5<br>🔗 Share your referral code → $5 per friend!<br>🩸 Together we're making a difference.`;
+      resultDiv.innerHTML = `REWARD CLAIMED!<br><br>Your reward: ${rewardValue}<br>Thank you for shopping with NRX!<br><br>🎥 Post a video wearing NRX → $2<br>🔗 Share your referral code → $5 per friend!<br>🩸 Together we're making a difference.`;
       resultDiv.className = 'result-box success';
     } else if (found && found.Status === "Pending") {
       resultDiv.innerHTML = 'This order is pending verification. Please wait for admin approval.';
