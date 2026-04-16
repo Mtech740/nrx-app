@@ -148,7 +148,7 @@
     </div>
   </div>
 
-  <!-- Gallery – uses your GitHub images; replace with actual high‑res photos -->
+  <!-- Gallery (using your GitHub images as placeholders) -->
   <div class="section-title" id="collection">Latest Collection</div>
   <div class="gallery" id="shirtGallery">
     <!-- Men's Colors (4) -->
@@ -162,10 +162,10 @@
     </div>
     <div class="shirt-card" data-shirt="Royal Blue" data-name="NRX Royal Blue">
       <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/gold-shirt.png" alt="Royal Blue" loading="lazy"></div>
-      <div class="shirt-info"><div class="shirt-name">NRX Royal Blue</div><div class="shirt-price">K180</div></div>
+      <div class-></div><div class="shirt-info"><div class="shirt-name">NRX Royal Blue</div><div class="shirt-price">K180</div></div>
     </div>
     <div class="shirt-card" data-shirt="Olive Green" data-name="NRX Olive Green">
-      <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/red-shirt.png" alt="Olive Green" loading="lazy"></div>
+      <div class-></div><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/red-shirt.png" alt="Olive Green" loading="lazy"></div>
       <div class="shirt-info"><div class="shirt-name">NRX Olive Green</div><div class="shirt-price">K180</div></div>
     </div>
     <!-- Ladies' Colors (8) – placeholders -->
@@ -182,7 +182,7 @@
       <div class="shirt-info"><div class="shirt-name">NRX Desert Beige</div><div class="shirt-price">K180</div></div>
     </div>
     <div class="shirt-card" data-shirt="Dark Navy" data-name="NRX Dark Navy">
-      <div class-></div><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/gold-shirt.png" alt="Dark Navy" loading="lazy"></div>
+      <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/gold-shirt.png" alt="Dark Navy" loading="lazy"></div>
       <div class="shirt-info"><div class="shirt-name">NRX Dark Navy</div><div class="shirt-price">K180</div></div>
     </div>
     <div class="shirt-card" data-shirt="Charcoal Grey (Ladies')" data-name="NRX Charcoal Grey">
@@ -191,7 +191,7 @@
     </div>
     <div class="shirt-card" data-shirt="Urban White" data-name="NRX Urban White">
       <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/blue-shirt.png" alt="Urban White" loading="lazy"></div>
-      <div class="shirt-info"><div class="shirt-name">NRX Urban White</div><div class="shirt-price">K180</div></div>
+      <div class="shirt-info"><div class="shirt-name">NRX Urban White</div><div class-></div><div class="shirt-price">K180</div></div>
     </div>
     <div class="shirt-card" data-shirt="Coyote Brown" data-name="NRX Coyote Brown">
       <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/black-shirt.png" alt="Coyote Brown" loading="lazy"></div>
@@ -252,7 +252,7 @@
       <select id="paymentSelect">
         <option value="">Payment Method *</option>
         <option value="MTN">MTN Mobile Money</option>
-        <option value="Airtel">Airtel Money</option>
+        <option value="Airtel" id="airtelOption">Airtel Money</option>
       </select>
     </div>
     <div class="payment-details" id="paymentDetails">Select payment method above to see details</div>
@@ -289,7 +289,66 @@
 <script>
   const SHEETBEST_URL = "https://api.sheetbest.com/sheets/e440b21b-2b2b-466e-8849-1fa3dc3124e6";
   let localOrders = JSON.parse(localStorage.getItem('nrx_orders') || '[]');
-  
+
+  // ========== AIRTEL DOWNTIME CONTROL (74 HOURS) ==========
+  // 🔧 SET THE EXACT END TIME OF THE DOWNTIME (74 hours from when it started)
+  // Example: if downtime started on April 16, 2025 at 14:00, then end is April 19, 2025 at 16:00
+  const airtelDowntimeEnd = new Date('2025-04-19T16:00:00'); // <-- CHANGE THIS to your actual end time
+
+  function isAirtelAvailable() {
+    return new Date() >= airtelDowntimeEnd;
+  }
+
+  function getRemainingTime() {
+    const diff = airtelDowntimeEnd - new Date();
+    if (diff <= 0) return null;
+    const hours = Math.floor(diff / 3600000);
+    const minutes = Math.floor((diff % 3600000) / 60000);
+    return { hours, minutes };
+  }
+
+  function updateAirtelStatus() {
+    const airtelOption = document.getElementById('airtelOption');
+    if (!airtelOption) return;
+    const available = isAirtelAvailable();
+    airtelOption.disabled = !available;
+    
+    // Create or update banner
+    let banner = document.getElementById('airtelDowntimeBanner');
+    if (!banner) {
+      banner = document.createElement('div');
+      banner.id = 'airtelDowntimeBanner';
+      banner.style.cssText = 'background:#ffeb3b; color:#000; padding:12px; text-align:center; margin:10px 0; border-radius:12px; font-weight:bold;';
+      const paymentDetails = document.getElementById('paymentDetails');
+      paymentDetails.parentNode.insertBefore(banner, paymentDetails);
+    }
+    
+    if (!available) {
+      const remaining = getRemainingTime();
+      banner.innerHTML = remaining 
+        ? `⚠️ Airtel Money is currently down for maintenance. Expected back in ${remaining.hours}h ${remaining.minutes}m. Please use MTN Mobile Money.`
+        : `⚠️ Airtel Money is temporarily unavailable. Please use MTN Mobile Money.`;
+      banner.style.display = 'block';
+      // If Airtel is selected, switch to MTN
+      if (document.getElementById('paymentSelect').value === 'Airtel') {
+        document.getElementById('paymentSelect').value = 'MTN';
+        document.getElementById('paymentSelect').dispatchEvent(new Event('change'));
+      }
+    } else {
+      banner.innerHTML = `✅ Airtel Money is back! You can now use Airtel for payments.`;
+      banner.style.background = '#d4edda';
+      banner.style.color = '#155724';
+      setTimeout(() => {
+        if (isAirtelAvailable()) banner.style.display = 'none';
+      }, 10000);
+    }
+  }
+
+  // Run every minute to update countdown
+  updateAirtelStatus();
+  setInterval(updateAirtelStatus, 60000);
+
+  // ========== EXISTING CODE (referral, gallery, order submission) ==========
   function getUserReferralCode() {
     let code = localStorage.getItem('nrx_user_code');
     if (!code) {
@@ -344,6 +403,12 @@
   const paymentDetailsMap = { MTN: { number:"076 9939546", name:"Mumba Sampa" }, Airtel: { number:"0772566084", name:"Mumba Sampa" } };
   document.getElementById('paymentSelect').onchange = () => {
     const method = document.getElementById('paymentSelect').value;
+    // Prevent selecting Airtel if it's down
+    if (method === 'Airtel' && !isAirtelAvailable()) {
+      alert('Airtel Money is currently down. Please use MTN.');
+      document.getElementById('paymentSelect').value = 'MTN';
+      return;
+    }
     const details = document.getElementById('paymentDetails');
     if (method && paymentDetailsMap[method]) {
       details.innerHTML = `<strong>Send payment to:</strong><br>${method}: ${paymentDetailsMap[method].number}<br>Name: ${paymentDetailsMap[method].name}<br>Amount: K180 (add K40 if delivery selected)<br>After transfer, upload screenshot below`;
