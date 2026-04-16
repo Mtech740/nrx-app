@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
+    /* (your existing CSS – unchanged) */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Inter', sans-serif; background: #ffffff; color: #111111; scroll-behavior: smooth; }
     .container { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
@@ -166,7 +167,7 @@
     </div>
     <div class="shirt-card" data-shirt="Olive Green" data-name="NRX Olive Green">
       <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/red-shirt.png" alt="Olive Green" loading="lazy"></div>
-      <div class="shirt-info"><div class="shirt-name">NRX Olive Green</div><div class-></div><div class="shirt-price">K180</div></div>
+      <div class="shirt-info"><div class="shirt-name">NRX Olive Green</div><div class="shirt-price">K180</div></div>
     </div>
     <!-- Ladies' Colors (8) – placeholders -->
     <div class="shirt-card" data-shirt="Matte Black" data-name="NRX Matte Black">
@@ -174,7 +175,7 @@
       <div class="shirt-info"><div class="shirt-name">NRX Matte Black</div><div class="shirt-price">K180</div></div>
     </div>
     <div class="shirt-card" data-shirt="Military Olive" data-name="NRX Military Olive">
-      <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/black-shirt.png" alt="Military Olive" loading="lazy"></div>
+      <div class-></div><div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/black-shirt.png" alt="Military Olive" loading="lazy"></div>
       <div class="shirt-info"><div class="shirt-name">NRX Military Olive</div><div class="shirt-price">K180</div></div>
     </div>
     <div class="shirt-card" data-shirt="Desert Beige" data-name="NRX Desert Beige">
@@ -185,17 +186,17 @@
       <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/gold-shirt.png" alt="Dark Navy" loading="lazy"></div>
       <div class="shirt-info"><div class="shirt-name">NRX Dark Navy</div><div class="shirt-price">K180</div></div>
     </div>
-    <div class-></div><div class="shirt-card" data-shirt="Charcoal Grey (Ladies')" data-name="NRX Charcoal Grey">
+    <div class="shirt-card" data-shirt="Charcoal Grey (Ladies')" data-name="NRX Charcoal Grey">
       <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/red-shirt.png" alt="Charcoal Grey" loading="lazy"></div>
       <div class="shirt-info"><div class="shirt-name">NRX Charcoal Grey</div><div class="shirt-price">K180</div></div>
     </div>
     <div class="shirt-card" data-shirt="Urban White" data-name="NRX Urban White">
       <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/blue-shirt.png" alt="Urban White" loading="lazy"></div>
-      <div class="shirt-info"><div class="shirt-name">NRX Urban White</div><div class-></div><div class="shirt-price">K180</div></div>
+      <div class="shirt-info"><div class="shirt-name">NRX Urban White</div><div class="shirt-price">K180</div></div>
     </div>
     <div class="shirt-card" data-shirt="Coyote Brown" data-name="NRX Coyote Brown">
       <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/black-shirt.png" alt="Coyote Brown" loading="lazy"></div>
-      <div class="shirt-info"><div class-></div><div class="shirt-name">NRX Coyote Brown</div><div class="shirt-price">K180</div></div>
+      <div class="shirt-info"><div class="shirt-name">NRX Coyote Brown</div><div class="shirt-price">K180</div></div>
     </div>
     <div class="shirt-card" data-shirt="Steel Blue" data-name="NRX Steel Blue">
       <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/white-shirt.png" alt="Steel Blue" loading="lazy"></div>
@@ -290,9 +291,21 @@
   const SHEETBEST_URL = "https://api.sheetbest.com/sheets/e440b21b-2b2b-466e-8849-1fa3dc3124e6";
   let localOrders = JSON.parse(localStorage.getItem('nrx_orders') || '[]');
 
-  // ========== AIRTEL DOWNTIME CONTROL (48 HOURS) ==========
-  // 🔧 SET THE EXACT END TIME OF THE DOWNTIME (Saturday 16:30)
-  const airtelDowntimeEnd = new Date('2025-04-19T16:30:00'); // <-- CHANGE THIS to your actual Saturday 16:30
+  // ========== AIRTEL DOWNTIME CONTROL (NEXT SATURDAY 16:30) ==========
+  function getNextSaturday1630() {
+    const now = new Date();
+    const day = now.getDay(); // 0 = Sunday, 6 = Saturday
+    let daysUntilSaturday = (6 - day + 7) % 7;
+    if (daysUntilSaturday === 0 && now.getHours() >= 16 && now.getMinutes() >= 30) {
+      daysUntilSaturday = 7; // if today is Saturday after 16:30, target next Saturday
+    }
+    const nextSaturday = new Date(now);
+    nextSaturday.setDate(now.getDate() + daysUntilSaturday);
+    nextSaturday.setHours(16, 30, 0, 0);
+    return nextSaturday;
+  }
+
+  const airtelDowntimeEnd = getNextSaturday1630();
 
   function isAirtelAvailable() {
     return new Date() >= airtelDowntimeEnd;
