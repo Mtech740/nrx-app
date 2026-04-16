@@ -162,11 +162,11 @@
     </div>
     <div class="shirt-card" data-shirt="Royal Blue" data-name="NRX Royal Blue">
       <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/gold-shirt.png" alt="Royal Blue" loading="lazy"></div>
-      <div class-></div><div class="shirt-info"><div class="shirt-name">NRX Royal Blue</div><div class="shirt-price">K180</div></div>
+      <div class="shirt-info"><div class="shirt-name">NRX Royal Blue</div><div class="shirt-price">K180</div></div>
     </div>
     <div class="shirt-card" data-shirt="Olive Green" data-name="NRX Olive Green">
-      <div class-></div><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/red-shirt.png" alt="Olive Green" loading="lazy"></div>
-      <div class="shirt-info"><div class="shirt-name">NRX Olive Green</div><div class="shirt-price">K180</div></div>
+      <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/red-shirt.png" alt="Olive Green" loading="lazy"></div>
+      <div class="shirt-info"><div class="shirt-name">NRX Olive Green</div><div class-></div><div class="shirt-price">K180</div></div>
     </div>
     <!-- Ladies' Colors (8) – placeholders -->
     <div class="shirt-card" data-shirt="Matte Black" data-name="NRX Matte Black">
@@ -185,7 +185,7 @@
       <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/gold-shirt.png" alt="Dark Navy" loading="lazy"></div>
       <div class="shirt-info"><div class="shirt-name">NRX Dark Navy</div><div class="shirt-price">K180</div></div>
     </div>
-    <div class="shirt-card" data-shirt="Charcoal Grey (Ladies')" data-name="NRX Charcoal Grey">
+    <div class-></div><div class="shirt-card" data-shirt="Charcoal Grey (Ladies')" data-name="NRX Charcoal Grey">
       <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/red-shirt.png" alt="Charcoal Grey" loading="lazy"></div>
       <div class="shirt-info"><div class="shirt-name">NRX Charcoal Grey</div><div class="shirt-price">K180</div></div>
     </div>
@@ -195,7 +195,7 @@
     </div>
     <div class="shirt-card" data-shirt="Coyote Brown" data-name="NRX Coyote Brown">
       <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/black-shirt.png" alt="Coyote Brown" loading="lazy"></div>
-      <div class="shirt-info"><div class="shirt-name">NRX Coyote Brown</div><div class="shirt-price">K180</div></div>
+      <div class="shirt-info"><div class-></div><div class="shirt-name">NRX Coyote Brown</div><div class="shirt-price">K180</div></div>
     </div>
     <div class="shirt-card" data-shirt="Steel Blue" data-name="NRX Steel Blue">
       <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/white-shirt.png" alt="Steel Blue" loading="lazy"></div>
@@ -290,10 +290,9 @@
   const SHEETBEST_URL = "https://api.sheetbest.com/sheets/e440b21b-2b2b-466e-8849-1fa3dc3124e6";
   let localOrders = JSON.parse(localStorage.getItem('nrx_orders') || '[]');
 
-  // ========== AIRTEL DOWNTIME CONTROL (74 HOURS) ==========
-  // 🔧 SET THE EXACT END TIME OF THE DOWNTIME (74 hours from when it started)
-  // Example: if downtime started on April 16, 2025 at 14:00, then end is April 19, 2025 at 16:00
-  const airtelDowntimeEnd = new Date('2025-04-19T16:00:00'); // <-- CHANGE THIS to your actual end time
+  // ========== AIRTEL DOWNTIME CONTROL (48 HOURS) ==========
+  // 🔧 SET THE EXACT END TIME OF THE DOWNTIME (Saturday 16:30)
+  const airtelDowntimeEnd = new Date('2025-04-19T16:30:00'); // <-- CHANGE THIS to your actual Saturday 16:30
 
   function isAirtelAvailable() {
     return new Date() >= airtelDowntimeEnd;
@@ -313,7 +312,6 @@
     const available = isAirtelAvailable();
     airtelOption.disabled = !available;
     
-    // Create or update banner
     let banner = document.getElementById('airtelDowntimeBanner');
     if (!banner) {
       banner = document.createElement('div');
@@ -325,30 +323,32 @@
     
     if (!available) {
       const remaining = getRemainingTime();
-      banner.innerHTML = remaining 
-        ? `⚠️ Airtel Money is currently down for maintenance. Expected back in ${remaining.hours}h ${remaining.minutes}m. Please use MTN Mobile Money.`
-        : `⚠️ Airtel Money is temporarily unavailable. Please use MTN Mobile Money.`;
+      if (remaining) {
+        banner.innerHTML = `⏳ Airtel Money is currently down for maintenance. Expected back in ${remaining.hours}h ${remaining.minutes}m. Please use MTN Mobile Money. 🙏`;
+      } else {
+        banner.innerHTML = `⏳ Airtel Money is temporarily unavailable. Please use MTN Mobile Money. 🔄`;
+      }
+      banner.style.background = '#ffeb3b';
+      banner.style.color = '#000';
       banner.style.display = 'block';
-      // If Airtel is selected, switch to MTN
       if (document.getElementById('paymentSelect').value === 'Airtel') {
         document.getElementById('paymentSelect').value = 'MTN';
         document.getElementById('paymentSelect').dispatchEvent(new Event('change'));
       }
     } else {
-      banner.innerHTML = `✅ Airtel Money is back! You can now use Airtel for payments.`;
+      banner.innerHTML = `✅ Airtel Money is back! You can now use Airtel for payments. 🚀`;
       banner.style.background = '#d4edda';
       banner.style.color = '#155724';
       setTimeout(() => {
         if (isAirtelAvailable()) banner.style.display = 'none';
-      }, 10000);
+      }, 15000);
     }
   }
 
-  // Run every minute to update countdown
   updateAirtelStatus();
   setInterval(updateAirtelStatus, 60000);
 
-  // ========== EXISTING CODE (referral, gallery, order submission) ==========
+  // ========== REST OF THE CODE (unchanged) ==========
   function getUserReferralCode() {
     let code = localStorage.getItem('nrx_user_code');
     if (!code) {
@@ -403,7 +403,6 @@
   const paymentDetailsMap = { MTN: { number:"076 9939546", name:"Mumba Sampa" }, Airtel: { number:"0772566084", name:"Mumba Sampa" } };
   document.getElementById('paymentSelect').onchange = () => {
     const method = document.getElementById('paymentSelect').value;
-    // Prevent selecting Airtel if it's down
     if (method === 'Airtel' && !isAirtelAvailable()) {
       alert('Airtel Money is currently down. Please use MTN.');
       document.getElementById('paymentSelect').value = 'MTN';
