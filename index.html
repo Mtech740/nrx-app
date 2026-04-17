@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
+    /* (your existing CSS – unchanged, same as previous) */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Inter', sans-serif; background: #ffffff; color: #111111; scroll-behavior: smooth; }
     .container { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
@@ -152,7 +153,7 @@
   <div class="gallery" id="shirtGallery">
     <!-- Men's Colors (4) -->
     <div class="shirt-card" data-shirt="Deep Burgundy" data-name="NRX Deep Burgundy">
-      <div class-></div><div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/black-shirt.png" alt="Deep Burgundy" loading="lazy"></div>
+      <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/black-shirt.png" alt="Deep Burgundy" loading="lazy"></div>
       <div class="shirt-info"><div class="shirt-name">NRX Deep Burgundy</div><div class="shirt-price">K180</div></div>
     </div>
     <div class="shirt-card" data-shirt="Charcoal Grey" data-name="NRX Charcoal Grey">
@@ -190,7 +191,7 @@
     </div>
     <div class="shirt-card" data-shirt="Urban White" data-name="NRX Urban White">
       <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/blue-shirt.png" alt="Urban White" loading="lazy"></div>
-      <div class="shirt-info"><div class="shirt-name">NRX Urban White</div><div class="shirt-price">K180</div></div>
+      <div class-></div><div class="shirt-info"><div class="shirt-name">NRX Urban White</div><div class="shirt-price">K180</div></div>
     </div>
     <div class="shirt-card" data-shirt="Coyote Brown" data-name="NRX Coyote Brown">
       <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/black-shirt.png" alt="Coyote Brown" loading="lazy"></div>
@@ -289,9 +290,21 @@
   const SHEETBEST_URL = "https://api.sheetbest.com/sheets/e440b21b-2b2b-466e-8849-1fa3dc3124e6";
   let localOrders = JSON.parse(localStorage.getItem('nrx_orders') || '[]');
 
-  // ========== AIRTEL DOWNTIME CONTROL (72 HOURS – BACK SUNDAY 16:30) ==========
-  // 🔧 CHANGE THIS DATE to your actual end time (Sunday 16:30 for 72h from Thursday 16:30)
-  const airtelDowntimeEnd = new Date('2025-04-20T16:30:00'); // Sunday 16:30
+  // ========== AIRTEL DOWNTIME CONTROL – ALWAYS NEXT SUNDAY 16:30 ==========
+  function getNextSunday1630() {
+    const now = new Date();
+    const daysUntilSunday = (7 - now.getDay()) % 7; // 0 = Sunday already
+    const nextSunday = new Date(now);
+    nextSunday.setDate(now.getDate() + daysUntilSunday);
+    nextSunday.setHours(16, 30, 0, 0);
+    // If today is Sunday and time is after 16:30, target next Sunday
+    if (now.getDay() === 0 && now >= nextSunday) {
+      nextSunday.setDate(nextSunday.getDate() + 7);
+    }
+    return nextSunday;
+  }
+
+  const airtelDowntimeEnd = getNextSunday1630();
 
   function isAirtelAvailable() {
     return new Date() >= airtelDowntimeEnd;
