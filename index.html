@@ -113,6 +113,7 @@
     <p>Premium quality limited edition tees • Free pickup in Lusaka</p>
   </div>
 
+  <!-- Reward banner – Kwacha amounts -->
   <div class="reward-banner">
     <h2>🔥 LAUNCH OFFER – FIRST 5 BUYERS ONLY 🔥</h2>
     <div class="reward-amount">Get K150 reward</div>
@@ -122,6 +123,13 @@
     <p>❤️ <strong>Every month, one vulnerable person gets K750 support</strong> – apply below.</p>
   </div>
 
+  <!-- Urgency counter (manually updated) -->
+  <div id="urgencyBanner" style="background: #ff4d4d; color: white; text-align: center; padding: 12px; border-radius: 12px; margin: 20px auto; max-width: 500px; font-weight: bold;">
+    🔥 <span id="rewardCount">5</span> of the <strong>K150 LAUNCH REWARDS</strong> left!<br>
+    Once they're gone, reward drops to K50 per order.
+  </div>
+
+  <!-- TikTok bonus section -->
   <div class="video-bonus">
     <div class="video-bonus-content">
       <h3><i class="fab fa-tiktok"></i> TikTok Creator Bonus</h3>
@@ -134,6 +142,7 @@
     </div>
   </div>
 
+  <!-- Impact section (sanitary pads) -->
   <div class="impact-section">
     <h2>NRX Impact 🖤</h2>
     <p>Every purchase helps us give back. Our first mission:</p>
@@ -148,12 +157,13 @@
     </div>
   </div>
 
-  <!-- Gallery (shortened for brevity – include all your shirt cards) -->
+  <!-- Gallery – 12 shirt cards (using existing image placeholders) -->
   <div class="section-title" id="collection">Latest Collection</div>
   <div class="gallery" id="shirtGallery">
+    <!-- Men's colors -->
     <div class="shirt-card" data-shirt="Deep Burgundy" data-name="NRX Deep Burgundy">
       <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/black-shirt.png" alt="Deep Burgundy" loading="lazy"></div>
-      <div class-></div><div class="shirt-info"><div class="shirt-name">NRX Deep Burgundy</div><div class="shirt-price">K180</div></div>
+      <div class="shirt-info"><div class="shirt-name">NRX Deep Burgundy</div><div class="shirt-price">K180</div></div>
     </div>
     <div class="shirt-card" data-shirt="Charcoal Grey" data-name="NRX Charcoal Grey">
       <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/white-shirt.png" alt="Charcoal Grey" loading="lazy"></div>
@@ -167,9 +177,10 @@
       <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/red-shirt.png" alt="Olive Green" loading="lazy"></div>
       <div class="shirt-info"><div class="shirt-name">NRX Olive Green</div><div class="shirt-price">K180</div></div>
     </div>
+    <!-- Ladies' colors -->
     <div class="shirt-card" data-shirt="Matte Black" data-name="NRX Matte Black">
       <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/blue-shirt.png" alt="Matte Black" loading="lazy"></div>
-      <div class="shirt-info"><div class="shirt-name">NRX Matte Black</div><div class="shirt-price">K180</div></div>
+      <div class="shirt-info"><div class-></div><div class="shirt-name">NRX Matte Black</div><div class="shirt-price">K180</div></div>
     </div>
     <div class="shirt-card" data-shirt="Military Olive" data-name="NRX Military Olive">
       <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/black-shirt.png" alt="Military Olive" loading="lazy"></div>
@@ -185,7 +196,7 @@
     </div>
     <div class="shirt-card" data-shirt="Charcoal Grey (Ladies')" data-name="NRX Charcoal Grey">
       <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/red-shirt.png" alt="Charcoal Grey" loading="lazy"></div>
-      <div class="shirt-info"><div class="shirt-name">NRX Charcoal Grey</div><div class="shirt-price">K180</div></div>
+      <div class="shirt-info"><div class-></div><div class="shirt-name">NRX Charcoal Grey</div><div class="shirt-price">K180</div></div>
     </div>
     <div class="shirt-card" data-shirt="Urban White" data-name="NRX Urban White">
       <div class="shirt-img"><img src="https://raw.githubusercontent.com/mtech740/nrx-app/main/images/blue-shirt.png" alt="Urban White" loading="lazy"></div>
@@ -201,13 +212,14 @@
     </div>
   </div>
 
+  <!-- Tabs -->
   <div class="tabs">
     <div class="tab active" data-tab="buy">Order Now</div>
     <div class="tab" data-tab="redeem">Claim Reward</div>
     <div class="tab" data-tab="support">Apply for Support</div>
   </div>
 
-  <!-- BUY SECTION (unchanged) -->
+  <!-- ORDER SECTION (unchanged) -->
   <div id="buy" class="form-container">
     <h2 style="margin-bottom: 24px;">Place Your Order</h2>
     <div class="form-row">
@@ -271,20 +283,23 @@
     <div id="redeemResult" class="result-box"></div>
   </div>
 
-  <!-- SUPPORT APPLICATION (for vulnerable persons) -->
+  <!-- SUPPORT APPLICATION – CUSTOM HTML + GOOGLE APPS SCRIPT (NO SHEETBEST) -->
   <div id="support" class="form-container hidden">
     <h2>❤️ Apply for Monthly Support (K750)</h2>
-    <p>Once a month, NRX gives K750 to a vulnerable person in need (cannot afford meal, rent, medical, clothes, etc.). Tell us your story.</p>
-    <div class="form-row">
-      <input type="text" id="applicantName" placeholder="Full Name *">
-      <input type="tel" id="applicantPhone" placeholder="Phone Number *">
-    </div>
-    <textarea id="applicantStory" rows="5" placeholder="Tell us your story... why you need support (e.g., cannot afford food, rent, medical bills, school fees, etc.) *"></textarea>
-    <button id="submitApplicationBtn">Submit Application</button>
-    <div id="applicationResult" class="result-box"></div>
+    <p>Once a month, NRX gives K750 to a vulnerable person in need. Tell us your story.</p>
+    <form id="supportForm">
+      <div class="form-row">
+        <input type="text" id="supportName" placeholder="Full Name *" required>
+        <input type="tel" id="supportPhone" placeholder="Phone Number *" required>
+      </div>
+      <textarea id="supportStory" rows="5" placeholder="Tell us your story... why you need support (e.g., cannot afford food, rent, medical bills, school fees, etc.) *" required></textarea>
+      <button type="submit" id="supportSubmitBtn">Submit Application</button>
+      <div id="supportResult" class="result-box"></div>
+    </form>
     <p style="margin-top: 16px; font-size: 0.8rem; color: #666;">⭐ Open to anyone in Zambia facing hardship. One application per month. Selected recipient will be contacted after verification.</p>
   </div>
 
+  <!-- Referral section -->
   <div class="referral-section">
     <div><strong><i class="fas fa-link"></i> Your Referral Code:</strong><br><code id="userReferralCode">NRX-LOADING</code><span>Share to earn bonuses</span></div>
     <button class="copy-btn" id="copyReferralBtn">Copy Code</button>
@@ -302,13 +317,13 @@
 </div>
 
 <script>
+  // ======================= CONFIGURATION =======================
   const SHEETBEST_URL = "https://api.sheetbest.com/sheets/e440b21b-2b2b-466e-8849-1fa3dc3124e6";
-  // ✅ UPDATED APPLICATIONS SHEETBEST URL (from your new connection)
-  const APPLICATIONS_SHEETBEST_URL = "https://api.sheetbest.com/sheets/6c0755cb-cee4-44e3-adc6-52e9f2804e03";
-  
+  // Apps Script URL for support applications
+  const SUPPORT_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyeG5lw6PUULsKmGqIird5Y9pDWiNDBbd9gLH5kftd5hDhxafcJ3OhmZpNo6Dl-5IfXIQ/exec";
   let localOrders = JSON.parse(localStorage.getItem('nrx_orders') || '[]');
 
-  // ========== AIRTEL DOWNTIME CONTROL ==========
+  // ========== AIRTEL DOWNTIME CONTROL (NEXT SUNDAY 16:30) ==========
   function getNextSunday1630() {
     const now = new Date();
     const daysUntilSunday = (7 - now.getDay()) % 7;
@@ -358,7 +373,7 @@
   updateAirtelStatus();
   setInterval(updateAirtelStatus, 60000);
 
-  // ========== ORDER & REFERRAL ==========
+  // ========== REFERRAL CODE ==========
   function getUserReferralCode() {
     let code = localStorage.getItem('nrx_user_code');
     if (!code) {
@@ -372,7 +387,8 @@
     navigator.clipboard.writeText(getUserReferralCode());
     alert('Referral code copied! Share with friends to earn bonuses.');
   };
-  
+
+  // ========== SHIRT SELECTION ==========
   let selectedShirt = "";
   let selectedShirtName = "";
   document.querySelectorAll('.shirt-card').forEach(card => {
@@ -407,7 +423,8 @@
       selectedShirtName = e.target.options[e.target.selectedIndex].text;
     }
   };
-  
+
+  // ========== PAYMENT DETAILS ==========
   const paymentDetailsMap = { MTN: { number:"076 9939546", name:"Mumba Sampa" }, Airtel: { number:"0772566084", name:"Mumba Sampa" } };
   document.getElementById('paymentSelect').onchange = () => {
     const method = document.getElementById('paymentSelect').value;
@@ -423,7 +440,8 @@
       details.innerHTML = 'Select payment method above to see details';
     }
   };
-  
+
+  // ========== FILE UPLOAD ==========
   let uploadedScreenshot = null;
   const uploadArea = document.getElementById('uploadArea');
   const fileInput = document.getElementById('screenshot');
@@ -441,7 +459,8 @@
       alert('Please select a valid image file (JPG, PNG)');
     }
   };
-  
+
+  // ========== SUBMIT ORDER ==========
   async function submitOrder() {
     const name = document.getElementById('fullName').value.trim();
     const phone = document.getElementById('phone').value.trim();
@@ -492,7 +511,8 @@
     } finally { submitBtn.disabled = false; }
   }
   document.getElementById('submitBtn').onclick = submitOrder;
-  
+
+  // ========== REDEEM REWARD ==========
   function redeemReward() {
     const code = document.getElementById('rewardCode').value.trim().toUpperCase();
     const resultDiv = document.getElementById('redeemResult');
@@ -520,58 +540,41 @@
     }
   }
   document.getElementById('redeemBtn').onclick = redeemReward;
-  
-  // ========== SUPPORT APPLICATION SUBMISSION (with correct API URL) ==========
-  document.getElementById('submitApplicationBtn').onclick = async () => {
-    const name = document.getElementById('applicantName').value.trim();
-    const phone = document.getElementById('applicantPhone').value.trim();
-    const story = document.getElementById('applicantStory').value.trim();
-    const resultDiv = document.getElementById('applicationResult');
-    
-    if (!name || !phone || !story) {
-      resultDiv.innerHTML = '❌ Please fill all fields and tell us your story.';
-      resultDiv.className = 'result-box error';
-      return;
-    }
-    
-    const applicationData = {
-      "Timestamp": new Date().toISOString(),
-      "Name": name,
-      "Phone": phone,
-      "Story": story,
-      "Status": "Pending"
-    };
-    
-    try {
-      console.log("Sending to:", APPLICATIONS_SHEETBEST_URL);
-      console.log("Data:", applicationData);
+
+  // ========== SUPPORT APPLICATION (Google Apps Script) ==========
+  const supportForm = document.getElementById('supportForm');
+  const supportResult = document.getElementById('supportResult');
+  if (supportForm) {
+    supportForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('supportName').value.trim();
+      const phone = document.getElementById('supportPhone').value.trim();
+      const story = document.getElementById('supportStory').value.trim();
       
-      const response = await fetch(APPLICATIONS_SHEETBEST_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(applicationData)
-      });
+      supportResult.innerHTML = 'Submitting...';
+      supportResult.className = 'result-box pending';
       
-      const responseText = await response.text();
-      console.log("Response status:", response.status);
-      console.log("Response body:", responseText);
-      
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${responseText}`);
+      try {
+        const response = await fetch(SUPPORT_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, phone, story })
+        });
+        const result = await response.json();
+        if (result.success) {
+          supportResult.innerHTML = '✅ Application received! If selected, you will be contacted within 30 days.';
+          supportResult.className = 'result-box success';
+          supportForm.reset();
+        } else {
+          throw new Error(result.error || 'Unknown error');
+        }
+      } catch (err) {
+        supportResult.innerHTML = `❌ Failed to submit: ${err.message}. Please try again later.`;
+        supportResult.className = 'result-box error';
       }
-      
-      resultDiv.innerHTML = '✅ Application received! If selected, you will be contacted within 30 days.';
-      resultDiv.className = 'result-box success';
-      document.getElementById('applicantName').value = '';
-      document.getElementById('applicantPhone').value = '';
-      document.getElementById('applicantStory').value = '';
-    } catch (error) {
-      console.error("Application submission error:", error);
-      resultDiv.innerHTML = `❌ Failed to submit. Error: ${error.message}. Please try again later.`;
-      resultDiv.className = 'result-box error';
-    }
-  };
-  
+    });
+  }
+
   // ========== TAB SWITCHING ==========
   document.querySelectorAll('.tab').forEach(tab => {
     tab.onclick = () => {
@@ -584,6 +587,13 @@
       document.getElementById(target).classList.remove('hidden');
     };
   });
+
+  // ========== URGENCY COUNTER MANUAL UPDATE ==========
+  let remainingRewards = 5; // change this manually as orders come in
+  document.getElementById('rewardCount').innerText = remainingRewards;
+  if (remainingRewards <= 0) {
+    document.getElementById('urgencyBanner').style.display = 'none';
+  }
 </script>
 </body>
 </html>
